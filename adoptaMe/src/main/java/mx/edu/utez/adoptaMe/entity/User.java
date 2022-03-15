@@ -2,22 +2,40 @@ package mx.edu.utez.adoptaMe.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+@Entity
+@Table(name = "users")
 public class User {
     
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
 
     public User() {
     }
+
     public User(Integer id, String username, String email, String password) {
         this.id = id;
         this.username = username;
@@ -54,10 +72,15 @@ public class User {
     @JoinColumn(name = "person_id", nullable = false, unique = true)
     private Person person;
     
-    //configuration for donation
+    // configuration for donation
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Donation> donations;
+
+    // configuration for UserHasRole
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserHasRole> userHasRoles; 
     
     
 }

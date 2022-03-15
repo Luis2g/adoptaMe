@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Donation {
@@ -16,9 +19,18 @@ public class Donation {
     @Column(name = "id")
     private Integer id;
 
+    @NotEmpty
+    @Min(value = 1, message = "El donativo debe ser al menos de un peso")
     private Double amount;
+
+    @NotEmpty
     private String donationDate;
+
+    @NotEmpty
+    @Size(min = 2, message = "La informacion al menos debe contener dos caracteres")
     private String authorizationData;
+
+    @NotEmpty
     private String status;
 
     public Donation() {

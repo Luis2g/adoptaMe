@@ -1,5 +1,10 @@
 package mx.edu.utez.adoptaMe.entity;
+import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,8 +13,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Person {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private String nombre;
+
+    @Column(name = "name")
+    private String name;
     private String surname;
     private String secondSurname;
     private String gender;
@@ -18,10 +29,10 @@ public class Person {
 
     public Person() {
     }
-    public Person(Integer id, String nombre, String surname, String secondSurname, String gender, String phoneNumber,
+    public Person(Integer id, String name, String surname, String secondSurname, String gender, String phoneNumber,
             String date) {
         this.id = id;
-        this.nombre = nombre;
+        this.name = name;
         this.surname = surname;
         this.secondSurname = secondSurname;
         this.gender = gender;
@@ -34,11 +45,11 @@ public class Person {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getNombre() {
-        return nombre;
+    public String getname() {
+        return name;
     }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setname(String name) {
+        this.name = name;
     }
     public String getSurname() {
         return surname;

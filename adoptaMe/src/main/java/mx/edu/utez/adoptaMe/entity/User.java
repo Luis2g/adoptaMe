@@ -55,7 +55,7 @@ public class User {
     private Person person;
     
     //configuration for donation
-    @OneToMany(mappedBy = "donation")
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Donation> donations;
     

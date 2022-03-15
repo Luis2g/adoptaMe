@@ -1,16 +1,19 @@
 package mx.edu.utez.adoptaMe.entity;
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
+@Table
 public class Person {
 
 
@@ -20,24 +23,46 @@ public class Person {
     private Integer id;
 
     @Column(name = "name")
+    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @NotEmpty
     private String name;
+
+    @Column(name = "surname")
+    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @NotEmpty
     private String surname;
+
+    @Column(name = "secondSurname")
+    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @NotEmpty
     private String secondSurname;
+
+    @Column(name = "gender")
+    @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter")
+    @NotEmpty
     private String gender;
+
+    @Column(name = "phone_number")
+    @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros")
+    @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros")
+    @NotEmpty
     private String phoneNumber;
-    private String date;
+
+    @Column(name = "registration_date")
+    @NotEmpty
+    private String registrationDate;
 
     public Person() {
     }
     public Person(Integer id, String name, String surname, String secondSurname, String gender, String phoneNumber,
-            String date) {
+            String registrationDate) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.secondSurname = secondSurname;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.date = date;
+        this.registrationDate = registrationDate;
     }
     public Integer getId() {
         return id;
@@ -75,11 +100,11 @@ public class Person {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public String getDate() {
-        return date;
+    public String getRegistrationDate() {
+        return registrationDate;
     }
-    public void setDate(String date) {
-        this.date = date;
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     //configuration for user

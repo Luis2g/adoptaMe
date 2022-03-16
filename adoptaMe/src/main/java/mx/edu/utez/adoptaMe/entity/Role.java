@@ -22,7 +22,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*")
@@ -36,18 +36,18 @@ public class Role {
     public Role() {
     }
 
-    public Role(Integer id, @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*$") @NotEmpty String name,
+    public Role(Long id, @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*$") @NotEmpty String name,
             @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$") @NotEmpty String description) {
         this.id = id;
         this.name = name;
         this.description = description;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

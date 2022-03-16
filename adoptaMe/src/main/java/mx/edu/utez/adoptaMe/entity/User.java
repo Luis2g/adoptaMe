@@ -25,7 +25,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "username", nullable = false)
     @NotEmpty(message = "Esta campo es requerido")
@@ -44,7 +44,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, @NotEmpty(message = "Esta campo es requerido") String username,
+    public User(Long id, @NotEmpty(message = "Esta campo es requerido") String username,
             @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") String email,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres") String password,
             Person person, List<Donation> donations, List<UserHasRole> userHasRoles) {
@@ -57,10 +57,10 @@ public class User {
         this.userHasRoles = userHasRoles;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getUsername() {

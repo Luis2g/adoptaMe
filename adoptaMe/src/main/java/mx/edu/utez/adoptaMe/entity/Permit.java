@@ -21,7 +21,7 @@ public class Permit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     @NotBlank(message = "Este campo es requerido")
@@ -35,7 +35,7 @@ public class Permit {
     public Permit() {
     }
     
-    public Permit(Integer id,
+    public Permit(Long id,
             @NotBlank(message = "Este campo es requerido") @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "Los caracteres proporcinados no son aceptados") String name,
             @NotBlank(message = "Esta campo es requerido") String description, List<RoleHasPermit> rolesHasPermits) {
         this.id = id;
@@ -43,10 +43,10 @@ public class Permit {
         this.description = description;
         this.rolesHasPermits = rolesHasPermits;
     }
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

@@ -2,6 +2,8 @@ package mx.edu.utez.adoptaMe.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Personality extends JpaRepository<Personality, Long>{
+import mx.edu.utez.adoptaMe.entity.Personality;
+
+public interface PersonalityRepository extends JpaRepository<Personality, Long>{
     
 }

@@ -22,7 +22,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -36,18 +36,18 @@ public class Post {
     public Post() {
     }
 
-    public Post(Integer id, String title, Boolean isMain, Boolean isAccepted) {
+    public Post(Long id, String title, Boolean isMain, Boolean isAccepted) {
         this.id = id;
         this.title = title;
         this.isMain = isMain;
         this.isAccepted = isAccepted;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

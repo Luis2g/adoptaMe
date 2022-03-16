@@ -19,7 +19,7 @@ public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     @NotEmpty
@@ -42,7 +42,7 @@ public class Donation {
     public Donation() {
     }
 
-    public Donation(Integer id,
+    public Donation(Long id,
             @NotEmpty @Min(value = 1, message = "El donativo debe ser al menos de un peso") Double amount,
             @NotEmpty String donationDate,
             @NotEmpty @Size(min = 2, message = "La informacion al menos debe contener dos caracteres") String authorizationData,
@@ -55,10 +55,10 @@ public class Donation {
         this.user = user;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public Double getAmount() {

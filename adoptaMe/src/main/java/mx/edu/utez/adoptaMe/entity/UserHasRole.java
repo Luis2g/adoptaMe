@@ -16,22 +16,22 @@ public class UserHasRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer id;
+    private Long id;
 
     public UserHasRole() {
     }
 
-    public UserHasRole(Integer id, User user, Role role) {
+    public UserHasRole(Long id, User user, Role role) {
         this.id = id;
         this.user = user;
         this.role = role;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

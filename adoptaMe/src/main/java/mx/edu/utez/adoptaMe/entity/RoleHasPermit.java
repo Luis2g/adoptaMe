@@ -16,7 +16,7 @@ public class RoleHasPermit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Integer id;
+    private Long id;
 
     // foreign key for role
     @ManyToOne

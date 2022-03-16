@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Restablecer Contraseña</title>
+</head>
+
+<body class="bg-background-login">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+
+                                <div class="card-header text-center">
+                                    <p class="font-weight-500 justify-content-end">Solicitud de recuperación de contraseña</p>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="img-fluid text-left">
+                                        <a type="" style="font-size: 13px" ><i class="fas fa-arrow-circle-left fa-2x"></i>
+                                        </a>
+                                    </div>
+                                    <figure>
+
+                                        <div class="img-fluid text-center">
+                                            <img src="/logo.png" class="img-fluid" width="200px" >
+                                        </div>
+                                    </figure>
+                                    <div class="text-center small text-muted mb-4">Ingresa el correo electronico asociado donde se enviará el enlace para recuperar tu contraseña.</div>
+                                    <form novalidate id="formRecuperacion"  name="loginForm">
+                                        <div class="form-group" >
+                                            <input type="email"
+                                                    name="correo"
+                                                    class="form-control py-4" 
+                                                    placeholder="Correo electrónico" 
+                                                    id="inputEmailAddress"
+                                                    minlength="10"
+                                                    maxlength="100"
+                                                    required
+                                                    autofocus=""/>
+                                            
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group d-flex  justify-content-center ">
+                                                <button class="btn btn-outline-primary border-5 rounded-lg font-weight-500 " 
+                                                        id="btnRecuperacion" type="submit">Enviar enlace</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="card-footer text-left">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+</footer>
+</html>

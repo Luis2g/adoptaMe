@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,27 +24,39 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
+    @NotEmpty(message = "Esta campo es requerido")
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
+    @NotEmpty(message = "Este campo es requerido")
+    @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$" )
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres")
     private String password;
 
     public User() {
     }
 
-    public User(Integer id, String username, String email, String password) {
+    public User(Integer id, @NotEmpty(message = "Esta campo es requerido") String username,
+            @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") String email,
+            @NotEmpty(message = "Este campo es requerido") @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres") String password,
+            Person person, List<Donation> donations, List<UserHasRole> userHasRoles) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.person = person;
+        this.donations = donations;
+        this.userHasRoles = userHasRoles;
     }
+
     public Integer getId() {
         return id;
     }

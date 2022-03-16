@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table(name = "rol")
+@Table(name = "roles")
 public class Role {
     
     @Id
@@ -25,19 +25,18 @@ public class Role {
     private Integer id;
 
     @Column(name = "name")
-    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*")
     @NotEmpty
     private String name;
 
     @Column(name = "description")
-    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
     @NotEmpty
     private String description;
 
     public Role() {
     }
 
-    public Role(Integer id, @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$") @NotEmpty String name,
+    public Role(Integer id, @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*$") @NotEmpty String name,
             @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$") @NotEmpty String description) {
         this.id = id;
         this.name = name;
@@ -68,7 +67,7 @@ public class Role {
         this.description = description;
     }
 
-    // Configuration for UserHasRoles
+    // Configuration for UserHasRole
     @OneToMany(mappedBy = "role")
     @JsonIgnore
     private List<UserHasRole> userHasRoles; 

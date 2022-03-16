@@ -1,6 +1,5 @@
 package mx.edu.utez.adoptaMe.entity;
 
-import javax.management.relation.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +15,7 @@ public class UserHasRole {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private Integer id;
 
     public UserHasRole() {

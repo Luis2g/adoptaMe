@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table
+@Table(name = "people")
 public class Person {
 
 
@@ -23,17 +23,17 @@ public class Person {
     private Integer id;
 
     @Column(name = "name")
-    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
     @NotEmpty
     private String name;
 
     @Column(name = "surname")
-    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
     @NotEmpty
     private String surname;
 
-    @Column(name = "secondSurname")
-    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
+    @Column(name = "second_surname")
+    @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
     @NotEmpty
     private String secondSurname;
 
@@ -54,8 +54,13 @@ public class Person {
 
     public Person() {
     }
-    public Person(Integer id, String name, String surname, String secondSurname, String gender, String phoneNumber,
-            String registrationDate) {
+    public Person(Integer id,
+            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty String name,
+            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty String surname,
+            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty String secondSurname,
+            @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty String gender,
+            @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty String phoneNumber,
+            @NotEmpty String registrationDate, User user) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -63,6 +68,7 @@ public class Person {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.registrationDate = registrationDate;
+        this.user = user;
     }
     public Integer getId() {
         return id;

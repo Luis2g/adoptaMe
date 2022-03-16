@@ -15,17 +15,17 @@ public class RoleHasPermit {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private Integer id;
 
-    // configuration for role
+    // foreign key for role
     @ManyToOne
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    // configuration for permit
+    // foreign key for permit
     @ManyToOne
-    @JoinColumn(name = "permit_id")
+    @JoinColumn(name = "permit_id", nullable = false)
     private Permit permit;
 
 }

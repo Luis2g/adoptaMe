@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "donations")
 public class Donation {
 
     @Id
@@ -19,29 +21,40 @@ public class Donation {
     @Column(name = "id")
     private Integer id;
 
+    @Column(nullable = false)
     @NotEmpty
     @Min(value = 1, message = "El donativo debe ser al menos de un peso")
     private Double amount;
 
+    @Column(name = "donation_date", nullable = false)
     @NotEmpty
     private String donationDate;
 
+    @Column(name = "authorization_data", nullable = false)
     @NotEmpty
     @Size(min = 2, message = "La informacion al menos debe contener dos caracteres")
     private String authorizationData;
 
+    @Column(nullable = false)
     @NotEmpty
     private String status;
 
     public Donation() {
     }
-    public Donation(Integer id, Double amount, String donationDate, String authorizationData, String status) {
+
+    public Donation(Integer id,
+            @NotEmpty @Min(value = 1, message = "El donativo debe ser al menos de un peso") Double amount,
+            @NotEmpty String donationDate,
+            @NotEmpty @Size(min = 2, message = "La informacion al menos debe contener dos caracteres") String authorizationData,
+            @NotEmpty String status, User user) {
         this.id = id;
         this.amount = amount;
         this.donationDate = donationDate;
         this.authorizationData = authorizationData;
         this.status = status;
+        this.user = user;
     }
+
     public Integer getId() {
         return id;
     }

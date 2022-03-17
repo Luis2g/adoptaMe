@@ -21,6 +21,48 @@ public class Request {
     @Column(name = "is_accepted", nullable = false)
     private Boolean isAccepted;
 
+    public Request() {
+    }
+
+    public Request(Long id, Boolean isAccepted, User user, Pet petRequest) {
+        this.id = id;
+        this.isAccepted = isAccepted;
+        this.user = user;
+        this.petRequest = petRequest;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getIsAccepted() {
+        return isAccepted;
+    }
+
+    public void setIsAccepted(Boolean isAccepted) {
+        this.isAccepted = isAccepted;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Pet getPetRequest() {
+        return petRequest;
+    }
+
+    public void setPetRequest(Pet petRequest) {
+        this.petRequest = petRequest;
+    }
+
     // Foreign key for user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

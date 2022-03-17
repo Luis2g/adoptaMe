@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,8 +26,15 @@ public class Post {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 150)
+    @Size(min = 2, max = 150)
+    @NotEmpty(message = "Este campo es requerido")
     private String title;
+
+    @Column(name = "content", nullable = false, length = 255)
+    @Size(min = 2, max = 255)
+    @NotEmpty(message = "Este campo es requerido")
+    private String content;
 
     @Column(name = "is_main", nullable = true)
     private Boolean isMain;
@@ -36,11 +45,18 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String title, Boolean isMain, Boolean isAccepted) {
+    public Post(Long id, @Size(min = 2, max = 150) @NotEmpty(message = "Este campo es requerido") String title,
+            @Size(min = 2, max = 255) @NotEmpty(message = "Este campo es requerido") String content, Boolean isMain,
+            Boolean isAccepted, User user, Pet petPost, List<Image> image, List<FavoriteOne> favoritesOnes) {
         this.id = id;
         this.title = title;
+        this.content = content;
         this.isMain = isMain;
         this.isAccepted = isAccepted;
+        this.user = user;
+        this.petPost = petPost;
+        this.image = image;
+        this.favoritesOnes = favoritesOnes;
     }
 
     public Long getId() {
@@ -73,6 +89,46 @@ public class Post {
 
     public void setIsAccepted(Boolean isAccepted) {
         this.isAccepted = isAccepted;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Pet getPetPost() {
+        return petPost;
+    }
+
+    public void setPetPost(Pet petPost) {
+        this.petPost = petPost;
+    }
+
+    public List<Image> getImage() {
+        return image;
+    }
+
+    public void setImage(List<Image> image) {
+        this.image = image;
+    }
+
+    public List<FavoriteOne> getFavoritesOnes() {
+        return favoritesOnes;
+    }
+
+    public void setFavoritesOnes(List<FavoriteOne> favoritesOnes) {
+        this.favoritesOnes = favoritesOnes;
     }
 
     // Foreign key for user

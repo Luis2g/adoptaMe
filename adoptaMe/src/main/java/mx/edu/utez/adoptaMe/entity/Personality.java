@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,15 +23,19 @@ public class Personality {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 45)
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 2, max = 45)
     private String name;
 
     public Personality() {
     }
 
-    public Personality(Long id, String name) {
+    public Personality(Long id, @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String name,
+            List<Pet> pets) {
         this.id = id;
         this.name = name;
+        this.pets = pets;
     }
 
     public Long getId() {
@@ -46,6 +52,14 @@ public class Personality {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     // Configuration for pet

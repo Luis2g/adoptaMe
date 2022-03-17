@@ -18,35 +18,35 @@ public class Donation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    @NotEmpty
+    @Column(name = "amount", nullable = false)
+    @NotEmpty(message = "Este campo es requerido")
     @Min(value = 1, message = "El donativo debe ser al menos de un peso")
     private Double amount;
 
     @Column(name = "donation_date", nullable = false)
-    @NotEmpty
+    @NotEmpty(message = "Este campo es requerido")
     private String donationDate;
 
-    @Column(name = "authorization_data", nullable = false)
-    @NotEmpty
+    @Column(name = "authorization_data", nullable = false, length = 255)
+    @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, message = "La informacion al menos debe contener dos caracteres")
     private String authorizationData;
 
-    @Column(nullable = false)
-    @NotEmpty
+    @Column(name = "status", nullable = false, length = 45)
+    @NotEmpty(message = "Este campo es requerido")
     private String status;
 
     public Donation() {
     }
 
     public Donation(Long id,
-            @NotEmpty @Min(value = 1, message = "El donativo debe ser al menos de un peso") Double amount,
-            @NotEmpty String donationDate,
-            @NotEmpty @Size(min = 2, message = "La informacion al menos debe contener dos caracteres") String authorizationData,
-            @NotEmpty String status, User user) {
+            @NotEmpty(message = "Este campo es requerido") @Min(value = 1, message = "El donativo debe ser al menos de un peso") Double amount,
+            @NotEmpty(message = "Este campo es requerido") String donationDate,
+            @NotEmpty(message = "Este campo es requerido") @Size(min = 2, message = "La informacion al menos debe contener dos caracteres") String authorizationData,
+            @NotEmpty(message = "Este campo es requerido") String status, User user) {
         this.id = id;
         this.amount = amount;
         this.donationDate = donationDate;
@@ -86,10 +86,18 @@ public class Donation {
         this.status = status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     // foreign key for user
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     

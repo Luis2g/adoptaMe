@@ -27,16 +27,18 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, length = 45, unique = true)
     @NotEmpty(message = "Esta campo es requerido")
+    @Size(min = 2, max = 45)
     private String username;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 50, unique = true)
     @NotEmpty(message = "Este campo es requerido")
-    @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$" )
+    @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$")
+    @Size(min = 3, max = 50)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 30)
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres")
     private String password;
@@ -44,8 +46,8 @@ public class User {
     public User() {
     }
 
-    public User(Long id, @NotEmpty(message = "Esta campo es requerido") String username,
-            @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") String email,
+    public User(Long id, @NotEmpty(message = "Esta campo es requerido") @Size(min = 2, max = 45) String username,
+            @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") @Size(min = 3, max = 50) String email,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres") String password,
             Person person, List<Donation> donations, List<UserHasRole> userHasRoles) {
         this.id = id;
@@ -82,6 +84,32 @@ public class User {
         this.password = password;
     }
     
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public List<Donation> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(List<Donation> donations) {
+        this.donations = donations;
+    }
+
+    public List<UserHasRole> getUserHasRoles() {
+        return userHasRoles;
+    }
+
+    public void setUserHasRoles(List<UserHasRole> userHasRoles) {
+        this.userHasRoles = userHasRoles;
+    }
+
+
+
     // foreign key for person
     @OneToOne
     @JoinColumn(name = "person_id", nullable = false, unique = true)

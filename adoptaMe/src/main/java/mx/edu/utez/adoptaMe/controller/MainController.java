@@ -11,4 +11,9 @@ public class MainController {
         return "landingPage";
     }
 
+    @GetMapping("/error401")
+    public String error(){
+        return "/errorPages/401";
+    }
+
 }

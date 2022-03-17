@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <title>Restablecer Contraseña</title>
-</head>
+<div th:replace="fragments/header :: header" ></div>
 
 <body class="bg-background-login">
     <div id="layoutAuthentication">
@@ -18,7 +12,7 @@
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
 
                                 <div class="card-header text-center">
-                                    <p class="font-weight-500 justify-content-end">Solicitud de recuperación de contraseña</p>
+                                    <strong class="text-center">Solicitud de recuperación de contraseña</strong>
                                 </div>
 
                                 <div class="card-body">
@@ -29,7 +23,7 @@
                                     <figure>
 
                                         <div class="img-fluid text-center">
-                                            <img src="/logo.png" class="img-fluid" width="200px" >
+                                            <img th:src="@{/images/logo.png}" class="img-fluid" width="200px" >
                                         </div>
                                     </figure>
                                     <div class="text-center small text-muted mb-4">Ingresa el correo electronico asociado donde se enviará el enlace para recuperar tu contraseña.</div>
@@ -65,8 +59,5 @@
     </div>
 </body>
 
-<footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-</footer>
+<div th:replace="fragments/footer :: footer" ></div>
 </html>

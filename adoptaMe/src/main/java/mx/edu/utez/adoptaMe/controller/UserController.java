@@ -10,8 +10,20 @@ import mx.edu.utez.adoptaMe.entity.User;
 @RequestMapping(("/usuario"))
 public class UserController {
 
-	@GetMapping("/Registro")
+	@GetMapping("/registro")
 	public String register(User user) {
 		return "registro";
+	}
+	@GetMapping("/perfil")
+	public String profile(User user) {
+		return "perfilUsuario";
+	}
+	@GetMapping("/acceso")
+	public String login(User user) {
+		return "login";
+	}
+	@GetMapping("/restablecerContrasena")
+	public String resetPassword(User user) {
+		return "restablecerContrasena";
 	}
 }

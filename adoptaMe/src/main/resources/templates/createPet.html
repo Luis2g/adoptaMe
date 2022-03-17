@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<div th:replace="fragments/header :: header"></div>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar-anonimo"></div>
+
+    <div class="container">
+        <div class="col-12 text-center">
+            <h1>Registrar mascota</h1>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 col-sm-2 mb-3">
+                <p class="text-center" for="image">Añadir imagen</p>
+                <input class="mx-auto d-block" type="image" onclick="uploadFile()" height="100rem"
+                    src="https://cdn1.iconfinder.com/data/icons/ui-colored-1/100/UI__2-512.png">
+                <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
+            </div>
+            <div class="col-12 col-sm-10">
+                <form id="registrarMascota" name="registrarMascota" novalidate>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <label for="name">Título de publicación <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="title"
+                                    placeholder="Ingresa el nombre">
+                            </div>
+                            <div class="col-12 col-sm-8 col-md-6">
+                                <label for="name">Nombre de la mascota <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre">
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="sex">Sexo <span style="color: red;">*</span></label>
+                                <select class="custom-select" id="sex">
+                                    <option selected value="1">Macho</option>
+                                    <option value="2">Hembra</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="age">Edad <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" id="age">
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="size">Tipo <span style="color: red;">*</span></label>
+                                <select class="custom-select" id="sex">
+                                    <option selected value="1">Perro</option>
+                                    <option value="2">Gato</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="size">Tamaño <span style="color: red;">*</span></label>
+                                <select class="custom-select" id="sex">
+                                    <option selected value="1">Pequeño</option>
+                                    <option value="2">Mediano</option>
+                                    <option value="3">Grande</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="color">Color <span style="color: red;">*</span></label>
+                                <select class="custom-select">
+                                    <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3">
+                                <label for="caracter">Caracter <span style="color: red;">*</span></label>
+                                <select class="custom-select">
+                                    <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}" th:value="${tmpCaracter.id}" ></option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="description">Descripción de la mascota <span style="color: red;">*</span></label>
+                                <textarea class="form-control" id="description"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="content">Escribe una descripción del porqué está en adopción <span style="color: red;">*</span></label>
+                                <textarea class="form-control" id="content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4 d-flex justify-content-end">
+            <button class="btn btn-success">Guardar</button>
+        </div>
+    </div>
+
+    <script>
+        let file = document.getElementById("image");
+
+        const uploadFile = () => {
+            file.click();
+        }
+    </script>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

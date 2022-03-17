@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <title>Perfil</title>
-</head>
+<div th:replace="fragments/header :: header" ></div>
 <body>
+	<div th:replace="fragments/navbar :: navbar-admin" ></div>
     <div class="row">
         <div class="col-3"></div>
         <div class="col-9">
             <div class="card text">
             <div class="card-header text-center">
-                <img class="card-img-top bg-dark" src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359554_960_720.png" style="width:150px;height:150px; border-radius: 50%;">
+                <img class="card-img-top bg-dark" th:src="@{/images/logo.png}" style="width:150px;height:150px; border-radius: 50%;">
             </div>
                 <div class="card-head text-center mt-3">
                     <h3>{{Rol}} Adoptame</h3>
@@ -74,8 +69,8 @@
                             <label for="exampleInputEmail1">Contraseña anterior</label>
                             <div class="input-group"> 
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">#</span>
-                                </div>
+		                            <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
+		                        </div>
                                 <input class="form-control " type="text" placeholder="Escriba su contraseña">
                             </div>
                         </div>
@@ -84,7 +79,7 @@
                             <label for="exampleInputEmail1">Contraseña nueva</label>
                             <div class="input-group"> 
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">#</span>
+                                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
                                 </div>
                                 <input class="form-control " type="text" placeholder="Escriba una nueva contraseña">
                             </div>
@@ -93,7 +88,7 @@
                             <label for="exampleInputEmail1">Confirmación de contraseña</label>
                             <div class="input-group"> 
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">#</span>
+                                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
                                 </div>
                                 <input class="form-control " type="text" placeholder="Confirme su contraseña">
                             </div>
@@ -108,8 +103,5 @@
         
     </div>
 </body>
-<footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-</footer>
+<div th:replace="fragments/footer :: footer" ></div>
 </html>

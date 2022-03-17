@@ -26,7 +26,7 @@ public class Donation {
     @Min(value = 1, message = "El donativo debe ser al menos de un peso")
     private Double amount;
 
-    @Column(name = "donation_date", nullable = false)
+    @Column(name = "donation_date", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
     private String donationDate;
 

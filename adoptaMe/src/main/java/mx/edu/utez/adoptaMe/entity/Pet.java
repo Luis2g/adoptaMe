@@ -38,7 +38,7 @@ public class Pet {
     @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)")
     private String sex;
 
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
     private String dateOfBirth;
 
@@ -52,7 +52,7 @@ public class Pet {
     @Size(min = 5, max = 45)
     private String type;
 
-    @Column(name = "registration_date", nullable = false)
+    @Column(name = "registration_date", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
     private String registrationDate;
 

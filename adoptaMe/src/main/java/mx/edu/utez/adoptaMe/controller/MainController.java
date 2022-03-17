@@ -16,4 +16,14 @@ public class MainController {
         return "/errorPages/401";
     }
 
+    @GetMapping("/perros")
+    public String dogs(){
+        return "petsList";
+    }
+
+    @GetMapping("/noticias")
+    public String news(){
+        return "news";
+    }
+
 }

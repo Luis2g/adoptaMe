@@ -19,48 +19,53 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 50)
     @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
-    @NotEmpty
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 2, max = 50)
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false, length = 50)
     @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
-    @NotEmpty
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 2, max = 50)
     private String surname;
 
-    @Column(name = "second_surname")
+    @Column(name = "second_surname", nullable = true, length = 50)
     @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
-    @NotEmpty
+    @Size(min = 2, max = 50)
     private String secondSurname;
 
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false, length = 1)
     @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter")
-    @NotEmpty
+    @NotEmpty(message = "Este campo es requerido")
     private String gender;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false, length = 10)
     @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros")
     @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros")
-    @NotEmpty
+    @NotEmpty(message = "Este campo es requerido")
     private String phoneNumber;
 
-    @Column(name = "registration_date")
-    @NotEmpty
+    @Column(name = "registration_date", nullable = false)
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 0, max = 10)
     private String registrationDate;
 
     public Person() {
     }
+
     public Person(Long id,
-            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty String name,
-            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty String surname,
-            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty String secondSurname,
-            @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty String gender,
-            @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty String phoneNumber,
-            @NotEmpty String registrationDate, User user) {
+            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
+            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String surname,
+            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @Size(min = 2, max = 50) String secondSurname,
+            @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty(message = "Este campo es requerido") String gender,
+            @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty(message = "Este campo es requerido") String phoneNumber,
+            @NotEmpty(message = "Este campo es requerido") @Size(min = 0, max = 10) String registrationDate,
+            User user) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -70,6 +75,7 @@ public class Person {
         this.registrationDate = registrationDate;
         this.user = user;
     }
+
     public Long getId() {
         return id;
     }
@@ -112,14 +118,28 @@ public class Person {
     public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
     }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 
     //configuration for user
     @OneToOne(mappedBy = "person")
     @JsonIgnore
     private User user;
-    
-    
-
     
 
 }

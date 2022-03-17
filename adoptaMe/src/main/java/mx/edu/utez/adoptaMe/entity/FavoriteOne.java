@@ -21,8 +21,10 @@ public class FavoriteOne {
     public FavoriteOne() {
     }
 
-    public FavoriteOne(Long id) {
+    public FavoriteOne(Long id, User user, Post post) {
         this.id = id;
+        this.user = user;
+        this.post = post;
     }
 
     public Long getId() {
@@ -31,6 +33,22 @@ public class FavoriteOne {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     // Foreign key for user

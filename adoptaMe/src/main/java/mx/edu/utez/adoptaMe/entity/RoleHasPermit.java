@@ -15,8 +15,43 @@ public class RoleHasPermit {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    public RoleHasPermit() {
+    }
+
+    public RoleHasPermit(Long id, Role role, Permit permit) {
+        this.id = id;
+        this.role = role;
+        this.permit = permit;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Permit getPermit() {
+        return permit;
+    }
+
+    public void setPermit(Permit permit) {
+        this.permit = permit;
+    }
+
+
 
     // foreign key for role
     @ManyToOne

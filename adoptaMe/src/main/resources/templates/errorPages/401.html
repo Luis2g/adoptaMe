@@ -66,7 +66,7 @@ body {
         <div class="row justify-content-center">
             <div class="col-12 col-sm-10 col-md-9 col-lg-5 mt-5">
                 <div>
-                    <div class="text-center mt-5" id="containerAnimation">
+                    <div class="text-center" id="containerAnimation">
                         ERROR
                         <div id="flip">
                             <div><div>401</div></div>
@@ -78,14 +78,14 @@ body {
                     <div class="text-center">
                         <div class="row">
                             <figure>
-                                <div class="img-fluid mt-5">
+                                <div class="img-fluid mt-2">
                                     <img th:src="@{/images/logo.png}" class="img-fluid" width="50%">
                                 </div>
                             </figure>
                         </div>
-                        <h5 class="mb-3 mt-4">No cuentas con acceso a la aplicación.</h5>
+                        <h5 class="mb-3 mt-3">No cuentas con acceso a la aplicación.</h5>
                         <form th:action="@{/usuario/acceso}">
-                            <button class="btn btn-info mt-5">Regresar</button>
+                            <button class="btn btn-info mt-2">Regresar</button>
                         </form>
                     </div>
                 </div>

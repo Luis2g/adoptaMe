@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://thymeleaf.org">
 
 <div th:replace="fragments/header :: header"></div>
 
@@ -18,28 +18,28 @@
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
             <div class="col-12 col-sm-10">
-                <form id="registrarMascota" name="registrarMascota" novalidate>
+                <form th:action="@{/savePet}" th:object="${pet}" method="POST">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-12 col-sm-8 col-md-6">
                                 <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span
                                         style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="name"
-                                    placeholder="Ingresa el nombre de la mascota">
+                                    placeholder="Ingresa el nombre de la mascota" th:field="*{name}">
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="sex" style="color: #687281;"><b>Sexo </b><span
                                         style="color: red;">*</span></label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="edad" id="months" value="months"
-                                        checked>
-                                    <label class="form-check-label" for="months">
+                                    <input class="form-check-input" type="radio" name="sex" id="M" value="M"
+                                        checked th:field="*{sex}">
+                                    <label class="form-check-label" for="M">
                                         Macho
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="edad" id="years" value="years">
-                                    <label class="form-check-label" for="years">
+                                    <input class="form-check-input" type="radio" name="sex" id="H" value="H">
+                                    <label class="form-check-label" for="H" th:field="*{sex}">
                                         Hembra
                                     </label>
                                 </div>
@@ -49,9 +49,9 @@
                                         style="color: red;">*</span></label>
                                 <div class="row">
                                     <div class="col-6">
-                                        <input type="number" class="form-control" id="age">
+                                        <input type="number" class="form-control" id="age" th:field="*{age}">
                                     </div>
-                                    <div class="col-6" style="padding: 0%;">
+                                    <!-- <div class="col-6" style="padding: 0%;">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="edad" id="months"
                                                 value="months" checked>
@@ -66,7 +66,7 @@
                                                 Años
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3 ">
@@ -80,16 +80,16 @@
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="size" style="color: #687281;"><b>Tamaño </b><span
                                         style="color: red;">*</span></label>
-                                <select class="custom-select" id="size">
-                                    <option selected value="1">Pequeño</option>
-                                    <option value="2">Mediano</option>
-                                    <option value="3">Grande</option>
+                                <select class="custom-select" id="size" th:field="*{size}">
+                                    <option value="Chico">Pequeño</option>
+                                    <option value="Mediano">Mediano</option>
+                                    <option value="Grande">Grande</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="color" style="color: #687281;"><b>Color </b><span
                                         style="color: red;">*</span></label>
-                                <select class="custom-select" id="color">
+                                <select class="custom-select" id="color" th:field="*{color}">
                                     <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}"
                                         th:value="${tmpColor.id}"></option>
                                 </select>
@@ -97,16 +97,16 @@
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="caracter" style="color: #687281;"><b>Caracter </b><span
                                         style="color: red;">*</span></label>
-                                <select class="custom-select" id="caracter">
+                                <select class="custom-select" id="caracter" th:field="*{personality}">
                                     <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}"
                                         th:value="${tmpCaracter.id}"></option>
                                 </select>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span
                                         style="color: red;">*</span></label>
-                                <textarea class="form-control" id="description"></textarea>
-                            </div>
+                                <textarea class="form-control" id="description" th:field="*{description}"></textarea>
+                            </div> -->
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-end">

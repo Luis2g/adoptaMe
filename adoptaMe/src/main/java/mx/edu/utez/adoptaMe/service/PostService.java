@@ -8,12 +8,12 @@ public interface PostService {
 
     List<Post> listAll();
 
-    Post save();
+    boolean save(Post post);
 
     Post edit();
 
     Post update();
 
-    void delete();
+    boolean delete();
     
 }

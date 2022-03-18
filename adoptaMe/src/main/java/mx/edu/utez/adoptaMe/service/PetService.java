@@ -8,12 +8,12 @@ public interface PetService {
     
     List<Pet> listAll();
 
-    Pet save();
+    boolean save(Pet pet);
 
     Pet edit();
 
     Pet update();
 
-    void delete();
+    boolean delete();
 
 }

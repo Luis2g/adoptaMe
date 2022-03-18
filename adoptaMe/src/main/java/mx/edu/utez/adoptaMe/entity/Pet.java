@@ -2,8 +2,10 @@ package mx.edu.utez.adoptaMe.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,14 +34,19 @@ public class Pet {
     @Size(min = 2, max = 50)
     private String name;
 
+    @Column(name = "name", nullable = false, length = 500)
+    @NotEmpty(message = "Este campo es requerido")
+    @Size(min = 2, max = 500)
+    private String description;
+
     @Column(name = "sex", nullable = false, length = 1)
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)")
     private String sex;
 
-    @Column(name = "date_of_birth", nullable = false, length = 50)
+    @Column(name = "age", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
-    private String dateOfBirth;
+    private String age;
 
     @Column(name = "size", nullable = false, length = 45)
     @NotEmpty(message = "Este campo es requerido")
@@ -64,24 +71,29 @@ public class Pet {
 
     public Pet(Long id,
             @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
+            @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 500) String description,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)") String sex,
-            @NotEmpty(message = "Este campo es requerido") String dateOfBirth,
+            @NotEmpty(message = "Este campo es requerido") String age,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 5, max = 45) String type,
             @NotEmpty(message = "Este campo es requerido") String registrationDate,
             @NotEmpty(message = "Este campo es requerido") Boolean isAvailable, Personality personality, Color color,
-            Post post, List<Request> requests) {
+            User user, List<Request> requests, List<Image> images, List<FavoriteOne> favoriteOnes) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.sex = sex;
-        this.dateOfBirth = dateOfBirth;
+        this.age = age;
         this.size = size;
         this.type = type;
         this.registrationDate = registrationDate;
         this.isAvailable = isAvailable;
         this.personality = personality;
         this.color = color;
+        this.user = user;
         this.requests = requests;
+        this.images = images;
+        this.favoriteOnes = favoriteOnes;
     }
 
     public Long getId() {
@@ -108,12 +120,12 @@ public class Pet {
         this.sex = sex;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getAge() {
+        return age;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public String getSize() {
@@ -160,6 +172,30 @@ public class Pet {
         return color;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public List<FavoriteOne> getFavoriteOnes() {
+        return favoriteOnes;
+    }
+
+    public void setFavoriteOnes(List<FavoriteOne> favoriteOnes) {
+        this.favoriteOnes = favoriteOnes;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -172,18 +208,26 @@ public class Pet {
         this.requests = requests;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     // Foreign key for personality
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "personality_id", nullable = false)
     private Personality personality;
 
     // Foreign key for color
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
-    // Foreign key for color
-    @ManyToOne
+    // Foreign key for user
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

@@ -27,12 +27,12 @@
   <div class="text-center mt-5">
     <div class="mt-3">
       <label style="color:rgb(211, 71, 71); font-size:36px; font-weight:bold; width:100%; bottom:45%; display:block;">
-        ERROR 401</label>      
+        ERROR 403</label>      
     </div>
-    <img th:src="@{/images/401.png}" class="mt-5 mb-1" width="350px" >      
+    <img th:src="@{/images/403.png}" class="mt-5 mb-1" width="350px" >      
     <div class="mt-4">
       <label style="color:rgb(88, 87, 87); font-size:20px; font-weight:bold; width:100%; bottom:45%; display:block;">
-        No cuentas con acceso a la aplicación</label>
+        No cuentas con permisos para acceder a este recurso</label>
     </div>
     <form th:action="@{/usuario/acceso}">
       <button class="btn mt-2" style="text-align-last: center;">Regresar</button>      

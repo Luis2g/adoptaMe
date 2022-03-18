@@ -21,10 +21,19 @@ public class FavoriteOne {
     public FavoriteOne() {
     }
 
-    public FavoriteOne(Long id, User user, Post post) {
+    public FavoriteOne(Long id, User user, Pet pet) {
         this.id = id;
         this.user = user;
-        this.post = post;
+        this.pet = pet;
+    }
+
+    
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public Long getId() {
@@ -43,14 +52,6 @@ public class FavoriteOne {
         this.user = user;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     // Foreign key for user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -58,7 +59,7 @@ public class FavoriteOne {
 
     // Foreign key for post
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name = "pet_id", nullable = false)
+    private Pet pet;
 
 }

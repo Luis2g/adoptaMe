@@ -2,8 +2,10 @@ package mx.edu.utez.adoptaMe.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +51,7 @@ public class User {
     public User(Long id, @NotEmpty(message = "Esta campo es requerido") @Size(min = 2, max = 45) String username,
             @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") @Size(min = 3, max = 50) String email,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres") String password,
-            Person person, List<Donation> donations, List<UserHasRole> userHasRoles) {
+            Person person, List<Donation> donations, List<UserHasRole> userHasRoles, List<Pet> pets) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -57,6 +59,15 @@ public class User {
         this.person = person;
         this.donations = donations;
         this.userHasRoles = userHasRoles;
+        this.pets = pets;
+    }
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     public Long getId() {
@@ -108,10 +119,8 @@ public class User {
         this.userHasRoles = userHasRoles;
     }
 
-
-
     // foreign key for person
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "person_id", nullable = false, unique = true)
     private Person person;
     
@@ -124,6 +133,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<UserHasRole> userHasRoles; 
-    
+
+    // configuration for pets
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Pet> pets; 
+
     
 }

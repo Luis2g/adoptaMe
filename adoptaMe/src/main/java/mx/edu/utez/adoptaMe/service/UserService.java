@@ -8,7 +8,7 @@ public interface UserService {
     
     List<User> listAll();
 
-    User save();
+    User save(User user);
 
     User edit();
 

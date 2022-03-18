@@ -7,17 +7,17 @@
             <h3 class="col mb-2">Crea una cuenta</h3>
             <div class="w-100"></div>
             <h5 class="col mb-3">Información personal</h5>
-            <form class="row">
-            	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" placeholder="Nombre"></div>
-                <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" placeholder="Apellido Paterno"></div>
-                <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-lg-4"><input class="form-control " type="text" placeholder="Apellido Materno"></div>
-                <div class=" mb-3 col-12 col-sm-6"><input class="form-control " type="text" placeholder="Número telefónico"></div>
+            <form  th:action="@{/usuario/guardar}" class="row" th:object="${user}" method="POST" >
+            	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.name}" placeholder="Nombre"></div>
+                <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.surname}" placeholder="Apellido Paterno"></div>
+                <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.secondSurname}" placeholder="Apellido Materno"></div>
+                <div class=" mb-3 col-12 col-sm-6"><input class="form-control " type="text" th:field="*{person.phoneNumber}" placeholder="Número telefónico"></div>
                 
                 <div class="input-group mb-3 col-12 pr-0 row col-lg-6">
                     <div class="input-group-prepend ml-3">
 	                    <span class="input-group-text material-icons " id="basic-addon1">email</span>
 	                </div>
-                    <input class="form-control " type="text" placeholder="Correo electrónico">
+                    <input class="form-control" th:field="*{email}" type="text" placeholder="Correo electrónico">
                 </div>
                 <div class="w-100"></div>
                 
@@ -29,7 +29,7 @@
 		                        class="ml-3" 
 		                        type="radio" 
 		                        ng-model="" 
-		                        name="sexo" 
+		                        th:field="*{person.gender}" 
 		                        value="1" 
 		                        >
 		                    <label>Hombre</label>
@@ -38,8 +38,8 @@
 	                    <input 
 	                        class="ml-3"
 	                        type="radio" 
-	                        ng-model="" 
-	                        name="sexo" 
+	                        th:field="*{person.gender}" 
+	                        name="gender" 
 	                        value="2" 
 	                        >
 	                    <label>Mujer</label>
@@ -52,19 +52,19 @@
                 <h5 class="col mb-3">Información de usuario</h5>
                 <div class="w-100"></div>
                 <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4">
-                	<input class="form-control " type="text" placeholder="Nombre de usuario">
+                	<input class="form-control" th:field="*{username}" type="text" placeholder="Nombre de usuario">
                 </div>
                 <div class="input-group mb-3 col-12 pr-0 row col-md-4 col-lg-4"> 
                     <div class="input-group-prepend ml-3">
 	                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
 	                </div>
-                    <input class="form-control " type="password" placeholder="Contraseña">
+                    <input class="form-control" th:field="*{password}" type="password" placeholder="Contraseña">
                 </div>
                 <div class="input-group mb-3 col-12 pr-0 row col-md-4 ml-md-3 col-lg-4"> 
                     <div class="input-group-prepend ml-3">
 	                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
 	                </div>
-                    <input class="form-control " type="password" placeholder="Confirmación">
+                    <input class="form-control" name="passwordConfirm" type="password" placeholder="Confirmación">
                 </div>
                 <div class="w-100"></div>
                 <div class="row col-12 sm-ml-4 mt-2">

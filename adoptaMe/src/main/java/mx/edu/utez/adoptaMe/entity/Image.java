@@ -61,4 +61,9 @@ public class Image {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
+    // Foreign key for pets
+    @ManyToOne
+    @JoinColumn(name = "pet_id", nullable = true)
+    private Pet pet;
+
 }

@@ -4,16 +4,15 @@
 <body>
 	<div th:replace="fragments/navbar :: navbar-admin" ></div>
     <div class="row">
-        <div class="col-md-3 "></div>
-        <div class="col-md-9 col-sm-12">
-            <div class="card text">
-            <div class="card-header text-center">
-                <img class="card-img-top bg-dark" th:src="@{/images/logo.png}" style="width:150px;height:150px; border-radius: 50%;">
-            </div>
+        <div class="col-12">
+            <div class="card">
+	            <div class="card-header text-center">
+	                <img class="card-img-top bg-dark" th:src="@{/images/logo.png}" style="width:150px;height:150px; border-radius: 50%;">
+	            </div>
                 <div class="card-head text-center mt-3">
                     <h3>{{Rol}} Adoptame</h3>
                 </div>
-                <div class="card-body row">
+                <div class="card-body row ml-5 pl-5">
                     <div class="col-xl-4 col-lg-6 col-12">
                         <h5>Usuario:</h5>
                         <h4 class="card-title">David Iván Pérez Torres</h4>
@@ -29,7 +28,7 @@
                     
                 </div>
                 <hr>
-                <div class="card-body row">
+                <div class="card-body row ml-5 pl-5">
                     <h3 class="col-xl-12 mb-4">Actualizar datos</h3>
                     <form class="container row">
                         <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -62,7 +61,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="card-body row">
+                <div class="card-body row ml-5 pl-5">
                     <h3 class="col-12 mb-4">Actualizar contraseña</h3>
                     <form class="container row">
                         <div class="form-group col-xl-4 col-lg-6  col-md-6 col-sm-12 col-12">

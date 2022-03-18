@@ -12,8 +12,8 @@
         </div>
         <div class="row mt-4">
             <div class="col-12 col-sm-2 mb-3">
-                <p class="text-center" for="image">Añadir imagen</p>
-                <input class="mx-auto d-block" type="image" onclick="uploadFile()" height="100rem"
+                <p class="text-center" for="image" style="color: #687281;"><b>Añadir imagen</b></p>
+                <input class="mx-auto d-block" type="image" onclick="uploadFile()" height="80rem"
                     src="https://cdn1.iconfinder.com/data/icons/ui-colored-1/100/UI__2-512.png">
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
@@ -22,67 +22,67 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-12 col-sm-6 col-md-6">
-                                <label for="name">Título de publicación <span style="color: red;">*</span></label>
+                                <label for="title" style="color: #687281;"><b>Título de publicación </b><span style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="title"
                                     placeholder="Ingresa el nombre">
                             </div>
                             <div class="col-12 col-sm-8 col-md-6">
-                                <label for="name">Nombre de la mascota <span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre">
+                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre de la mascota">
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="sex">Sexo <span style="color: red;">*</span></label>
+                                <label for="sex" style="color: #687281;"><b>Sexo </b><span style="color: red;">*</span></label>
                                 <select class="custom-select" id="sex">
                                     <option selected value="1">Macho</option>
                                     <option value="2">Hembra</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="age">Edad <span style="color: red;">*</span></label>
+                                <label for="age" style="color: #687281;"><b>Edad </b><span style="color: red;">*</span></label>
                                 <input type="number" class="form-control" id="age">
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="size">Tipo <span style="color: red;">*</span></label>
-                                <select class="custom-select" id="sex">
+                                <label for="type" style="color: #687281;"><b>Tipo </b><span style="color: red;">*</span></label>
+                                <select class="custom-select" id="type">
                                     <option selected value="1">Perro</option>
                                     <option value="2">Gato</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="size">Tamaño <span style="color: red;">*</span></label>
-                                <select class="custom-select" id="sex">
+                                <label for="size" style="color: #687281;"><b>Tamaño </b><span style="color: red;">*</span></label>
+                                <select class="custom-select" id="size">
                                     <option selected value="1">Pequeño</option>
                                     <option value="2">Mediano</option>
                                     <option value="3">Grande</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="color">Color <span style="color: red;">*</span></label>
-                                <select class="custom-select">
+                                <label for="color" style="color: #687281;"><b>Color </b><span style="color: red;">*</span></label>
+                                <select class="custom-select" id="color">
                                     <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="caracter">Caracter <span style="color: red;">*</span></label>
-                                <select class="custom-select">
+                                <label for="caracter" style="color: #687281;"><b>Caracter </b><span style="color: red;">*</span></label>
+                                <select class="custom-select" id="caracter">
                                     <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}" th:value="${tmpCaracter.id}" ></option>
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="description">Descripción de la mascota <span style="color: red;">*</span></label>
+                                <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span style="color: red;">*</span></label>
                                 <textarea class="form-control" id="description"></textarea>
                             </div>
                             <div class="col-12">
-                                <label for="content">Escribe una descripción del porqué está en adopción <span style="color: red;">*</span></label>
+                                <label for="content" style="color: #687281;"><b>Escribe una descripción del porqué está en adopción </b><span style="color: red;">*</span></label>
                                 <textarea class="form-control" id="content"></textarea>
                             </div>
                         </div>
                     </div>
+                    <div class="mt-4 d-flex justify-content-end">
+                        <button class="btn btn-success" type="submit">Guardar</button>
+                    </div>
                 </form>
             </div>
-        </div>
-        <div class="row mt-4 d-flex justify-content-end">
-            <button class="btn btn-success">Guardar</button>
         </div>
     </div>
 

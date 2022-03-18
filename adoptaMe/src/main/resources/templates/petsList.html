@@ -86,10 +86,8 @@
 
                 <label for="color">Color</label>
                 <div class="input-group">
-                    <select id="color" class="form-control">
-                        <option selected>Seleccione...</option>
-                        <option>Blanco</option>
-                        <option>Negro</option>
+                    <select class="custom-select" id="color">
+                        <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
                     </select>
                 </div>
 

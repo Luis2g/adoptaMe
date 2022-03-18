@@ -34,7 +34,7 @@ public class Pet {
     @Size(min = 2, max = 50)
     private String name;
 
-    @Column(name = "name", nullable = false, length = 500)
+    @Column(name = "description", nullable = false, length = 500)
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 500)
     private String description;

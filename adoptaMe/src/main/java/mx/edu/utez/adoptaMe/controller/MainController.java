@@ -19,8 +19,18 @@ public class MainController {
     }
 
     @GetMapping("/error401")
-    public String error(){
+    public String error401(){
         return "/errorPages/401";
+    }
+
+    @GetMapping("/error400")
+    public String error400(){
+        return "/errorPages/400";
+    }
+
+    @GetMapping("/error403")
+    public String error403(){
+        return "/errorPages/403";
     }
 
     @GetMapping("/perros")

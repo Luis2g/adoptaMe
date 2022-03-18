@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -82,7 +81,6 @@ public class Pet {
         this.isAvailable = isAvailable;
         this.personality = personality;
         this.color = color;
-        this.post = post;
         this.requests = requests;
     }
 
@@ -166,14 +164,6 @@ public class Pet {
         this.color = color;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
     public List<Request> getRequests() {
         return requests;
     }
@@ -192,14 +182,24 @@ public class Pet {
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
-    // Configuration for post
-    @OneToOne(mappedBy = "petPost")
-    @JsonIgnore
-    private Post post;
+    // Foreign key for color
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     // Configuration for request
     @OneToMany(mappedBy = "petRequest")
     @JsonIgnore
     private List<Request> requests;
+
+    // Configuration for request
+    @OneToMany(mappedBy = "pet")
+    @JsonIgnore
+    private List<Image> images;
+
+    // Configuration for request
+    @OneToMany(mappedBy = "pet")
+    @JsonIgnore
+    private List<FavoriteOne> favoriteOnes;
 
 }

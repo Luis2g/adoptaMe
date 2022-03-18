@@ -50,9 +50,9 @@ public class Person {
     @NotEmpty(message = "Este campo es requerido")
     private String phoneNumber;
 
-    @Column(name = "registration_date", nullable = false)
-    @NotEmpty(message = "Este campo es requerido")
-    @Size(min = 0, max = 10)
+    @Column(name = "registration_date")
+    // @NotEmpty(message = "Este campo es requerido")
+    // @Size(min = 0, max = 10)
     private String registrationDate;
 
     public Person() {
@@ -64,7 +64,7 @@ public class Person {
             @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @Size(min = 2, max = 50) String secondSurname,
             @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty(message = "Este campo es requerido") String gender,
             @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty(message = "Este campo es requerido") String phoneNumber,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 0, max = 10) String registrationDate,
+            String registrationDate,
             User user) {
         this.id = id;
         this.name = name;

@@ -2,22 +2,32 @@ package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
+import mx.edu.utez.adoptaMe.repository.PetRepository;
 
 @Service
 public class PetServiceImpl implements PetService {
 
+    @Autowired
+    private PetRepository petRepository;
 
     @Override
     public List<Pet> listAll() {
-        return null;
+        return petRepository.findAll();
     }
 
     @Override
-    public Pet save() {
-        return null;
+    public boolean save(Pet pet) {
+        try{
+            petRepository.save(pet);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -31,8 +41,8 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void delete() {
-        
+    public boolean delete() {
+        return false;
     }
 
 }

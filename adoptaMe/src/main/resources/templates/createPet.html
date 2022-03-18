@@ -4,7 +4,7 @@
 <div th:replace="fragments/header :: header"></div>
 
 <body>
-    <div th:replace="fragments/navbar :: navbar-anonimo"></div>
+    <div th:replace="fragments/navbar :: navbar-voluntario"></div>
 
     <div class="container">
         <div class="col-12 text-center">
@@ -21,35 +21,65 @@
                 <form id="registrarMascota" name="registrarMascota" novalidate>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col-12 col-sm-6 col-md-6">
-                                <label for="title" style="color: #687281;"><b>Título de publicación </b><span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" id="title"
-                                    placeholder="Ingresa el nombre">
-                            </div>
                             <div class="col-12 col-sm-8 col-md-6">
-                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span style="color: red;">*</span></label>
-                                <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre de la mascota">
+                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span
+                                        style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="name"
+                                    placeholder="Ingresa el nombre de la mascota">
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="sex" style="color: #687281;"><b>Sexo </b><span style="color: red;">*</span></label>
-                                <select class="custom-select" id="sex">
-                                    <option selected value="1">Macho</option>
-                                    <option value="2">Hembra</option>
-                                </select>
+                                <label for="sex" style="color: #687281;"><b>Sexo </b><span
+                                        style="color: red;">*</span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edad" id="months" value="months"
+                                        checked>
+                                    <label class="form-check-label" for="months">
+                                        Macho
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="edad" id="years" value="years">
+                                    <label class="form-check-label" for="years">
+                                        Hembra
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="age" style="color: #687281;"><b>Edad </b><span style="color: red;">*</span></label>
-                                <input type="number" class="form-control" id="age">
+                                <label for="age" style="color: #687281;"><b>Edad </b><span
+                                        style="color: red;">*</span></label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" id="age">
+                                    </div>
+                                    <div class="col-6" style="padding: 0%;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="edad" id="months"
+                                                value="months" checked>
+                                            <label class="form-check-label" for="months">
+                                                Meses
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="edad" id="years"
+                                                value="years">
+                                            <label class="form-check-label" for="years">
+                                                Años
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6 col-sm-4 col-md-3">
-                                <label for="type" style="color: #687281;"><b>Tipo </b><span style="color: red;">*</span></label>
+                            <div class="col-6 col-sm-4 col-md-3 ">
+                                <label for="type" style="color: #687281;"><b>Tipo </b><span
+                                        style="color: red;">*</span></label>
                                 <select class="custom-select" id="type">
                                     <option selected value="1">Perro</option>
                                     <option value="2">Gato</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="size" style="color: #687281;"><b>Tamaño </b><span style="color: red;">*</span></label>
+                                <label for="size" style="color: #687281;"><b>Tamaño </b><span
+                                        style="color: red;">*</span></label>
                                 <select class="custom-select" id="size">
                                     <option selected value="1">Pequeño</option>
                                     <option value="2">Mediano</option>
@@ -57,24 +87,25 @@
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="color" style="color: #687281;"><b>Color </b><span style="color: red;">*</span></label>
+                                <label for="color" style="color: #687281;"><b>Color </b><span
+                                        style="color: red;">*</span></label>
                                 <select class="custom-select" id="color">
-                                    <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
+                                    <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}"
+                                        th:value="${tmpColor.id}"></option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
-                                <label for="caracter" style="color: #687281;"><b>Caracter </b><span style="color: red;">*</span></label>
+                                <label for="caracter" style="color: #687281;"><b>Caracter </b><span
+                                        style="color: red;">*</span></label>
                                 <select class="custom-select" id="caracter">
-                                    <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}" th:value="${tmpCaracter.id}" ></option>
+                                    <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}"
+                                        th:value="${tmpCaracter.id}"></option>
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span style="color: red;">*</span></label>
+                                <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span
+                                        style="color: red;">*</span></label>
                                 <textarea class="form-control" id="description"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <label for="content" style="color: #687281;"><b>Escribe una descripción del porqué está en adopción </b><span style="color: red;">*</span></label>
-                                <textarea class="form-control" id="content"></textarea>
                             </div>
                         </div>
                     </div>

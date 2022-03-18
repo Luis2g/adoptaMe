@@ -7,7 +7,7 @@
     <div th:replace="fragments/navbar :: navbar-anonimo"></div>
 
     <div class="container-fluid mt-3">
-
+        <h1>Hola</h1>
         <!-- Button trigger modal register news -->
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrarNoticia">
             Registrar noticia
@@ -19,8 +19,8 @@
         </button>
 
         <!-- Button trigger modal register pet -->
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrarMascota">
-            Registrar mascota
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalInformacionMascota">
+            Información mascota
         </button>
     </div>
 
@@ -30,7 +30,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar entrada de blog</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar entrada de blog</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -40,24 +40,24 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-12 col-sm-6 col-md-6">
-                                    <label for="title">Título</label>
+                                    <label for="title" style="color: #687281;"><b>Título </b><span style="color: red;">*</span></label>
                                     <input type="text" class="form-control" id="title"
                                         placeholder="Ingresa un título corto">
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4">
                                     <div class="form-check">
-                                        <label class="form-check-label" for="isPrincipal">¿Es principal?</label>
+                                        <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es principal? </b><span style="color: red;">*</span></label>
                                         <input type="checkbox" class="form-check-input" id="isPrincipal"
-                                            style="display: block; margin-left: 0rem;">
+                                            style="display: block; margin-left: 0%;">
                                     </div>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <label for="contenido">Contenido</label>
+                                    <label for="contenido" style="color: #687281;"><b>Contenido </b><span style="color: red;">*</span></label>
                                     <textarea class="form-control col-12" id="contenido"
                                         placeholder="Ingresa el contenido de la noticia"></textarea>
                                 </div>
                                 <div class="col-6">
-                                    <label for="image">Imagen</label>
+                                    <label for="image" style="color: #687281;"><b>Imagen </b><span style="color: red;">*</span></label>
                                     <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
                                         imagen</button>
                                     <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
@@ -67,7 +67,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success">Guardar</button>
                 </div>
             </div>
@@ -80,34 +80,34 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar entrada de blog</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar entrada de blog</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrarNoticia" name="registrarNoticia" novalidate>
+                    <form id="modificarNoticia" name="modificarNoticia" novalidate>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-12 col-sm-6 col-md-6">
-                                    <label for="title">Título</label>
+                                    <label for="title" style="color: #687281;"><b>Título </b><span style="color: red;">*</span></label>
                                     <input type="text" class="form-control" id="title"
                                         placeholder="Ingresa un título corto">
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4">
                                     <div class="form-check">
-                                        <label class="form-check-label" for="isPrincipal">¿Es principal?</label>
+                                        <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es principal? </b><span style="color: red;">*</span></label>
                                         <input type="checkbox" class="form-check-input" id="isPrincipal"
-                                            style="display: block; margin-left: 0rem;">
+                                            style="display: block; margin-left: 0%;">
                                     </div>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <label for="contenido">Contenido</label>
+                                    <label for="contenido" style="color: #687281;"><b>Contenido </b><span style="color: red;">*</span></label>
                                     <textarea class="form-control col-12" id="contenido"
                                         placeholder="Ingresa el contenido de la noticia"></textarea>
                                 </div>
                                 <div class="col-6">
-                                    <label for="image">Imagen</label>
+                                    <label for="image" style="color: #687281;"><b>Imagen </b><span style="color: red;">*</span></label>
                                     <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
                                         imagen</button>
                                     <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
@@ -117,199 +117,160 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning">Modificar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal register pet -->
-    <!-- <div class="modal fade" id="modalRegistrarMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="static">
+    <!-- <div class="modal fade" id="modalModificarNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar mascota</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modificar noticia</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrarMascota" name="registrarMascota" novalidate>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-12 col-sm-6">
-                                    <label for="name">Nombre</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Ingresa el nombre">
+                    <div class="row">
+                        <div class="container">
+                            <form id="registrarMascota" name="registrarMascota" novalidate>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+                                                src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                        <div class="row col-12 col-sm-8">
+                                            <div class="col-12">
+                                                <label for="name" style="color: #687281;"><b>Título de publicación </b></label>
+                                                <p>Corgis, los mejores nadadores</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota</b></label>
+                                                <p>Caramelo</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Sexo</b></label>
+                                                <p>Macho</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Edad</b></label>
+                                                <p>10 meses</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+                                                <p>Pequeño</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Color</b></label>
+                                                <p>Con manchas</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Carácter</b></label>
+                                                <p>Juguetón</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
+                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="content" style="color: #687281;"><b>Descripción de la publicación </b></label>
+                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6 col-sm-3">
-                                    <label for="sex">Sexo</label>
-                                    <select class="custom-select" id="sex">
-                                        <option selected value="1">Macho</option>
-                                        <option value="2">Hembra</option>
-                                    </select>
-                                </div>
-                                <div class="col-6 col-sm-3">
-                                    <label for="age">Edad</label>
-                                    <input type="number" class="form-control" id="age">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="size">Tamaño</label>
-                                    <select class="custom-select" id="sex">
-                                        <option selected value="1">Pequeño</option>
-                                        <option value="2">Mediano</option>
-                                        <option value="3">Grande</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="color">Color</label>
-                                    <select class="custom-select" id="color">
-                                        <option selected value="1">Blanco</option>
-                                        <option value="2">Café</option>
-                                        <option value="3">Gris</option>
-                                        <option value="4">Negro</option>
-                                        <option value="5">Atigrado</option>
-                                        <option value="6">Bicolor</option>
-                                        <option value="7">Con manchas</option>
-                                        <option value="8">Varios colares</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="caracter">Caracter</label>
-                                    <select class="custom-select" id="caracter">
-                                        <option selected value="1">Activo</option>
-                                        <option value="2">Independiente</option>
-                                        <option value="3">Juguetón</option>
-                                        <option value="4">Protector</option>
-                                        <option value="5">Ruidoso</option>
-                                        <option value="6">Tímido</option>
-                                        <option value="7">Tranquilo</option>
-                                        <option value="8">Amoroso</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <label for="image">Imagen</label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
-                                </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success">Guardar</button>
+                    <button type="button" class="btn btn-success">Solicitar adopción</button>
                 </div>
             </div>
         </div>
     </div> -->
 
-    <div class="modal fade" id="modalRegistrarMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="static">
+    <!-- Modal info pet -->
+    <div class="modal fade" id="modalInformacionMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar mascota</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Información de la mascota</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="registrarMascota" name="registrarMascota" novalidate>
-                        <div class="row">
-                            <div class="col-12 col-sm-2 mb-3">
-                                <p class="text-center" for="image">Añadir imagen</p>
-                                <input class="mx-auto d-block" type="image" onclick="uploadFile()" height="50rem"
-                                    src="https://cdn1.iconfinder.com/data/icons/ui-colored-1/100/UI__2-512.png">
-                                <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
-                            </div>
-                            <div class="col-12 col-sm-10">
+                    <div class="row">
+                        <div class="container">
+                            <form id="informacionMascota" name="informacionMascota" novalidate>
                                 <div class="form-group">
-                                    <div class="col-12 col-sm-6 col-md-6">
-                                        <label for="name">Título de publicación <span
-                                                style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" id="title"
-                                            placeholder="Ingresa el nombre">
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-6">
-                                        <label for="name">Nombre</label>
-                                        <input type="text" class="form-control" id="name"
-                                            placeholder="Ingresa el nombre">
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="sex">Sexo</label>
-                                        <select class="custom-select" id="sex">
-                                            <option selected value="1">Macho</option>
-                                            <option value="2">Hembra</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="age">Edad</label>
-                                        <input type="number" class="form-control" id="age">
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="size">Tipo</label>
-                                        <select class="custom-select" id="sex">
-                                            <option selected value="1">Perro</option>
-                                            <option value="2">Gato</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="size">Tamaño</label>
-                                        <select class="custom-select" id="sex">
-                                            <option selected value="1">Pequeño</option>
-                                            <option value="2">Mediano</option>
-                                            <option value="3">Grande</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="color">Color</label>
-                                        <select class="custom-select" id="color">
-                                            <option selected value="1">Blanco</option>
-                                            <option value="2">Café</option>
-                                            <option value="3">Gris</option>
-                                            <option value="4">Negro</option>
-                                            <option value="5">Atigrado</option>
-                                            <option value="6">Bicolor</option>
-                                            <option value="7">Con manchas</option>
-                                            <option value="8">Varios colares</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-md-3">
-                                        <label for="caracter">Caracter</label>
-                                        <select class="custom-select" id="caracter">
-                                            <option selected value="1">Activo</option>
-                                            <option value="2">Independiente</option>
-                                            <option value="3">Juguetón</option>
-                                            <option value="4">Protector</option>
-                                            <option value="5">Ruidoso</option>
-                                            <option value="6">Tímido</option>
-                                            <option value="7">Tranquilo</option>
-                                            <option value="8">Amoroso</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="description">Descripción de la mascota</label>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="content">Escribe una descripción del porqué está en
-                                            adopción</label>
-                                        <textarea class="form-control"></textarea>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+                                                src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                        <div class="row col-12 col-sm-8">
+                                            <div class="col-12">
+                                                <label for="name" style="color: #687281;"><b>Título de publicación </b></label>
+                                                <p>Corgis, los mejores nadadores</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota</b></label>
+                                                <p>Caramelo</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Sexo</b></label>
+                                                <p>Macho</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Edad</b></label>
+                                                <p>10 meses</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+                                                <p>Pequeño</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Color</b></label>
+                                                <p>Con manchas</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Carácter</b></label>
+                                                <p>Juguetón</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
+                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="content" style="color: #687281;"><b>Descripción de la publicación </b></label>
+                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                        </div>
                                     </div>
                                 </div>
-                    </form>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success">Solicitar adopción</button>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-success">Guardar</button>
-        </div>
-    </div>
-    </div>
     </div>
 
     <script>

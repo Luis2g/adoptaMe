@@ -72,9 +72,9 @@
                             <div class="col-6 col-sm-4 col-md-3 ">
                                 <label for="type" style="color: #687281;"><b>Tipo </b><span
                                         style="color: red;">*</span></label>
-                                <select class="custom-select" id="type">
-                                    <option selected value="1">Perro</option>
-                                    <option value="2">Gato</option>
+                                <select class="custom-select" id="type" th:field="*{type}">
+                                    <option selected value="Perro">Perro</option>
+                                    <option value="Gato">Gato</option>
                                 </select>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
@@ -102,11 +102,13 @@
                                         th:value="${tmpCaracter.id}"></option>
                                 </select>
                             </div>
-                            <!-- <div class="col-12">
+                            <div class="col-12">
                                 <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span
                                         style="color: red;">*</span></label>
                                 <textarea class="form-control" id="description" th:field="*{description}"></textarea>
-                            </div> -->
+                            </div>
+                            <!-- <input type="text" name="isAvailable" th:field="*{isAvailable}" value="1" > -->
+                            <!-- <input type="text" name="user" th:field="*{user}" value="1" > -->
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-end">

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
+import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
@@ -37,7 +38,17 @@ public class PetController {
 
     @PostMapping("/savePet")
     public String savePet(Model model,Pet pet){
-        System.out.println(pet);
+        // All pet when is created, the available always is true
+        pet.setIsAvailable(true);
+
+        // Configuration for user before controller session is created
+        User user = new User();
+        int idInt = 1;
+        long id = idInt;
+        user.setId(id);
+        pet.setUser(user);
+        // End configuration
+
         boolean saved = petServiceImpl.save(pet);
         if(!saved){
             return "createPet";

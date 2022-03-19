@@ -45,7 +45,7 @@ public class UserController {
 	}
 
 	@PostMapping("/guardar")
-	public String save(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam("rol") String rol){
+	public String save(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, RedirectAttributes redirectAttributes, @RequestParam(name = "rol", required=false) String rol){
 
 		System.out.println(rol);
 
@@ -62,7 +62,7 @@ public class UserController {
 		User saved = userServiceImpl.save(user);
 		if(saved != null){
 			redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente, por favor inicie sesión!");
-			return "redirect:/usuario/acceso";
+			return "redirect:/usuarios/acceso";
 		}
 		redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
 		return "registro";

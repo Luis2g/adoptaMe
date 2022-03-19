@@ -40,11 +40,12 @@ public class User {
     @Size(min = 3, max = 50)
     private String email;
 
-    @Column(name = "password", nullable = false, length = 30)
+    @Column(name = "password", nullable = false, length = 64)
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres")
     private String password;
 
+    @NotEmpty
     public User() {
     }
 

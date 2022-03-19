@@ -2,86 +2,189 @@
 <html lang="es">
 <div th:replace="fragments/header :: header" ></div>
 <body  >
-    <div class="text-center m-5 row border  rounded p-5">
+    <div class=" m-5 row border  rounded p-5">
         <div class=" col-12 col-lg-8 order-last" >
-            <h3 class="col mb-2">Crea una cuenta</h3>
-            <div class="w-100"></div>
-            <h5 class="col mb-3">Información personal</h5>
-            <form  th:action="@{/usuario/guardar}" class="row" th:object="${user}" method="POST" >
-            	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.name}" placeholder="Nombre"></div>
-                <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.surname}" placeholder="Apellido Paterno"></div>
-                <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-lg-4"><input class="form-control " type="text" th:field="*{person.secondSurname}" placeholder="Apellido Materno"></div>
-                <div class=" mb-3 col-12 col-sm-6"><input class="form-control " type="text" th:field="*{person.phoneNumber}" placeholder="Número telefónico"></div>
-                
-                <div class="input-group mb-3 col-12 pr-0 row col-lg-6">
-                    <div class="input-group-prepend ml-3">
-	                    <span class="input-group-text material-icons " id="basic-addon1">email</span>
-	                </div>
-                    <input class="form-control" th:field="*{email}" type="text" placeholder="Correo electrónico">
+            
+
+            <div class="text-center" >
+                <h2 class="col-12 mb-2">Crea una cuenta</h2>
+                <h5 class="col-12 mb-3">Información personal</h5>
+            </div>
+
+
+            <form  th:action="@{/usuarios/guardar}" class="row" th:object="${user}" method="POST" >
+            	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
+                    <label for="name" >Nombre <span style="color:red" >*</span> </label>
+                    <input 
+                        id="name"
+                        class="form-control" 
+                        type="text" 
+                        th:field="*{person.name}" 
+                        placeholder="Nombre"
+                    >
+                    <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
-                <div class="w-100"></div>
-                
-                <div class="col-12 col-sm-10 text-left mb-3" >
-                    <label for="edad" >Sexo</label>
-                    <div class="row">
-	                    <div class="col-12 col-lg-4">
-		                    <input
-		                        class="ml-3" 
-		                        type="radio" 
-		                        ng-model="" 
-		                        th:field="*{person.gender}" 
-		                        value="1" 
-		                        >
-		                    <label>Hombre</label>
-	                    </div>
-	                    <div class="col-12 col-lg-3">
-	                    <input 
-	                        class="ml-3"
-	                        type="radio" 
-	                        th:field="*{person.gender}" 
-	                        name="gender" 
-	                        value="2" 
-	                        >
-	                    <label>Mujer</label>
-	                    </div>
+                <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
+                    <label for="surname" >Apellido paterno <span style="color:red" >*</span></label>
+                    <input 
+                        id="surname"
+                        class="form-control" 
+                        type="text" 
+                        th:field="*{person.surname}" 
+                        placeholder="Apellido Paterno"
+                    >
+                    <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}" class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-lg-4">
+                    <label for="secondSurname" >Apellido materno <span style="color:red" >*</span> </label>
+                    <input 
+                        id="secondSurname"
+                        class="form-control " 
+                        type="text" 
+                        th:field="*{person.secondSurname}" 
+                        placeholder="Apellido Materno"
+                        >
+                        <div th:if="${#fields.hasErrors('person.secondSurname')}" th:errors="*{person.secondSurname}" class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label for="phoneNumber" >Número telefonico <span style="color:red" >*</span> </label>
+                    <input 
+                        id="phoneNumber"
+                        class="form-control" 
+                        type="text" 
+                        th:field="*{person.phoneNumber}" 
+                        placeholder="Número telefónico"
+                    >
+                    <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}" class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <div class="col-12 col-sm-6" >
+                    <label style="margin-block: 0px;" >Sexo</label>
+                    <div  style="display: block">
+                        <input
+                            id="man"
+                            type="radio" 
+                            th:field="*{person.gender}" 
+                            value="1" 
+                        >
+                        <label style="margin-block: 0px;" for="man" >Hombre</label>
                     </div>
+                    <div  style="display: block">
+                        <input 
+                            id="woman"
+                            type="radio" 
+                            th:field="*{person.gender}" 
+                            name="gender" 
+                            value="0" 
+                        >
+                        <label style="margin-block: 0px;" for="woman" >Mujer</label>
+                    </div>
+                    <div th:if="${#fields.hasErrors('person.gender')}" th:errors="*{person.gender}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
                     
                 
-                <div class="w-100"></div>
-                <h5 class="col mb-3">Información de usuario</h5>
-                <div class="w-100"></div>
-                <div class="mb-3 col-12 col-sm-12 col-md-4 col-lg-4">
-                	<input class="form-control" th:field="*{username}" type="text" placeholder="Nombre de usuario">
+                <h4 class="col-12 mb-3 text-center mt-3">Información de usuario</h4>
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="username" >Nombre de usuario<span style="color:red" >*</span> </label>
+                	<input 
+                        id="username"
+                        class="form-control" 
+                        th:field="*{username}" 
+                        type="text" 
+                        placeholder="Nombre de usuario"
+                    >
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
-                <div class="input-group mb-3 col-12 pr-0 row col-md-4 col-lg-4"> 
-                    <div class="input-group-prepend ml-3">
-	                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
-	                </div>
-                    <input class="form-control" th:field="*{password}" type="password" placeholder="Contraseña">
+
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="password" >Contraseña<span style="color:red" >*</span> </label>
+                	<input 
+                        id="password"
+                        class="form-control" 
+                        th:field="*{password}" 
+                        type="password" 
+                        placeholder="********"
+                    >
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
-                <div class="input-group mb-3 col-12 pr-0 row col-md-4 ml-md-3 col-lg-4"> 
-                    <div class="input-group-prepend ml-3">
-	                    <span class="input-group-text material-icons" id="basic-addon1">visibility</span>
-	                </div>
-                    <input class="form-control" name="passwordConfirm" type="password" placeholder="Confirmación">
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="confirmacion" >Confirmación<span style="color:red" >*</span> </label>
+                	<input 
+                        id="confirmacion"
+                        class="form-control" 
+                        name="confirmation"
+                        type="passsword" 
+                        placeholder="********"
+                    >
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
-                <div class="w-100"></div>
-                <div class="row col-12 sm-ml-4 mt-2">
-                    <strong class="text-primary col-12 mb-3"><a href="" >Prefiero iniciar sesión</a></strong>
-                    <div class="col-12">
-                        <input type="submit" value="Continuar" class="btn btn-success col-8 col-sm-5">
+
+                <input
+                    id="registrationDate"
+                    th:field="*{person.registrationDate}" 
+                    type="hidden"
+                >
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="email" >Correo electrónico<span style="color:red" >*</span> </label>
+                	<input 
+                        id="email"
+                        class="form-control" 
+                        th:field="*{email}" 
+                        type="email" 
+                        placeholder="ejemplo@gmail.com"
+                    >
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="rol" >Tipo de rol<span style="color:red" >*</span> </label>
+                	<select 
+                        id="rol"
+                        class="form-control" 
+                        name="rol" 
+                        type="email" 
+                        placeholder="ejemplo@gmail.com"
+                    >
+                    </select>
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
+                </div>                             
+
+                <div class="col-12" >
+                    <div class="row text-center" >
+                        <div class="col-12 sm-ml-4 mt-2">
+                            <strong class="text-primary col-12 mb-3"><a href="" >Prefiero iniciar sesión</a></strong>
+                            <div class="col-12">
+                                <input type="submit" value="Continuar" class="btn btn-success col-8 col-sm-5">
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
             </form>
         </div>
         
     	<div class="col text-center" >
             <img class="img-fluid mw-25" th:src="@{/images/logo.png}" style="width: 350px;" alt="not found">
             <h4>Adoptame</h4>
-        
         </div>
     </div>
+    <div th:replace="fragments/footer :: footer" ></div>
+    <script>
+
+        $(document).ready(function(){
+            let registrationDate = document.getElementById("registrationDate");
+            let date = new Date();
+            date = date.toISOString().split('T')[0];
+            registrationDate.value = date;
+            console.log(registrationDate.value);
+        });
+
+    </script>
 </body>
-<div th:replace="fragments/footer :: footer" ></div>
 </html>

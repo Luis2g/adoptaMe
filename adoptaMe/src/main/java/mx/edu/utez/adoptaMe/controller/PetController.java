@@ -22,12 +22,7 @@ public class PetController {
     private PersonalityServiceImpl personalityServiceImpl;
 
     @Autowired
-    private PetServiceImpl petServiceImpl;
-
-    @GetMapping("/modals")
-    public String modals(){
-        return "inicioModals";
-    }
+    private PetServiceImpl petServiceImpl;    
 
     @GetMapping("/createPet")
     public String createPet(Model model, Pet pet){

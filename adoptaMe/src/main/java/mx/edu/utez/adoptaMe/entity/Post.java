@@ -38,20 +38,17 @@ public class Post {
     @Column(name = "is_main", nullable = true)
     private Boolean isMain;
 
-    @Column(name = "is_accepted", nullable = true)
-    private Boolean isAccepted;
 
     public Post() {
     }
 
     public Post(Long id, @Size(min = 2, max = 150) @NotEmpty(message = "Este campo es requerido") String title,
             @Size(min = 2, max = 255) @NotEmpty(message = "Este campo es requerido") String content, Boolean isMain,
-            Boolean isAccepted, User user, List<Image> image) {
+            User user, List<Image> image) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.isMain = isMain;
-        this.isAccepted = isAccepted;
         this.user = user;
         this.image = image;
     }
@@ -78,14 +75,6 @@ public class Post {
 
     public void setIsMain(Boolean isMain) {
         this.isMain = isMain;
-    }
-
-    public Boolean getIsAccepted() {
-        return isAccepted;
-    }
-
-    public void setIsAccepted(Boolean isAccepted) {
-        this.isAccepted = isAccepted;
     }
 
     public String getContent() {

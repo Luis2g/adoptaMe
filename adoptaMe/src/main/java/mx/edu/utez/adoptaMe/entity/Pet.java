@@ -63,7 +63,7 @@ public class Pet {
     private String registrationDate;
 
     @Column(name = "is_available", nullable = false)
-    @NotEmpty(message = "Este campo es requerido")
+    // @NotEmpty(message = "Este campo es requerido")
     private Boolean isAvailable;
 
     public Pet() {
@@ -77,7 +77,7 @@ public class Pet {
             @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 5, max = 45) String type,
             @NotEmpty(message = "Este campo es requerido") String registrationDate,
-            @NotEmpty(message = "Este campo es requerido") Boolean isAvailable, Personality personality, Color color,
+            Boolean isAvailable, Personality personality, Color color,
             User user, List<Request> requests, List<Image> images, List<FavoriteOne> favoriteOnes) {
         this.id = id;
         this.name = name;
@@ -227,7 +227,7 @@ public class Pet {
     private Color color;
 
     // Foreign key for user
-    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.MERGE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

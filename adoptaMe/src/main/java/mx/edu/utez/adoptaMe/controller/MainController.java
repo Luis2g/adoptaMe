@@ -47,11 +47,6 @@ public class MainController {
     public String dogs(Model model) {
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         return "petsList";
-    }
-
-    @GetMapping("/noticias")
-    public String news() {
-        return "news";
-    }
+    }    
 
 }

@@ -44,18 +44,21 @@
                                     <label for="title" style="color: #687281;"><b>Título </b><span style="color: red;">*</span></label>
                                     <input type="text" class="form-control" id="title" th:field="*{title}"
                                         placeholder="Ingresa un título corto">
+                                        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4">
                                     <div class="form-check">
                                         <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es principal? </b><span style="color: red;">*</span></label>
                                         <input type="checkbox" class="form-check-input" id="isPrincipal" th:field="*{isMain}"
                                             style="display: block; margin-left: 0%;">
+                                            <div th:if="${#fields.hasErrors('isMain')}" th:errors="*{isMain}" class="alert alert-danger mb-3 mt-3"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 mt-3">
                                     <label for="contenido" style="color: #687281;"><b>Contenido </b><span style="color: red;">*</span></label>
                                     <textarea class="form-control col-12" id="contenido" th:field="*{content}"
                                         placeholder="Ingresa el contenido de la noticia"></textarea>
+                                        <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
                                 <div class="col-6">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span style="color: red;">*</span></label>

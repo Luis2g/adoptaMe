@@ -52,6 +52,8 @@ public class MainController {
 
     @GetMapping("/perros")
     public String dogs(Model model) {
+    	user =  Session.getSession();
+    	model.addAttribute("user", user);
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         return "petsList";
     }    

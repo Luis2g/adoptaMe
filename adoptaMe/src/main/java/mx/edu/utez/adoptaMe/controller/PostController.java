@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.Post;
 import mx.edu.utez.adoptaMe.entity.User;
+import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 
 @Controller
@@ -22,6 +23,8 @@ public class PostController {
     
     @Autowired
     private PostServiceImpl postServiceImpl;
+    
+    private User user;
 
     @GetMapping("/modals")
     public String modals(Post post){
@@ -53,7 +56,9 @@ public class PostController {
     }
 
     @GetMapping("/noticias")
-    public String news() {
+    public String news(Model model) {
+    	user =  Session.getSession();
+    	model.addAttribute("user", user);
         return "news";
     }
 

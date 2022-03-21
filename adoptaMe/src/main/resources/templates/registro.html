@@ -151,6 +151,12 @@
                         type="email" 
                         placeholder="ejemplo@gmail.com"
                     >
+                    <option value="2" >
+                        Voluntario
+                    </option>
+                    <option value="3" >
+                        Adoptador
+                    </option>
                     </select>
                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>                             
@@ -180,6 +186,7 @@
         $(document).ready(function(){
             let registrationDate = document.getElementById("registrationDate");
             let date = new Date();
+            date.setDate(date.getDate() - 1);
             date = date.toISOString().split('T')[0];
             registrationDate.value = date;
             console.log(registrationDate.value);

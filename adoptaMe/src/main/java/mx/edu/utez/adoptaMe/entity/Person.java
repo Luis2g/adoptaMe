@@ -19,8 +19,8 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "person_id", nullable = false)
+    private Long personId;
 
     @Column(name = "name", nullable = false, length = 50)
     @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
@@ -58,15 +58,14 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id,
+    public Person(Long personId,
             @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
             @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String surname,
             @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @Size(min = 2, max = 50) String secondSurname,
             @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty(message = "Este campo es requerido") String gender,
             @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty(message = "Este campo es requerido") String phoneNumber,
-            String registrationDate,
-            User user) {
-        this.id = id;
+            String registrationDate, User user) {
+        this.personId = personId;
         this.name = name;
         this.surname = surname;
         this.secondSurname = secondSurname;
@@ -76,12 +75,16 @@ public class Person {
         this.user = user;
     }
 
-    public Long getId() {
-        return id;
+
+
+    public Long getPersonId() {
+        return personId;
     }
-    public void setId(Long id) {
-        this.id = id;
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
+
     public String getname() {
         return name;
     }

@@ -10,7 +10,20 @@
     
 </style>
 <body>
-    <div th:replace="fragments/navbar :: navbar-anonimo"></div>
+   	<div th:switch="${user.getUserHasRoles().get(0).getRole().getId()}" >
+		<div th:case="0" >
+	    	<div th:replace="fragments/navbar :: navbar-anonimo"></div>		
+		</div>
+		<div th:case="1" >
+			<div th:replace="fragments/navbar :: navbar-administrador"></div>
+		</div>
+		<div th:case="2" >
+			<div th:replace="fragments/navbar :: navbar-voluntario"></div>
+		</div>
+		<div th:case="3" >
+			<div th:replace="fragments/navbar :: navbar-adoptador"></div>
+		</div>
+	</div>
 
     <div class="container" style="margin-top:70px;">
         <div class="row" >

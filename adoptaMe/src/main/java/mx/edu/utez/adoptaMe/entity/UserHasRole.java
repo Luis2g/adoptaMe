@@ -26,6 +26,10 @@ public class UserHasRole {
         this.user = user;
         this.role = role;
     }
+    public UserHasRole(User user, Role role) {
+        this.user = user;
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
@@ -60,5 +64,13 @@ public class UserHasRole {
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+	@Override
+	public String toString() {
+		return "UserHasRole [id=" + id + ", user= no" + ", role=" + role + "]";
+	}
+    
+    
+    
 
 }

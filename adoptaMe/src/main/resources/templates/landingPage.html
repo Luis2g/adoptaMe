@@ -4,7 +4,23 @@
 <div th:replace="fragments/header :: header"></div>
 
 <body>
-    <div th:replace="fragments/navbar :: navbar-anonimo"></div>
+
+	<div th:switch="${user.getUserHasRoles().get(0).getRole().getId()}" >
+		<div th:case="0" >
+	    	<div th:replace="fragments/navbar :: navbar-anonimo"></div>		
+		</div>
+		<div th:case="1" >
+			<div th:replace="fragments/navbar :: navbar-administrador"></div>
+		</div>
+		<div th:case="2" >
+			<div th:replace="fragments/navbar :: navbar-voluntario"></div>
+		</div>
+		<div th:case="3" >
+			<div th:replace="fragments/navbar :: navbar-adoptador"></div>
+		</div>
+	</div>
+
+    
     <div class="container-fluid" style="margin-top:50px">
         <!--Start the carousel-->
         <div class="col-12">
@@ -54,6 +70,12 @@
 
             
         </div>
+        
+        <div th:text="${role} ? 'El rol es el siguiente: ' + ${role.id} : 'No hay role'" >
+        </div>
+        
+        
+        
         <div class="container-fluid mt-3 mb-3 text-center" >
             
             <!--Controls-->

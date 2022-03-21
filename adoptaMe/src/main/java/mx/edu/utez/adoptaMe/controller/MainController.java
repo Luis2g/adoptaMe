@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import mx.edu.utez.adoptaMe.entity.User;
+import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 
 @Controller
@@ -12,9 +14,14 @@ public class MainController {
 
     @Autowired
     private ColorServiceImpl colorServiceImpl;
-
+    
+    private User user;
+    
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+    	user =  Session.getSession();
+    	System.out.println("This is the user: " + user);
+    	model.addAttribute("user", user);
         return "landingPage";
     }
 

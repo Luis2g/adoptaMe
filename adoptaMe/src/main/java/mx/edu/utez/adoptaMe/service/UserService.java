@@ -10,9 +10,11 @@ public interface UserService {
 
     User save(User user);
 
-    User edit();
+    User edit(int id);
 
     User update();
+
+    User login(String username, String password);
 
     void delete();
 

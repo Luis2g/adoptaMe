@@ -39,6 +39,10 @@ public class Role {
     public Role() {
     }
 
+    public Role(Long id) {
+        this.id = id;
+    }
+
     public Role(Long id,
             @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String name,
             @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 255) String description,
@@ -99,5 +103,12 @@ public class Role {
     @OneToMany(mappedBy = "role")
     @JsonIgnore
     private List<RoleHasPermit> rolesHasPermits;
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
+    
+    
 
 }

@@ -8,7 +8,7 @@ public interface UserHasRoleService {
     
     List<UserHasRole> listAll();
 
-    UserHasRole save();
+    UserHasRole save(UserHasRole userHasRole);
 
     UserHasRole edit();
 

@@ -1,7 +1,7 @@
 
     <!-- Inicio Navbar Administrador -->
     <div th:fragment="navbar-admin">
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2278c9;">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-lg" style="background-color: #2278c9;">
             <a class="navbar-brand" href="#">AdoptaMe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
                     <a class="nav-link align-middle" style="color: aliceblue;" href="#">
                         <span class="material-icons" style="vertical-align: middle;">
                             account_circle
-                        </span>&nbsp; Acceso</a>
+                        </span>&nbsp; opciones de la sesión administrador</a>
                 </span>
             </div>
         </nav>
@@ -36,7 +36,7 @@
 
     <!-- Inicio Navbar Voluntario -->
     <div th:fragment="navbar-voluntario">
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2278c9;">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-lg" style="background-color: #2278c9;">
             <a class="navbar-brand" th:href="@{/}">AdoptaMe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
                     <a class="nav-link align-middle" style="color: aliceblue;" href="#">
                         <span class="material-icons" style="vertical-align: middle;">
                             account_circle
-                        </span>&nbsp; Acceso</a>
+                        </span>&nbsp; opciones de la sesión administrador</a>
                 </span>
             </div>
         </nav>
@@ -71,7 +71,7 @@
 
     <!-- Inicio Navbar Adoptador -->
     <div th:fragment="navbar-adoptador">
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2278c9;">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-lg" style="background-color: #2278c9;">
             <a class="navbar-brand" href="#">AdoptaMe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@
                     <a class="nav-link align-middle" style="color: aliceblue;" href="#">
                         <span class="material-icons" style="vertical-align: middle;">
                             account_circle
-                        </span>&nbsp; Acceso</a>
+                        </span>&nbsp; opcion de la sesión adoptador</a>
                 </span>
             </div>
         </nav>
@@ -127,7 +127,7 @@
                     </li>
                 </ul>
                 <span class="nav-text">
-                    <a class="nav-link align-middle" th:href="@{/usuario/acceso}" style="color: aliceblue;">
+                    <a class="nav-link align-middle" th:href="@{/usuarios/acceso}" style="color: aliceblue;">
                         <span class="material-icons" style="vertical-align: middle;">
                             account_circle
                         </span>&nbsp; Acceso</a>

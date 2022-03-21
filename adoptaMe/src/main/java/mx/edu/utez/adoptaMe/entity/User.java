@@ -26,8 +26,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(name = "username", nullable = false, length = 45, unique = true)
     @NotEmpty(message = "Esta campo es requerido")
@@ -49,19 +49,6 @@ public class User {
     public User() {
     }
 
-    public User(Long id, @NotEmpty(message = "Esta campo es requerido") @Size(min = 2, max = 45) String username,
-            @NotEmpty(message = "Este campo es requerido") @Pattern(regexp = "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$") @Size(min = 3, max = 50) String email,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres") String password,
-            Person person, List<Donation> donations, List<UserHasRole> userHasRoles, List<Pet> pets) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.person = person;
-        this.donations = donations;
-        this.userHasRoles = userHasRoles;
-        this.pets = pets;
-    }
 
     public List<Pet> getPets() {
         return pets;
@@ -70,13 +57,15 @@ public class User {
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
+    
+    public Long getUserId() {
+        return userId;
+    }
 
-    public Long getId() {
-        return id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
+
     public String getUsername() {
         return username;
     }
@@ -138,7 +127,13 @@ public class User {
     // configuration for pets
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Pet> pets; 
+    private List<Pet> pets;
 
-    
+    @Override
+    public String toString() {
+        return "User [donations=" + donations + ", email=" + email + ", password=" + password
+                + ", person=" + person + ", pets=" + pets + ", userHasRoles=" + userHasRoles + ", username=" + username
+                + "]";
+    }
+
 }

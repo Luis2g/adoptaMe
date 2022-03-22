@@ -1,0 +1,27 @@
+<div th:fragment="menu" >
+	
+	<table class="table" style="margin-top:50px" >
+		<tr>
+			<td th:class="${highlighted == 'miCuenta'} ? 'shadow-sm rounded': '' " th:style="${highlighted == 'miCuenta'} ? 'background-color: #027AEB' : ''" > 
+				<a th:style="${highlighted == 'miCuenta'} ? 'color: white' : 'color: #687281'" th:href="@{/usuarios/perfil/miCuenta}" >Mi cuenta</a> 
+			</td>
+		</tr>
+		<tr>
+			<td th:class="${highlighted == 'misDonaciones'} ? 'shadow-sm rounded': '' " th:style="${highlighted == 'misDonaciones'} ? 'background-color: #027AEB' : ''" >
+				<a th:style="${highlighted == 'misDonaciones'} ? 'color: white' : 'color: #687281'" th:href="@{/usuarios/perfil/misDonaciones}" >Mis donaciones</a>
+			</td>
+		</tr>
+		<tr>
+			<td th:class="${highlighted == 'misSolicitudes'} ? 'shadow-sm rounded': '' " th:style="${highlighted == 'misSolicitudes'} ? 'background-color: #027AEB' : ''" >
+				<a th:style="${highlighted == 'misSolicitudes'} ? 'color: white' : 'color: #687281'" th:href="@{/usuarios/perfil/misSolicitudes}" >Mis solicitudes de adopción</a>
+			</td>
+		</tr>
+		<tr>
+			<td th:class="${highlighted == 'misFavoritos'} ? 'shadow-sm rounded': '' " th:style="${highlighted == 'misFavoritos'} ? 'background-color: #027AEB' : ''" >
+				<a th:style="${highlighted == 'misFavoritos'} ? 'color: white' : 'color: #687281'"  th:href="@{/usuarios/perfil/misFavoritos}" >Mi lista de favoritos</a>
+			</td>
+		</tr>
+	
+	</table>
+
+</div>

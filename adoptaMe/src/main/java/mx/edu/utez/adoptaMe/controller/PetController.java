@@ -32,7 +32,7 @@ public class PetController {
     private PetServiceImpl petServiceImpl;    
 
     @GetMapping("/listPets")
-	public String pets(Model model, RedirectAttributes redirectAttributes) {
+	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("listPets", petServiceImpl.listAll());
 		return "petsList";
 	}
@@ -45,11 +45,11 @@ public class PetController {
     }
 
     @GetMapping("/AdoptarMascota/{id}")
-    public String showPet(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes){
-        Pet pet = petServiceImpl.edit(id);
+    public String showPet(@PathVariable long id, Model model, RedirectAttributes redirectAttributes){
+        Pet pet = petServiceImpl.request(id);
         if(pet != null){
             model.addAttribute("pet", pet);
-            System.out.println(pet.getName());
+            System.out.println("Mascota: "+pet);
             return "fragments/requestPetModal";
         }
         return "redirect:/listPets";

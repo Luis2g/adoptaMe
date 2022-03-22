@@ -32,10 +32,9 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet edit(Long id) {
+    public Pet request(Long id) {
         Optional<Pet> optional = petRepository.findById(id);
         if(optional.isPresent()){
-            System.out.println(optional.get());
             return optional.get();
         }
         return null;

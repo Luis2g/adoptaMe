@@ -125,8 +125,8 @@
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
                         <p class="card-text">[[${tmpPet.description}]]</p>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
-                                <a style="color:white"><span class="material-icons" data-toggle="modal" data-target="#modalInformacionMascota"
+                            <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
+                                <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
                             </button>
                     </div>
@@ -144,10 +144,12 @@
                 </div>
             </div>
 
+            
 
             <!-- Start modal info pet -->
-            <th:block th:replace="fragments/requestPetModal :: modal('modalInformacionMascota')">modal</th:block>
+            <!-- <div th:replace="fragments/requestPetModal :: modal('modalInformacionMascota')">modal</div> -->
             <!-- End modal info pet -->
+            <div id="showModal"></div>
             
 
         </div>
@@ -159,21 +161,20 @@
 
     <script th:replace="fragments/footer :: footer"></script>
     <script>
+        $('document').ready(function() {
+            showPet(1)
+        });
+        showPet = (id) => {
+            console.log(id);
+            $.get("/AdoptarMascota/"+id,
+                function (data) {
+                    console.log(data);
+                    $('#showModal').html(data);
+                }).then(() => {
+                    $('#modalInformacionMascota').modal('show');
+                })
+        }
 
-        // showPet = (id) => {
-        //     console.log(id);
-        //     $.get("/AdoptarMascota/"+id,
-        //         function (data) {
-        //             console.log(data);
-        //         });
-        // }
-
-       function showPet(id) {
-            $.get("/AdoptarMascota/"+id, function (data) {
-                console.log(data);
-                $('#modalInformacionMascota').find('.modal-body').html(data);
-            })
-        };
 
 
         feather.replace();

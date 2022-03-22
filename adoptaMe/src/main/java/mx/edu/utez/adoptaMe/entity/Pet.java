@@ -246,4 +246,13 @@ public class Pet {
     @JsonIgnore
     private List<FavoriteOne> favoriteOnes;
 
+    @Override
+    public String toString() {
+        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", isAvailable=" + isAvailable + ", name=" + name
+                + ", personality=" + ", registrationDate=" + registrationDate + ", requests="
+                + ", sex=" + sex + ", size=" + size + ", type=" + type + ", user=" + "]";
+    }
+
+    
+
 }

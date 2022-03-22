@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class UserController {
 	public String register(User user) {
 		return "registro";
 	}
-	@GetMapping("/perfil")
+	@GetMapping("/perfil2")
 	public String profile(User user) {
 		return "perfilUsuario";
 	}
@@ -50,6 +51,21 @@ public class UserController {
 	@GetMapping("/restablecerContrasena")
 	public String resetPassword(User user) {
 		return "restablecerContrasena";
+	}
+	
+	@GetMapping( value = {"/perfil", "/perfil/{option}"})
+	public String profile(@PathVariable(required = false) String option, Model model) {
+		
+		String highlighted;
+		
+		if(option != null) {
+			highlighted = option;
+			model.addAttribute("highlighted", highlighted);
+		}
+				
+		user =  Session.getSession();
+    	model.addAttribute("user", user);
+		return "accountOptions";
 	}
 
 	@PostMapping("/iniciarSesion")
@@ -75,7 +91,7 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("msg_success", "¡Bienvenido!");
 			return "redirect:/";
 		}
-		redirectAttributes.addFlashAttribute("msg_error", "¡Usuario no encontrado!");
+		redirectAttributes.addFlashAttribute("msg_error", "¡Usuario y/o contraseña incorrecta!");
 		return "redirect:/usuarios/acceso";
 	}
 

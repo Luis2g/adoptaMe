@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="modal(id)" class="modal fade" th:id="${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Información de la mascota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="row" >
+                        <div class="container">
+                            <form id="informacionMascota" name="informacionMascota" novalidate>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+                                                src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                        <div class="row col-12 col-sm-8">
+                                            <div class="col-12">
+                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b></label>
+                                                <p>[[${name}]]</p>
+                                            </div>
+                                            <!-- <div class="col-6">
+                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota</b></label>
+                                                <p>Caramelo</p>
+                                            </div> -->
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Sexo</b></label>
+                                                <p ></p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Edad</b></label>
+                                                <p></p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+                                                <p></p>
+                                            </div>
+                                            <!-- <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Color</b></label>
+                                                <p></p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Carácter</b></label>
+                                                <p></p>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
+                                            <p style="text-align: justify;"></p>
+                                        </div>
+                                        <!-- <div class="col-12">
+                                            <label for="content" style="color: #687281;"><b>Descripción de la publicación </b></label>
+                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success">Solicitar adopción</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+</html>

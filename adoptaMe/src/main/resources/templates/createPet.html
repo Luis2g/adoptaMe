@@ -18,16 +18,17 @@
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
             <div class="col-12 col-sm-10">
-                <form th:action="@{/savePet}" th:object="${pet}" method="POST">
+                <form th:action="@{/GuardarMascota}" th:object="${pet}" method="POST">
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col-12 col-sm-8 col-md-6">
+                            <div class="col-8 col-sm-8 col-md-5">
                                 <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span
                                         style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="name"
                                     placeholder="Ingresa el nombre de la mascota" th:field="*{name}">
+                                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
-                            <div class="col-6 col-sm-4 col-md-3">
+                            <div class="col-4 col-sm-4 col-md-2">
                                 <label for="sex" style="color: #687281;"><b>Sexo </b><span
                                         style="color: red;">*</span></label>
                                 <div class="form-check">
@@ -43,31 +44,25 @@
                                         Hembra
                                     </label>
                                 </div>
+                                <div th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
-                            <div class="col-6 col-sm-4 col-md-3">
+                            <div class="col-6 col-sm-8 col-md-5">
                                 <label for="age" style="color: #687281;"><b>Edad </b><span
                                         style="color: red;">*</span></label>
                                 <div class="row">
                                     <div class="col-6">
-                                        <input type="number" class="form-control" id="age" th:field="*{age}">
+                                        <input type="number" class="form-control" id="ageOne" onchange="concatAge()">
                                     </div>
-                                    <!-- <div class="col-6" style="padding: 0%;">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="edad" id="months"
-                                                value="months" checked>
-                                            <label class="form-check-label" for="months">
-                                                Meses
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="edad" id="years"
-                                                value="years">
-                                            <label class="form-check-label" for="years">
-                                                Años
-                                            </label>
-                                        </div>
-                                    </div> -->
+                                    <div class="col-6">
+                                        <select class="custom-select" id="ageTwo" onchange="concatAge()">
+                                            <option value="0" selected disabled>Seleccione...</option>
+                                            <option value="meses">Meses</option>
+                                            <option value="años">Años</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" th:field="*{age}" id="ageConcat">
                                 </div>
+                                <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3 ">
                                 <label for="type" style="color: #687281;"><b>Tipo </b><span
@@ -76,6 +71,7 @@
                                     <option selected value="Perro">Perro</option>
                                     <option value="Gato">Gato</option>
                                 </select>
+                                <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="size" style="color: #687281;"><b>Tamaño </b><span
@@ -85,6 +81,7 @@
                                     <option value="Mediano">Mediano</option>
                                     <option value="Grande">Grande</option>
                                 </select>
+                                <div th:if="${#fields.hasErrors('size')}" th:errors="*{size}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="color" style="color: #687281;"><b>Color </b><span
@@ -93,6 +90,7 @@
                                     <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}"
                                         th:value="${tmpColor.id}"></option>
                                 </select>
+                                <div th:if="${#fields.hasErrors('color')}" th:errors="*{color}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="caracter" style="color: #687281;"><b>Caracter </b><span
@@ -101,13 +99,15 @@
                                     <option th:each="tmpCaracter: ${personalitiesList}" th:text="${tmpCaracter.name}"
                                         th:value="${tmpCaracter.id}"></option>
                                 </select>
+                                <div th:if="${#fields.hasErrors('personality')}" th:errors="*{personality}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
                             <div class="col-12">
                                 <label for="description" style="color: #687281;"><b>Descripción de la mascota </b><span
                                         style="color: red;">*</span></label>
                                 <textarea class="form-control" id="description" th:field="*{description}"></textarea>
+                                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger mb-3 mt-3"></div>
                             </div>
-                            <!-- <input type="text" name="isAvailable" th:field="*{isAvailable}" value="1" > -->
+                            <input id="registrationDate" th:field="*{registrationDate}" type="hidden">
                             <!-- <input type="text" name="user" th:field="*{user}" value="1" > -->
                         </div>
                     </div>
@@ -119,15 +119,31 @@
         </div>
     </div>
 
+    <div th:replace="fragments/footer :: footer"></div>
     <script>
         let file = document.getElementById("image");
 
         const uploadFile = () => {
             file.click();
         }
+
+        concatAge = () => {
+            let ageOne = document.getElementById("ageOne").value;
+            let ageTwo = document.getElementById("ageTwo").value;
+
+            let ageConcat = document.getElementById("ageConcat");
+            ageConcat.value = ageOne+" "+ageTwo;
+            console.log(ageConcat.value);
+        }
+
+        $(document).ready(function(){
+            let registrationDate = document.getElementById("registrationDate");
+            let date = new Date();
+            date = date.toISOString().split('T')[0];
+            registrationDate.value = date;
+        });
     </script>
 
-    <div th:replace="fragments/footer :: footer"></div>
 </body>
 
 </html>

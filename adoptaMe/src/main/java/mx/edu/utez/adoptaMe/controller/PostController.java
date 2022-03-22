@@ -35,14 +35,15 @@ public class PostController {
     @PostMapping("/savePost")
     public String savePet(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, RedirectAttributes redirectAttributes){    
         User user = new User();             
-        user.setId(Long.valueOf(1));
-        post.setUser(user);    
+        user.setUserId(Long.valueOf(1));
+        post.setUser(user);
 
         if(result.hasErrors()){
             for(ObjectError error: result.getAllErrors()){
 				System.out.println("Error" + error.getDefaultMessage());
 			}
-            return "Error";
+            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+            return "redirect:/modals";
         }else{
             boolean response = postServiceImpl.save(post); 
             if(response){
@@ -54,11 +55,15 @@ public class PostController {
             }
         }        
     }
+    
 
     @GetMapping("/noticias")
-    public String news(Model model) {
+    public String news(Model model,Post post) {
+
+        model.addAttribute("postList", postServiceImpl.listAll());
     	user =  Session.getSession();
     	model.addAttribute("user", user);
+
         return "news";
     }
 

@@ -103,9 +103,7 @@ public class UserController {
 
 		System.out.println("This is the confirmation: " + confirmation);
 
-		if(result.hasErrors()){
-			
-			
+		if(result.hasErrors()){			
 			for(ObjectError error: result.getAllErrors()){
 				System.out.println("Error" + error.getDefaultMessage());
 			}

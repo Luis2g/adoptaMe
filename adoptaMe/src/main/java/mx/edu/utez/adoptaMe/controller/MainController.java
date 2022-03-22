@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
+import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 
 @Controller
 public class MainController {
 
     @Autowired
     private ColorServiceImpl colorServiceImpl;
+
+    @Autowired
+    private PostServiceImpl postServiceImpl;
     
     private User user;
     
@@ -21,6 +25,7 @@ public class MainController {
     public String index(Model model) {
     	user =  Session.getSession();
     	System.out.println("This is the user: " + user);
+        model.addAttribute("postList", postServiceImpl.listAll());
     	model.addAttribute("user", user);
         return "landingPage";
     }

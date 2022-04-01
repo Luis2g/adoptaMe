@@ -3,6 +3,19 @@
 <div th:replace="fragments/header :: header"></div>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+        selector: '#content',
+        plugins: "textcolor, table lists code",
+        toolbar: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor table code"
+    });
+    tinymce.init({
+        selector: '#contentEdit',
+        plugins: "textcolor, table lists code",
+        toolbar: "undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor table code"
+    });
+</script>
 <style>
     img.floatLeft {
         float: left;
@@ -29,9 +42,22 @@
     <div class="container" style="margin-top:70px;">
         <div class="row">
             <div class="col-12 ml-1">
-                <div>
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Más noticias</button>
+                <div class="row">
+                    <div class="col-10">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                            <span class="material-icons" style="vertical-align: middle;">add</span>
+                            Más noticias
+                        </button>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="button" data-toggle="modal"
+                            data-target="#modalRegistrarNoticia">
+                            <span class="material-icons" style="vertical-align: middle;">create</span>
+                            Registrar noticias
+                        </button>
+
+                    </div>
                 </div>
                 <div class="offcanvas offcanvas-start shadow-lg" data-bs-scroll="true" data-bs-backdrop="false"
                     tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -70,27 +96,33 @@
                     </div>
                 </div>
             </div>
+
             <div th:each="tmpPost : ${postList}">
-                <div class="col-12 mt-2" th:id="${tmpPost.id}">
-                    <div
-                        class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
-                        <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
-                            <div class="d-flex justify-content-between">
-                                <h3 th:text="${tmpPost.title}"></h3>
+                <a data-toggle="modal" data-target="#modalModificarNoticia">
+                    <div class="col-12 mt-2" th:id="${tmpPost.id}">
+                        <div
+                            class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+                            <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
+                                <div class="d-flex justify-content-between">
+                                    <h3 th:text="${tmpPost.title}"></h3>
+                                </div>
+                                <strong class="d-inline-block mb-2 text-success"
+                                    th:text="${tmpPost.isMain == true} ? 'Principal':'Normal' "></strong>
+                                <div class="mb-1 text-muted">Publicado: Nov 12</div>
+                                <p class="card-text mb-auto" th:utext="${tmpPost.content}"></p>
                             </div>
-                            <strong class="d-inline-block mb-2 text-success"
-                                th:text="${tmpPost.isMain == true} ? 'Principal':'Normal' "></strong>
-                            <div class="mb-1 text-muted">Publicado: Nov 12</div>
-                            <p class="card-text mb-auto" th:text="${tmpPost.content}"></p>
-                        </div>
-                        <div class="col-12 col-md-4 mt-2 d-lg-block">
-                            <img class="rounded" style="width: 95%; height: 95%; object-fit: cover"
-                                src="/images/perrosygatos.webp">
+                            <div class="col-12 col-md-4 mt-2 d-lg-block">
+                                <img class="rounded" style="width: 95%; height: 95%; object-fit: cover"
+                                    src="/images/perrosygatos.webp">
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
+        <div th:replace="fragments/inicioModals :: modal-new"></div>
+        <div th:replace="fragments/inicioModals :: modal-editNew"></div>
+
     </div>
     <script th:replace="fragments/footer :: footer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

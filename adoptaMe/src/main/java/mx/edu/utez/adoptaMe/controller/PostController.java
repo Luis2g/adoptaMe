@@ -3,6 +3,8 @@ package mx.edu.utez.adoptaMe.controller;
 
 import javax.validation.Valid;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,6 +67,11 @@ public class PostController {
     	model.addAttribute("user", user);
 
         return "news";
+    }
+
+
+    public Optional <Post> getOnePost(Long id){
+        return postServiceImpl.edit(id);
     }
 
 }

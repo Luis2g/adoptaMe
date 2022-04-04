@@ -2,7 +2,8 @@ package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
 
-import javax.management.relation.Role;
+import mx.edu.utez.adoptaMe.entity.Role;
+
 
 public interface RoleService {
     

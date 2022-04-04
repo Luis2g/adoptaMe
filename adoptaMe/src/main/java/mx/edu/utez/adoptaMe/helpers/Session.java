@@ -14,19 +14,19 @@ public class Session {
 
 		public static User getSession(){
 			
-			if(user == null) {
-				user = new User();
-				//Creating role
-				Role role = new Role();
-				role.setId(0l);
-				//Creating userHasRole
-				UserHasRole userHasRole = new UserHasRole();
-				userHasRole.setRole(role);
-				//Creating the list
-				List<UserHasRole> list = new ArrayList<>();
-				list.add(userHasRole);
-				user.setUserHasRoles(list);				
-			}
+//			if(user == null) {
+//				user = new User();
+//				//Creating role
+//				Role role = new Role();
+//				role.setId(0l);
+//				//Creating userHasRole
+//				UserHasRole userHasRole = new UserHasRole();
+//				userHasRole.setRole(role);
+//				//Creating the list
+//				List<UserHasRole> list = new ArrayList<>();
+//				list.add(userHasRole);
+//				user.setUserHasRoles(list);				
+//			}
 			
 			return user;
 		}

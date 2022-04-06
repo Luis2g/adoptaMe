@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post edit() {
+    public Post edit(Long id) {        
         return null;
     }
 

@@ -40,7 +40,7 @@ public class PetController {
         User user = new User();
         int idInt = 1;
         long id = idInt;
-        user.setId(id);
+        user.setUserId(id);
         pet.setUser(user);
         // End configuration
 

@@ -35,7 +35,7 @@ public class PostController {
     @PostMapping("/savePost")
     public String savePet(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, RedirectAttributes redirectAttributes){    
         User user = new User();             
-        user.setUserId(Long.valueOf(1));
+        user.setUsername("DiegoVelascoGH");
         post.setUser(user);    
 
         if(result.hasErrors()){

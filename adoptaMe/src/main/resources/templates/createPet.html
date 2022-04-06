@@ -4,9 +4,8 @@
 <div th:replace="fragments/header :: header"></div>
 
 <body>
-    <div th:replace="fragments/navbar :: navbar-voluntario"></div>
-
-    <div class="container">
+    <div th:replace="fragments/navbar :: navbar"></div>	
+    <div class="container"  style="margin-top: 60px;">
         <div class="col-12 text-center">
             <h1>Registrar mascota</h1>
         </div>
@@ -18,7 +17,7 @@
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
             <div class="col-12 col-sm-10">
-                <form th:action="@{/GuardarMascota}" th:object="${pet}" method="POST">
+                <form th:action="@{/Mascota/GuardarMascota}" th:object="${pet}" method="POST">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-8 col-sm-8 col-md-5">
@@ -133,7 +132,6 @@
 
             let ageConcat = document.getElementById("ageConcat");
             ageConcat.value = ageOne+" "+ageTwo;
-            console.log(ageConcat.value);
         }
 
         $(document).ready(function(){

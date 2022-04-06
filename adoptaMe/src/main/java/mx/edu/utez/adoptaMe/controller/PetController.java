@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
@@ -20,6 +21,7 @@ import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 
 @Controller
+@RequestMapping("/Mascota")
 public class PetController {
 
     @Autowired
@@ -31,7 +33,7 @@ public class PetController {
     @Autowired
     private PetServiceImpl petServiceImpl;    
 
-    @GetMapping("/listPets")
+    @GetMapping("/Mascotas")
 	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("listPets", petServiceImpl.listAll());
 		return "petsList";
@@ -52,7 +54,7 @@ public class PetController {
             System.out.println("Mascota: "+pet);
             return "fragments/requestPetModal";
         }
-        return "redirect:/listPets";
+        return "redirect:/Mascota/Mascotas";
     }
 
     @PostMapping("/GuardarMascota")
@@ -64,7 +66,7 @@ public class PetController {
         User user = new User();
         int idInt = 1;
         long id = idInt;
-        user.setUserId(id);
+        user.setUsername("DiegoVelascoGH");
         pet.setUser(user);
         // End configuration
 

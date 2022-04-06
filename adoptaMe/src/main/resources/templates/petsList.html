@@ -41,24 +41,7 @@
 </style>
 
 <body>
-
-	
-	<!-- <div th:switch="${user.getUserHasRoles().get(0).getRole().getId()}" >
-		<div th:case="0" >
-	    	<div th:replace="fragments/navbar :: navbar-anonimo"></div>		
-		</div>
-		<div th:case="1" >
-			<div th:replace="fragments/navbar :: navbar-administrador"></div>
-		</div>
-		<div th:case="2" >
-			<div th:replace="fragments/navbar :: navbar-voluntario"></div>
-		</div>
-		<div th:case="3" >
-			<div th:replace="fragments/navbar :: navbar-adoptador"></div>
-		</div>
-	</div>  -->
-
-
+    <div th:replace="fragments/navbar :: navbar"></div>	
     <div class="petsContainer" style="margin-top:70px">
         <div class="row">
 
@@ -125,10 +108,12 @@
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
                         <p class="card-text">[[${tmpPet.description}]]</p>
-                            <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
+                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
                                 <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
-                            </button>
+                            </button> -->
+                            <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button>
+
                     </div>
 
                     <div class="card-footer text-muted">
@@ -144,12 +129,23 @@
                 </div>
             </div>
 
-            
+            <div th:each="tmpPets : ${tmpPet}" th:attr="id=${'petModal' + tmpPet.id}">
+                <div class="modal-body">
+                  <div class="modal-body">
+                     [[${tmpPet.name}]]
+              
+                  </div>
+              
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Remove</button>
+                  </div>
+                </div>
+              </div>
 
             <!-- Start modal info pet -->
             <!-- <div th:replace="fragments/requestPetModal :: modal('modalInformacionMascota')">modal</div> -->
             <!-- End modal info pet -->
-            <div id="showModal"></div>
             
 
         </div>
@@ -161,23 +157,7 @@
 
     <script th:replace="fragments/footer :: footer"></script>
     <script>
-        $('document').ready(function() {
-            showPet(1)
-        });
-        showPet = (id) => {
-            console.log(id);
-            $.get("/AdoptarMascota/"+id,
-                function (data) {
-                    console.log(data);
-                    $('#showModal').html(data);
-                }).then(() => {
-                    $('#modalInformacionMascota').modal('show');
-                })
-        }
 
-
-
-        feather.replace();
     </script>
 </body>
 

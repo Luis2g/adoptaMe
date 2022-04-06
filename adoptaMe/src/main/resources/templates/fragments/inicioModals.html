@@ -397,7 +397,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="registrarNoticia" name="registrarNoticia" novalidate th:action="@{/savePost}"
-                        method="post" th:object="${post}">
+                        method="post" th:object="${post}" enctype="multipart/form-data">
                         <div class="form-group">
                             <div></div>
                             <div class="form-row">
@@ -427,12 +427,10 @@
                                     <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
                                         class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
+                                    <input class="form-control" type="file" accept="image/*" name="imagenPost">
                                 </div>
                             </div>
                         </div>

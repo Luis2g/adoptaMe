@@ -39,17 +39,16 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="/images/perrosygatos.webp" style="width:100%; height: 600px; object-fit: cover;"
+                            <img src="/images/landingimage.jpg" style="width:100%; height: 600px; object-fit: cover;"
                                 class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5 style="color: black;">First slide label</h5>
                             </div>
                         </div>
                         <div class="carousel-item" th:each="tmpPost : ${postList}">
-                            <img src="/images/perrosygatos2.jpg" style="width:100%; height: 600px; object-fit: cover;"
+                            <img th:src="@{/imagenes/{i} (i = ${tmpPost.image})}" style="width:100%; height: 600px; object-fit: cover;"
                                 class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5 th:text="${tmpPost.title}" style="color: black;"></h5>
+                                <h1 th:text="${tmpPost.title}" style="color: black;"></h1>
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import mx.edu.utez.adoptaMe.entity.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
     
     @ExceptionHandler(org.hibernate.exception.SQLGrammarException.class)
     @Procedure (name = "login")

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
+import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 
 @Controller
@@ -22,11 +23,15 @@ public class MainController {
     
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private PostServiceImpl postServiceImpl;
     
     private User user;
     
     @GetMapping("/inicio")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("postList", postServiceImpl.listAll());
         return "/landingPage";
     }
     

@@ -9,8 +9,6 @@ public interface UserService {
     List<User> listAll();
 
     User save(User user);
-
-    User edit(int id);
     
     User findByUsername(String username);
 

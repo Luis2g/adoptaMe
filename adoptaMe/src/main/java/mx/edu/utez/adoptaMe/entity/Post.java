@@ -103,7 +103,7 @@ public class Post {
 
     // Foreign key for user
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private User user;
 
     // Configuration for images

@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Procedure (name = "login")
 	Optional<User> login(@Param("usernameIn") String usernameIn, @Param("passwordIn") String passwordIn);
 
+    User findByUsername(String username);
 
 
 

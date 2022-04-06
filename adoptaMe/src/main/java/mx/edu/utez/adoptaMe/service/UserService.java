@@ -11,6 +11,8 @@ public interface UserService {
     User save(User user);
 
     User edit(int id);
+    
+    User findByUsername(String username);
 
     User update();
 

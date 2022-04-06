@@ -21,15 +21,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Role {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    @Column(name = "name", nullable = false, length = 45)
+    @Column(name = "authority", nullable = false, length = 45)
     @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*")
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 45)
-    private String name;
+    private String authority;
 
     @Column(name = "description", nullable = false, length = 255)
     @NotEmpty(message = "Este campo es requerido")
@@ -39,37 +35,6 @@ public class Role {
     public Role() {
     }
 
-    public Role(Long id) {
-        this.id = id;
-    }
-
-    public Role(Long id,
-            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String name,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 255) String description,
-            List<UserHasRole> userHasRoles, List<RoleHasPermit> rolesHasPermits) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.userHasRoles = userHasRoles;
-        this.rolesHasPermits = rolesHasPermits;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -77,38 +42,22 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public List<UserHasRole> getUserHasRoles() {
-        return userHasRoles;
-    }
-
-    public void setUserHasRoles(List<UserHasRole> userHasRoles) {
-        this.userHasRoles = userHasRoles;
-    }
-
-    public List<RoleHasPermit> getRolesHasPermits() {
-        return rolesHasPermits;
-    }
-
-    public void setRolesHasPermits(List<RoleHasPermit> rolesHasPermits) {
-        this.rolesHasPermits = rolesHasPermits;
-    }
-
-    // Configuration for UserHasRole
-    @OneToMany(mappedBy = "role")
-    @JsonIgnore
-    private List<UserHasRole> userHasRoles; 
-
-    // configuration for roleHasPermit
-    @OneToMany(mappedBy = "role")
-    @JsonIgnore
-    private List<RoleHasPermit> rolesHasPermits;
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+ 
+    public String getAuthority() {
+		return authority;
 	}
-    
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+
+
+    //This used to be the old configuration before Spring Security
+//    // configuration for roleHasPermit
+//    @OneToMany(mappedBy = "role")
+//    @JsonIgnore
+//    private List<RoleHasPermit> rolesHasPermits;
+
     
 
 }

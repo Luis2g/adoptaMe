@@ -1,6 +1,7 @@
 package mx.edu.utez.adoptaMe.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,10 +28,6 @@ public class User {
     
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
     @Column(name = "username", nullable = false, length = 45, unique = true)
     @NotEmpty(message = "Esta campo es requerido")
     @Size(min = 2, max = 45)
@@ -44,26 +43,32 @@ public class User {
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 8, message = "La contraseña debe contener al menos 8 caracteres")
     private String password;
+    
+    private boolean enabled;
 
     @NotEmpty
     public User() {
     }
 
 
-    public List<Pet> getPets() {
+    public boolean isEnabled() {
+		return enabled;
+	}
+
+
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
+
+	public List<Pet> getPets() {
         return pets;
     }
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
-    }
-    
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -101,15 +106,18 @@ public class User {
         this.donations = donations;
     }
 
-    public List<UserHasRole> getUserHasRoles() {
-        return userHasRoles;
-    }
+    public Set<Role> getAuthorities() {
+		return authorities;
+	}
 
-    public void setUserHasRoles(List<UserHasRole> userHasRoles) {
-        this.userHasRoles = userHasRoles;
-    }
 
-    // foreign key for person
+	public void setAuthorities(Set<Role> authorities) {
+		this.authorities = authorities;
+	}
+
+
+
+	// foreign key for person
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "person_id", nullable = false, unique = true)
     private Person person;
@@ -119,11 +127,20 @@ public class User {
     @JsonIgnore
     private List<Donation> donations;
 
-    // configuration for UserHasRole
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<UserHasRole> userHasRoles; 
+    //This used to be the old configuration before spring security
+//    // configuration for UserHasRole
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<UserHasRole> userHasRoles; 
 
+	@ManyToMany
+	@JoinTable(
+			name = "authorities",
+			joinColumns = @JoinColumn(name = "username"),
+			inverseJoinColumns = @JoinColumn(name = "authority")
+	)
+	Set<Role> authorities;
+    
     // configuration for pets
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -132,7 +149,7 @@ public class User {
     @Override
     public String toString() {
         return "User [donations=" + donations + ", email=" + email + ", password=" + password
-                + ", person=" + person + ", pets=" + pets + ", userHasRoles=" + userHasRoles + ", username=" + username
+                + ", person=" + person + ", pets=" + pets + ", username=" + username
                 + "]";
     }
 

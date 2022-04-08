@@ -422,15 +422,18 @@
                                 <div class="col-12 mt-3">
                                     <label for="contenido" style="color: #687281;"><b>Contenido </b><span
                                             style="color: red;">*</span></label>
-                                    <textarea class="form-control form-control-lg col-12" id="content" th:field="*{content}"
-                                        placeholder="Ingresa el contenido de la noticia" rows="10"></textarea>
+                                    <textarea class="form-control form-control-lg col-12" id="content"
+                                        th:field="*{content}" placeholder="Ingresa el contenido de la noticia"
+                                        rows="10"></textarea>
                                     <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
                                         class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
-                                    <input class="form-control" type="file" accept="image/*" name="imagenPost">
+                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
+                                        imagen</button>
+                                    <input type="file" style="display: none;" name="imagenPost" id="image" accept=".jpg, .jpeg, .png">
                                 </div>
                             </div>
                         </div>
@@ -439,62 +442,6 @@
                             <button type="submit" class="btn btn-success">Guardar</button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div th:fragment="modal-editNew">
-    <div class="modal fade" id="modalModificarNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modificar entrada de blog</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="modificarNoticia" name="modificarNoticia" novalidate th:object="${post}">
-                        <div class="form-group">
-                            <input type="hidden" id="idEdit" th:field="*{id}">
-                            <div class="form-row">
-                                <div class="col-12 col-sm-6 col-md-6">
-                                    <label for="title" style="color: #687281;"><b>Título </b><span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="titleEdit" th:field="*{title}"
-                                        placeholder="Ingresa un título corto">
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="isPrincipalEdit" style="color: #687281;"><b>¿Es
-                                                principal? </b><span style="color: red;">*</span></label>
-                                        <input type="checkbox" class="form-check-input" id="isPrincipal" th:field="*{isMain}"
-                                            style="display: block; margin-left: 0%;">
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <label for="contenido" style="color: #687281;"><b>Contenido </b><span
-                                            style="color: red;">*</span></label>
-                                    <textarea class="form-control form-control-lg col-12" rows="10" id="contentEdit" th:field="*{content}"
-                                        placeholder="Ingresa el contenido de la noticia"></textarea>
-                                </div>
-                                <div class="col-6">
-                                    <label for="image" style="color: #687281;"><b>Imagen </b><span
-                                            style="color: red;">*</span></label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning">Modificar</button>
                 </div>
             </div>
         </div>

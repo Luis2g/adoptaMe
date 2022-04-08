@@ -39,9 +39,6 @@ public class PetController {
         // Configuration for user before controller session is created
         User user = new User();
         int idInt = 1;
-        long id = idInt;
-        user.setUserId(id);
-        pet.setUser(user);
         // End configuration
 
         boolean saved = petServiceImpl.save(pet);

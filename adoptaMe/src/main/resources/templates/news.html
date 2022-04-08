@@ -84,8 +84,7 @@
             </div>
 
             <div th:each="tmpPost : ${postList}">
-                <a data-toggle="modal" data-target="#modalModificarNoticia">
-                    <div class="col-12 mt-2" th:id="${tmpPost.id}">
+                <a th:href="@{/noticias/editar/{id} (id = ${tmpPost.id})}" style="text-decoration: none; color: black;">
                         <div
                             class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
                             <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
@@ -94,7 +93,7 @@
                                 </div>
                                 <strong class="d-inline-block mb-2 text-success"
                                     th:text="${tmpPost.isMain == true} ? 'Principal':'Normal' "></strong>
-                                <div class="mb-1 text-muted">Publicado: Nov 12</div>
+                                <div class="mb-1 text-muted">Publicado: [[${tmpPost.postDate}]]</div>
                                 <p class="card-text mb-auto" th:utext="${tmpPost.content}"></p>
                             </div>
                             <div class="col-12 col-md-4 mt-2 d-lg-block">
@@ -107,13 +106,22 @@
             </div>
         </div>
         <div th:replace="fragments/inicioModals :: modal-new"></div>
-        <div th:replace="fragments/inicioModals :: modal-editNew"></div>
 
     </div>
     <script th:replace="fragments/footer :: footer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+    <script>
+
+        let file = document.getElementById("image");
+
+        const uploadFile = () => {
+            file.click();
+        }
+
+    </script>
 </body>
 
 </html>

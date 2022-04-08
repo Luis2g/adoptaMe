@@ -34,6 +34,9 @@ public class Post {
     @Column(name = "is_main", nullable = true)
     private Boolean isMain;
 
+    @Column(name = "post_date", nullable = true, length = 10)
+    private String postDate;
+
     @Column(nullable = true, length = 45)
 	private String image;
 
@@ -41,19 +44,17 @@ public class Post {
     public Post() {
     }
 
-    
-
     public Post(Long id, @Size(min = 2, max = 150) @NotEmpty(message = "Este campo es requerido") String title,
             @Size(min = 2, max = 255) @NotEmpty(message = "Este campo es requerido") String content, Boolean isMain,
-            String image, User user) {
+            String postDate, String image, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.isMain = isMain;
+        this.postDate = postDate;
         this.image = image;
         this.user = user;
     }
-
 
 
     public Long getId() {
@@ -102,7 +103,20 @@ public class Post {
 
     public void setImage(String image) {
         this.image = image;
+    }    
+
+
+    public String getPostDate() {
+        return postDate;
     }
+
+
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
+
+
 
 
     // Foreign key for user

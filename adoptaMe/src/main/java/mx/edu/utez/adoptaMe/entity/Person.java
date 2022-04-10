@@ -85,12 +85,6 @@ public class Person {
         this.personId = personId;
     }
 
-    public String getname() {
-        return name;
-    }
-    public void setname(String name) {
-        this.name = name;
-    }
     public String getSurname() {
         return surname;
     }

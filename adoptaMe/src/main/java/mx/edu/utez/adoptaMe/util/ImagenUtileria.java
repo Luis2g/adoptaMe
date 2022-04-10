@@ -13,7 +13,6 @@ public class ImagenUtileria {
 
 		try {
 
-
 			String rutaArchivo = ruta + "/" + nombreImagen;
 
 			System.err.println(rutaArchivo);

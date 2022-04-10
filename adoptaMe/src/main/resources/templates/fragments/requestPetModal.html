@@ -3,7 +3,30 @@
 <head>
 </head>
 <body>
-    <div class="modal fade" id="modalInformacionMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+    <div th:fragment="modalInformacionMascota" class="modal fade" th:id="modalInformacionMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>[[${pet.name}]]</p>
+                <p>Hola aqui arriba va el nombre</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- <div class="modal fade" id="modalInformacionMascota" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -27,7 +50,7 @@
                                         <div class="row col-12 col-sm-8">
                                             <div class="col-12">
                                                 <label for="name" style="color: #687281;"><b>Nombre de la mascota </b></label>
-                                                <!-- <input type="text" th:text="${pet.name}"> -->
+                                                 <input type="text" th:text="${pet.name}">
                                                 <p>[[${pet.name}]]</p>
                                             </div>
                                             <div class="col-6 col-sm-3">
@@ -66,6 +89,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
 </html>

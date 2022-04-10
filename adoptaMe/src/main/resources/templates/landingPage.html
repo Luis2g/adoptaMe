@@ -5,30 +5,9 @@
 
 <body>
 
-<!-- 	<div th:switch="${user.getUserHasRoles().get(0).getRole().getId()}" > -->
-<!-- 		<div th:case="0" > -->
-<!-- 	    	<div  th:replace="fragments/navbar :: navbar-anonimo"></div>		 -->
-<!-- 		</div> -->
-<!-- 		<div th:case="1" > -->
+	<div th:replace="fragments/navbar :: navbar"></div>						
 
-<!-- 			<div sec:authorize="hasAuthority('ROLE_ADMIN')" > -->
-				<div th:replace="fragments/navbar :: navbar"></div>						
-<!-- 			</div> -->
-			
-<!-- 			<div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" > -->
-<!-- 				<div  th:replace="fragments/navbar :: navbar-voluntario"></div> -->
-<!-- 			</div> -->
-
-<!-- 		</div> -->
-<!-- 		<div th:case="2" > -->
-<!-- 		</div> -->
-<!-- 		<div th:case="3" > -->
-<!-- 			<div th:replace="fragments/navbar :: navbar-adoptador"></div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-    
-    <div class="container-fluid" style="margin-top:50px">
+    <div class="container-fluid" style="margin-top:48px">
         <!--Start the carousel-->
         <div class="col-12">
             <div class="bd-example">

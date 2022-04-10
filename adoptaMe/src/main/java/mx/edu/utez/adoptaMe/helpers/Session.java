@@ -5,7 +5,7 @@ import java.util.List;
 
 import mx.edu.utez.adoptaMe.entity.Role;
 import mx.edu.utez.adoptaMe.entity.User;
-import mx.edu.utez.adoptaMe.entity.UserHasRole;
+//import mx.edu.utez.adoptaMe.entity.UserHasRole;
 
 public class Session {
 	

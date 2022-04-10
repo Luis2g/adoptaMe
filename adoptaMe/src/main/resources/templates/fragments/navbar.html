@@ -20,13 +20,13 @@
                     <a class="nav-link" th:href="@{/noticias}">Noticias</a>
                 </li>
                 <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item active">
-                    <a class="nav-link" href="#">Solicitudes de administrador</a>
+                    <a class="nav-link" th:href="@{/solicitudesParaPublicar}">Solicitudes de publicaciones</a>
                 </li>
                 <li sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="nav-item active">
-                    <a class="nav-link" href="#">Solicitudes de voluntario</a>
+                    <a class="nav-link" th:href="@{/misPublicaciones}">Mis publicaciones</a>
                 </li>
                 <li sec:authorize="hasAuthority('ROLE_ADOPTER')" class="nav-item active">
-                    <a class="nav-link" href="#">Solicitudes de adoptador</a>
+                    <a class="nav-link" >Solicitudes de adoptador</a>
                 </li>
             </ul>
             <ul class="navbar-nav mr-automy-2 my-lg-0">

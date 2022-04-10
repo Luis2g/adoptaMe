@@ -17,5 +17,7 @@ public interface UserService {
     User login(String username, String password);
 
     void delete();
+    
+//    void changePassword(String password, String username);
 
 }

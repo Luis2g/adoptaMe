@@ -26,7 +26,7 @@
               <hr>
               <div class="card-body row ml-5 pl-5">
                   <h3 class="col-xl-12 mb-4">Actualizar datos</h3>
-                  <form class="container row" th:action="@{/usuarios/updateUserData}" th:object="${user}" method="POST" >
+                  <form class="container row" id="userDataForm" th:action="@{/usuarios/updateUserData}" th:object="${user}" method="POST" >
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="">Nombre(s)</label>
                           <input type="text" th:field="*{person.name}" class="form-control" id="" placeholder="Escriba un nombre" >
@@ -53,10 +53,11 @@
                           
                       </div>
                       
-                      <div class="col-12 text-center mt-3">
-             	          <button type="submit" class="btn btn-primary col-4">Actualizar datos</button>
-                      </div>
+                      <input type="hidden" name="password" id="password" >
                       
+                      <div class="col-12 text-center mt-3">
+             	          <button type="button" onClick="passwordValidation()" class="btn btn-primary col-4">Actualizar datos</button>
+                      </div>                      
                   </form>
 
                   <hr style="background-color: #000;  width: 100%" />

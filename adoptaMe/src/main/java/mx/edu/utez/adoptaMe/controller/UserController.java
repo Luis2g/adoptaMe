@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ import mx.edu.utez.adoptaMe.entity.Role;
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
+import mx.edu.utez.adoptaMe.service.AccessServiceImpl;
 import mx.edu.utez.adoptaMe.service.RoleServiceImpl;
 
 @Controller 
@@ -34,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private RoleServiceImpl roleServiceImpl;
+	
+	@Autowired
+	private AccessServiceImpl accessServiceImpl;
 	
 	@Autowired
     PasswordEncoder passwordEncoder;
@@ -104,36 +109,41 @@ public class UserController {
 
 	}
 	
-	@PostMapping("/actualizar")
-	public String update(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		if(userServiceImpl.save(user).getUsername() != null) {
-			redirectAttributes.addFlashAttribute("msg_success", "¡Se han guardado correctamente los datos!");
-		}else {
-			redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error por favor verifique los datos proporcionados!");
-		}
-		return "redirect:/usuarios/perfil/miCuenta";
-	}
+//	@PostMapping("/actualizar")
+//	public String update(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		if(userServiceImpl.save(user).getUsername() != null) {
+//			redirectAttributes.addFlashAttribute("msg_success", "¡Se han guardado correctamente los datos!");
+//		}else {
+//			redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error por favor verifique los datos proporcionados!");
+//		}
+//		return "redirect:/usuarios/perfil/miCuenta";
+//	}
 	
 	@PostMapping("/updateUserData")
 	public String changeUserData (@ModelAttribute("user") User user, 
+			@RequestParam(name = "password", required = true) String passwordIn,
 			RedirectAttributes redirectAttributes,
 			Authentication authentication) {
 		
+		System.out.println("This is the password from the front " + passwordIn);		
 		User userFromDB = userServiceImpl.findByUsername(authentication.getName());
 		
-		userFromDB.getPerson().setName(user.getPerson().getName());
-		userFromDB.getPerson().setSurname(user.getPerson().getSurname());
-		userFromDB.getPerson().setSecondSurname(user.getPerson().getSecondSurname());
-		userFromDB.getPerson().setPhoneNumber(user.getPerson().getPhoneNumber());
-		userFromDB.setEmail(user.getEmail());
-		
-		userServiceImpl.save(userFromDB);
-		
-		redirectAttributes.addFlashAttribute("msg_success", "¡Los datos han sido guardados exitosamente!");
-		
-		
+		if(passwordEncoder.matches(passwordIn, userFromDB.getPassword())) {
+			userFromDB.getPerson().setName(user.getPerson().getName());
+			userFromDB.getPerson().setSurname(user.getPerson().getSurname());
+			userFromDB.getPerson().setSecondSurname(user.getPerson().getSecondSurname());
+			userFromDB.getPerson().setPhoneNumber(user.getPerson().getPhoneNumber());
+			userFromDB.setEmail(user.getEmail());
+			
+			userServiceImpl.save(userFromDB);
+			
+			redirectAttributes.addFlashAttribute("msg_success", "¡Los datos han sido guardados exitosamente!");
+			return "redirect:/usuarios/perfil/miCuenta";
+		}
+		redirectAttributes.addFlashAttribute("msg_error", "¡La contraseña proporcionada no es valida!");		
 		return "redirect:/usuarios/perfil/miCuenta";
+		
 	}
 	
 	@PostMapping("/changePassword")
@@ -142,20 +152,37 @@ public class UserController {
 			@RequestParam(name = "confirmationPassword", required = true) String confirmationPassword,
 			Authentication authentication,
 			RedirectAttributes redirectAttributes) {
+				
+		User userFromDB = userServiceImpl.findByUsername(authentication.getName());
 		
-		System.out.println("This is the old password " + oldPassword);
-		System.out.println("This is the new password " + newPassword);
-		System.out.println("This is the password confirmation " + confirmationPassword);
-		System.out.println("This is the username to find " + authentication.getName());
-		User modifiedUser = userServiceImpl.findByUsername(authentication.getName());
-		modifiedUser.setPassword(passwordEncoder.encode(newPassword));
-		userServiceImpl.save(modifiedUser);
+		if(passwordEncoder.matches(oldPassword, userFromDB.getPassword())) {
+			userFromDB.setPassword(passwordEncoder.encode(newPassword));
+			userServiceImpl.save(userFromDB);
+			
+			redirectAttributes.addFlashAttribute("msg_success", "¡Se ha cambiado la contraseña!");
+			
+			return "redirect:/logout";
+		}
 		
-		redirectAttributes.addFlashAttribute("msg_success", "¡Se ha cambiado la contraseña!");
+		redirectAttributes.addFlashAttribute("msg_error", "¡La contraseña actual no coincide!, por favor verifique");
+		return "redirect:/usuarios/perfil/miCuenta";		
+	}
+	
+	@GetMapping("/accesos")
+	public String accesses(Authentication authentication, HttpSession session, Model model) {
 		
-//		userServiceImpl.changePassword(passwordEncoder.encode(newPassword), authentication.getName());
+		if(authentication != null) {
+    		String username = authentication.getName();
+    		User user = userServiceImpl.findByUsername(username);
+    		session.setAttribute("user", user);
+    	}
 		
-		return "redirect:/usuarios/perfil/miCuenta";
+		
+		
+		model.addAttribute("accesses", accessServiceImpl.findAll());
+		
+		
+		return "/accesses";
 	}
     
 }

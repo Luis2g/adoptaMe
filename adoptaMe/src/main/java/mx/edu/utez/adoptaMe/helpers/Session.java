@@ -10,7 +10,7 @@ import mx.edu.utez.adoptaMe.entity.User;
 public class Session {
 	
 		private static User user;
-		private static String url;
+		private static String url = "";
 		
 
 		public static User getSession(){

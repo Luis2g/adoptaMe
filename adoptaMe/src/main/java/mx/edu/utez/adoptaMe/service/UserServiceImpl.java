@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
-import java.lang.Exception;
 
 import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User edit(int id) {
-        long idLong = id;
-        return userRepository.findById(idLong).get(); 
-     
-    }
-
-    @Override
     public User update() {
         return null;
     }
@@ -52,6 +44,12 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
     	return userRepository.findByUsername(username);
     }
+    
+//    @Transactional
+//    @Override
+//    public void changePassword(String password, String username) {
+//    	userRepository.changePassword(password, username);
+//    }
     
     @Transactional
     @Override

@@ -10,7 +10,7 @@ public interface PostService {
 
     boolean save(Post post);
 
-    Post edit();
+    Post edit(Long id);
 
     Post update();
 

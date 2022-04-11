@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import mx.edu.utez.adoptaMe.security.SimpleAuthenticationSuccessHandler;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 import javax.sql.DataSource;
@@ -21,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    
+    @Autowired
+    private SimpleAuthenticationSuccessHandler successHandler;
     
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -35,11 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	
         http
             .authorizeRequests()
-            .antMatchers("/", "login", "/logout", "/inicio", "/mascotas", "/usuarios/registro", "/usuarios/guardar", "/noticias").permitAll()
+            .antMatchers("/", "/imagenes/**", "login", "/logout", "/inicio", "/mascotas", "/usuarios/registro", "/usuarios/guardar", "/noticias").permitAll()
             .anyRequest().authenticated()
             .and()
-            .formLogin()
-            .loginPage("/login").permitAll()
+            .formLogin().successHandler(successHandler).loginPage("/login").permitAll()
+//            .loginPage("/login").permitAll()
             .and()
             .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .invalidateHttpSession(true)

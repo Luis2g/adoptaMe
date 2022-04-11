@@ -9,8 +9,6 @@ public interface UserService {
     List<User> listAll();
 
     User save(User user);
-
-    User edit(int id);
     
     User findByUsername(String username);
 
@@ -19,5 +17,7 @@ public interface UserService {
     User login(String username, String password);
 
     void delete();
+    
+//    void changePassword(String password, String username);
 
 }

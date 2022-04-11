@@ -65,38 +65,47 @@ public class Pet {
     @Column(name = "is_available", nullable = false)
     // @NotEmpty(message = "Este campo es requerido")
     private Boolean isAvailable;
+    
+    @Column(name = "status", nullable = false, length = 50)
+    private String status;
 
     public Pet() {
     }
 
-    public Pet(Long id,
-            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 500) String description,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)") String sex,
-            @NotEmpty(message = "Este campo es requerido") String age,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
-            @NotEmpty(message = "Este campo es requerido") @Size(min = 5, max = 45) String type,
-            @NotEmpty(message = "Este campo es requerido") String registrationDate,
-            Boolean isAvailable, Personality personality, Color color,
-            User user, List<Request> requests, List<Image> images, List<FavoriteOne> favoriteOnes) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.sex = sex;
-        this.age = age;
-        this.size = size;
-        this.type = type;
-        this.registrationDate = registrationDate;
-        this.isAvailable = isAvailable;
-        this.personality = personality;
-        this.color = color;
-        this.user = user;
-        this.requests = requests;
-        this.images = images;
-        this.favoriteOnes = favoriteOnes;
-    }
+    
 
-    public Long getId() {
+    public Pet(Long id,
+			@Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50, message = "El nombre de la mascota debe contener al menos 2 caracteres") String name,
+			@NotEmpty(message = "Este campo es requerido") @Size(min = 15, max = 500, message = "La descripción debe tener al menos 15 caracteres") String description,
+			@NotEmpty(message = "Este campo es requerido") @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)") String sex,
+			@NotEmpty(message = "Este campo es requerido") String age,
+			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
+			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String type,
+			@NotEmpty(message = "Este campo es requerido") String registrationDate, Boolean isAvailable, String status,
+			Personality personality, Color color, User user, List<Request> requests, List<Image> images,
+			List<FavoriteOne> favoriteOnes) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.sex = sex;
+		this.age = age;
+		this.size = size;
+		this.type = type;
+		this.registrationDate = registrationDate;
+		this.isAvailable = isAvailable;
+		this.status = status;
+		this.personality = personality;
+		this.color = color;
+		this.user = user;
+		this.requests = requests;
+		this.images = images;
+		this.favoriteOnes = favoriteOnes;
+	}
+
+
+
+	public Long getId() {
         return id;
     }
 
@@ -216,7 +225,21 @@ public class Pet {
         this.description = description;
     }
 
-    // Foreign key for personality
+    
+    
+    public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+	// Foreign key for personality
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "personality_id", nullable = false)
     private Personality personality;
@@ -246,6 +269,11 @@ public class Pet {
     @JsonIgnore
     private List<FavoriteOne> favoriteOnes;
 
+ // Configuration for commentary
+    @OneToMany(mappedBy = "petCommentary")
+    @JsonIgnore
+    private List<Commentary> commentaries;
+    
     @Override
     public String toString() {
         return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", isAvailable=" + isAvailable + ", name=" + name

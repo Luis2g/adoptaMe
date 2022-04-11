@@ -17,7 +17,7 @@
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
             <div class="col-12 col-sm-10">
-                <form th:action="@{/Mascota/GuardarMascota}" th:object="${pet}" method="POST">
+                <form th:action="@{/mascotas/save}" th:object="${pet}" method="POST">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-8 col-sm-8 col-md-5">

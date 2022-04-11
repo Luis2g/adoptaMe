@@ -127,13 +127,4 @@ public class MainController {
     public String error500(){
         return "/errorPages/500";
     }
-
-    @GetMapping("/mascotas")
-    public String dogs(Model model) {
-    	user =  Session.getSession();
-    	model.addAttribute("user", user);
-        model.addAttribute("colorsList", colorServiceImpl.listAll());
-        return "petsList";
-    }    
-
 }

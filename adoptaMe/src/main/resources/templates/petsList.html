@@ -114,7 +114,10 @@
                                 <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
                             </button> -->
-                            <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button>
+                            <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
+                            <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > ¡Adoptar! </a>-->
+                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">¡Adoptar!</button >
+                            <a th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
 
                     </div>
 
@@ -131,23 +134,92 @@
                 </div>
             </div>
 
-            <div th:each="tmpPets : ${tmpPet}" th:attr="id=${'petModal' + tmpPet.id}">
-                <div class="modal-body">
-                  <div class="modal-body">
-                     [[${tmpPet.name}]]
-              
-                  </div>
-              
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <button type="submit" class="btn btn-primary">Remove</button>
-                  </div>
-                </div>
-              </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
+     aria-hidden="true" th:each="pet : ${listPets}" th:attr="id=${'editModal' + pet.id}">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div >
+			  <div class="modal-body">
+			    	<div class="row" >
+                        <div class="container">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-4">
+                                            <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+                                                src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+                                            <div class="row">
+                                            </div>
+                                        </div>
+                                        <div class="row col-12 col-sm-8">
+                                            <div class="col-12">
+                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b></label>
+                                                <p>[[${pet.name}]]</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Sexo</b></label>
+                                                <p th:text="${pet.sex == 'M'}  ? 'Macho' : 'Hembra'"></p  >
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Edad</b></label>
+                                                <p>[[${pet.age}]]</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+                                                <p>[[${pet.size}]]</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Color</b></label>
+                                                <p>[[${pet.color.name}]]</p>
+                                            </div>
+                                            <div class="col-6 col-sm-3">
+                                                <label for="name" style="color: #687281;"><b>Carácter</b></label>
+                                                <p>[[${pet.personality.name}]]</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
+                                            <p style="text-align: justify;">[[${pet.description}]]</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+			    </div>
+			
+			    <div class="modal-footer">
+			    </div>
+			  </div>
+			</div>
+		</div>
+	  </div>
+	</div>
 
             <!-- Start modal info pet -->
             <!-- <div th:replace="fragments/requestPetModal :: modal('modalInformacionMascota')">modal</div> -->
-            <!-- End modal info pet -->
+            <!-- End modal info pet 
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"aria-hidden="true">
+			    <div class="modal-dialog" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                                 <h5 class = "modal-title" id = "exampleModalLabel"> Revisar </h5>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">×</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <form class="table" th:action="@{/order/evaluate}" method="post">
+			                    <p>[[${tmpPet}]]</p>
+                				<p>Hola aqui arriba va el nombre</p>
+			                </form>
+			            </div>
+			 			<div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			                <button type="button" class="btn btn-primary">Save changes</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>-->
             
 
         </div>
@@ -159,7 +231,11 @@
 
     <script th:replace="fragments/footer :: footer"></script>
     <script>
-
+	$("#exampleModal").modal("hide");
+ 
+    function showPet(ID) {
+        $("#id").val(ID);
+    }
     </script>
 </body>
 

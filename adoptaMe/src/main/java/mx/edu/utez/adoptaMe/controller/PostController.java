@@ -22,6 +22,7 @@ import org.springframework.security.core.Authentication;
 
 import mx.edu.utez.adoptaMe.entity.Post;
 import mx.edu.utez.adoptaMe.entity.User;
+import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
@@ -84,10 +85,16 @@ public class PostController {
     
 
     @GetMapping("/noticias")
-    public String news(Model model,Post post) {
+    public String news(Model model,Post post, Authentication authentication, HttpSession session) {
 
-        model.addAttribute("postList", postServiceImpl.listAll());    	
+        if(authentication != null) {
+    		String username = authentication.getName();
+    		User user = userServiceImpl.findByUsername(username);
+    		session.setAttribute("user", user);
+    	}
 
+        model.addAttribute("postList", postServiceImpl.listAll());
+        Session.setUrl("/noticias");
         return "news";
     }
 

@@ -1,6 +1,7 @@
 package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,10 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post edit(Long id) {        
+        Optional<Post> optional = postRepository.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
         return null;
     }
 

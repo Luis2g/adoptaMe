@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<div th:replace="fragments/header :: header"></div>
+<style>
+    .petsContainer {
+        margin-inline: 10%;
+    }
+
+    .btn-heart {
+        display: block;
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        border: 1px solid red;
+    }
+
+    .feather-14 {
+        width: 14px;
+        height: 14px;
+    }
+
+    .feather-16 {
+        width: 16px;
+        height: 16px;
+    }
+
+    .feather-24 {
+        width: 24px;
+        height: 24px;
+    }
+
+    .feather-32 {
+        width: 32px;
+        height: 32px;
+    }
+
+    .btn-heart:focus {
+        border: none;
+        outline: none;
+    }
+</style>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar-anonimo"></div>
+    <div class="petsContainer" style="margin-top:70px">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="row" >
+                    <div class="offset-md-8  col-12 col-md-4 " >
+                        <label for="basic-url">Busqueda</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                            <div class="input-group-append">
+                                <span class="input-group-text">Buscar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+
+                <label for="sex">Sexo</label>
+                <div class="input-group">
+                    <select id="sex" class="form-control">
+                        <option selected>Seleccione...</option>
+                        <option>Macho</option>
+                        <option>Hembra</option>
+                    </select>
+                </div>
+
+                <label for="size">Tamaño</label>
+                <div class="input-group">
+                    <select id="size" class="form-control">
+                        <option selected>Seleccione...</option>
+                        <option>Pequeño</option>
+                        <option>Mediano</option>
+                        <option>Grande</option>
+                    </select>
+                </div>
+
+                <label for="color">Color</label>
+                <div class="input-group">
+                    <select class="custom-select" id="color">
+                        <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
+                    </select>
+                </div>
+
+                <div class="text-right mt-3">
+                    <button class="btn btn-primary">
+                        <span class="material-icons" style="vertical-align: middle;">
+                            filter_list
+                        </span>
+                        &nbsp;Filtrar
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make
+                            up the bulk of the
+                            card's content.</p>
+                        <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+
+
+
+
+    <script th:replace="fragments/footer :: footer"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header"></div>
+
+<style>
+  .btn{
+  color: white;
+  background-color: #23ce81;  
+  border-radius: 5px;
+  font-size: 24px;
+  border-style: none;
+  padding-left: 4px;
+  padding-right: 10px;
+}
+
+.btn:hover{
+  color: white;
+  background-color: #1c5c3f;
+  border-radius: 5px;
+  font-size: 24px;
+  border-style: none;
+  padding-left: 4px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+</style>
+
+<body>  
+  <div class="text-center mt-5">
+    <div class="mt-3">
+      <label style="color:rgb(211, 71, 71); font-size:36px; font-weight:bold; width:100%; bottom:45%; display:block;">
+        ERROR 400</label>      
+    </div>
+    <img th:src="@{/images/400.png}" class="mt-3 mb-1" width="350px" >      
+    <div class="mt-4">
+      <label style="color:rgb(88, 87, 87); font-size:20px; font-weight:bold; width:100%; bottom:45%; display:block;">
+        No se pudo procesar la petición debido a un error del cliente</label>
+    </div>
+    <form th:action="@{/usuario/acceso}">
+      <button class="btn mt-3" style="text-align-last: center;"> <i data-feather="arrow-left"></i> Regresar</button>      
+    </form>
+  </div>
+  <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

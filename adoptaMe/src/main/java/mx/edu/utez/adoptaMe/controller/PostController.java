@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,7 +69,7 @@ public class PostController {
 				System.out.println("Error" + error.getDefaultMessage());
 			}
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-            return "redirect:/modals";
+            return "redirect:/noticias";
         }else{
             boolean response = postServiceImpl.save(post); 
             if(response){
@@ -76,7 +77,7 @@ public class PostController {
                 return "redirect:/noticias";
             }else{
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-                return "redirect:/modals";
+                return "redirect:/noticias";
             }
         }        
     }
@@ -88,6 +89,19 @@ public class PostController {
         model.addAttribute("postList", postServiceImpl.listAll());    	
 
         return "news";
+    }
+
+    @GetMapping("/noticias/editar/{id}")
+    public String editNews(@PathVariable long id, Model model, RedirectAttributes redirectAttributes){
+        Post post = postServiceImpl.edit(id);
+        if (post != null){
+            model.addAttribute("post", post);
+            return "editNews";
+        }else{
+            redirectAttributes.addFlashAttribute("msg_error", "Registro no encontrado");
+            return "redirect:/noticias";
+        }
+        
     }
 
 

@@ -1,10 +1,18 @@
 package mx.edu.utez.adoptaMe.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
 import mx.edu.utez.adoptaMe.entity.User;
@@ -13,6 +21,7 @@ import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 
 @Controller
+@RequestMapping("/Mascota")
 public class PetController {
 
     @Autowired
@@ -24,28 +33,64 @@ public class PetController {
     @Autowired
     private PetServiceImpl petServiceImpl;    
 
-    @GetMapping("/createPet")
+    @GetMapping("/Mascotas")
+	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("listPets", petServiceImpl.listAll());
+		return "petsList";
+	}
+
+    @GetMapping("/RegistrarMascota")
     public String createPet(Model model, Pet pet){
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
         return "createPet";
     }
 
-    @PostMapping("/savePet")
-    public String savePet(Model model,Pet pet){
+    @GetMapping("/AdoptarMascota/{id}")
+    public String showPet(@PathVariable long id, Model model, RedirectAttributes redirectAttributes){
+        Pet pet = petServiceImpl.request(id);
+        if(pet != null){
+            model.addAttribute("pet", pet);
+            System.out.println("Mascota: "+pet);
+            return "fragments/requestPetModal";
+        }
+        return "redirect:/Mascota/Mascotas";
+    }
+
+    @PostMapping("/GuardarMascota")
+    public String savePet(Model model, @Valid @ModelAttribute("pet") Pet pet, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         // All pet when is created, the available always is true
         pet.setIsAvailable(true);
 
         // Configuration for user before controller session is created
         User user = new User();
         int idInt = 1;
+        long id = idInt;
+        user.setUsername("DiegoVelascoGH");
+        pet.setUser(user);
         // End configuration
 
+        if(bindingResult.hasErrors()){
+            for(ObjectError error: bindingResult.getAllErrors()){
+				System.out.println("Error: " + error.getDefaultMessage());
+			}
+            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+            model.addAttribute("colorsList", colorServiceImpl.listAll());
+            model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
+			return "createPet";
+        }
+
         boolean saved = petServiceImpl.save(pet);
-        if(!saved){
+        if(saved){
+            redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
+			return "redirect:/listPets";
+        }else{
+            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+            model.addAttribute("colorsList", colorServiceImpl.listAll());
+            model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
             return "createPet";
         }
-        return "petsList";
+
     }
 
     

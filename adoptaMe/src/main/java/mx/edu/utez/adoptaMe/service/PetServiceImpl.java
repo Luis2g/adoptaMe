@@ -1,6 +1,7 @@
 package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet edit() {
+    public Pet request(Long id) {
+        Optional<Pet> optional = petRepository.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
         return null;
     }
 

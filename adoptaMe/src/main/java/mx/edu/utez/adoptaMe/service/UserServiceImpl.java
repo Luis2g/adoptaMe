@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
     	return userRepository.findByUsername(username);
     }
     
+//    @Transactional
+//    @Override
+//    public void changePassword(String password, String username) {
+//    	userRepository.changePassword(password, username);
+//    }
+    
     @Transactional
     @Override
     public User login(String username, String password) {

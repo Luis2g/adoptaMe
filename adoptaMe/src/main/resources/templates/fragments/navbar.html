@@ -28,6 +28,9 @@
                 <li sec:authorize="hasAuthority('ROLE_ADOPTER')" class="nav-item active">
                     <a class="nav-link" >Solicitudes de adoptador</a>
                 </li>
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item active">
+                    <a class="nav-link" th:href="@{/usuarios/accesos}" >Accesos</a>
+                </li>
             </ul>
             <ul class="navbar-nav mr-automy-2 my-lg-0">
 				<li class="nav-item" sec:authorize="isAnonymous()">

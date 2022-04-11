@@ -12,10 +12,11 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import mx.edu.utez.adoptaMe.helpers.Session;
 
 @Component
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-	
+
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Override
@@ -35,14 +36,19 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 				break;
 			}
 		}
-		
-		if (hasAdministradorRole) {
-			redirectStrategy.sendRedirect(request, response, "/solicitudesParaPublicar");
-		} else if (hasAdoptadorRole) {
-			redirectStrategy.sendRedirect(request, response, "/misPublicaciones");
-		} else {
-			redirectStrategy.sendRedirect(request, response, "/inicio");
+
+		if (Session.getUrl().isEmpty()) {
+			if (hasAdministradorRole) {
+				redirectStrategy.sendRedirect(request, response, "/solicitudesParaPublicar");
+			} else if (hasAdoptadorRole) {
+				redirectStrategy.sendRedirect(request, response, "/misPublicaciones");
+			} else {
+				redirectStrategy.sendRedirect(request, response, "/inicio");
+			}
+		}else{
+			redirectStrategy.sendRedirect(request, response, Session.getUrl());			
 		}
+
 	}
 
 }

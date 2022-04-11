@@ -31,12 +31,12 @@ public class Pet {
     @Column(name = "name", nullable = false, length = 50)
     @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
     @NotEmpty(message = "Este campo es requerido")
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 50, message = "El nombre de la mascota debe contener al menos 2 caracteres")
     private String name;
 
     @Column(name = "description", nullable = false, length = 500)
     @NotEmpty(message = "Este campo es requerido")
-    @Size(min = 2, max = 500)
+    @Size(min = 15, max = 500, message = "La descripción debe tener al menos 15 caracteres")
     private String description;
 
     @Column(name = "sex", nullable = false, length = 1)
@@ -55,7 +55,7 @@ public class Pet {
 
     @Column(name = "type", nullable = false, length = 45)
     @NotEmpty(message = "Este campo es requerido")
-    @Size(min = 5, max = 45)
+    @Size(min = 2, max = 45)
     private String type;
 
     @Column(name = "registration_date", nullable = false, length = 50)
@@ -245,5 +245,14 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     @JsonIgnore
     private List<FavoriteOne> favoriteOnes;
+
+    @Override
+    public String toString() {
+        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", isAvailable=" + isAvailable + ", name=" + name
+                + ", personality=" + ", registrationDate=" + registrationDate + ", requests="
+                + ", sex=" + sex + ", size=" + size + ", type=" + type + ", user=" + "]";
+    }
+
+    
 
 }

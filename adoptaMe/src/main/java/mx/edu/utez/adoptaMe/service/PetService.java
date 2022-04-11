@@ -10,7 +10,9 @@ public interface PetService {
 
     boolean save(Pet pet);
 
-    Pet request(Long id);
+    Pet showPetRequest(Long id);
+    
+    Pet editPet(Long id);
 
     Pet update();
 

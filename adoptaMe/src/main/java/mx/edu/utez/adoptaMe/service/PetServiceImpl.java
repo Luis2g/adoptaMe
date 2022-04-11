@@ -32,7 +32,16 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet request(Long id) {
+    public Pet showPetRequest(Long id) {
+        Optional<Pet> optional = petRepository.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+    
+    @Override
+    public Pet editPet(Long id) {
         Optional<Pet> optional = petRepository.findById(id);
         if(optional.isPresent()){
             return optional.get();

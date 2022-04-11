@@ -61,10 +61,6 @@ public class Pet {
     @Column(name = "registration_date", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
     private String registrationDate;
-
-    @Column(name = "is_available", nullable = false)
-    // @NotEmpty(message = "Este campo es requerido")
-    private Boolean isAvailable;
     
     @Column(name = "status", nullable = false, length = 50)
     private String status;
@@ -81,7 +77,7 @@ public class Pet {
 			@NotEmpty(message = "Este campo es requerido") String age,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String type,
-			@NotEmpty(message = "Este campo es requerido") String registrationDate, Boolean isAvailable, String status,
+			@NotEmpty(message = "Este campo es requerido") String registrationDate, String status,
 			Personality personality, Color color, User user, List<Request> requests, List<Image> images,
 			List<FavoriteOne> favoriteOnes) {
 		super();
@@ -93,7 +89,6 @@ public class Pet {
 		this.size = size;
 		this.type = type;
 		this.registrationDate = registrationDate;
-		this.isAvailable = isAvailable;
 		this.status = status;
 		this.personality = personality;
 		this.color = color;
@@ -159,14 +154,6 @@ public class Pet {
 
     public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
-    }
-
-    public Boolean getIsAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
     }
 
     public Personality getPersonality() {
@@ -276,7 +263,7 @@ public class Pet {
     
     @Override
     public String toString() {
-        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", isAvailable=" + isAvailable + ", name=" + name
+        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", name=" + name
                 + ", personality=" + ", registrationDate=" + registrationDate + ", requests="
                 + ", sex=" + sex + ", size=" + size + ", type=" + type + ", user=" + "]";
     }

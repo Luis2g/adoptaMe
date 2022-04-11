@@ -428,12 +428,10 @@
                                     <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
                                         class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" name="imagenPost" id="image" accept=".jpg, .jpeg, .png">
+                                    <input class="form-control" type="file" name="imagenPost" id="image" accept=".jpg, .jpeg, .png">
                                 </div>
                             </div>
                         </div>

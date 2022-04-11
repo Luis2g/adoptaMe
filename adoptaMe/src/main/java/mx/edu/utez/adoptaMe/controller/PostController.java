@@ -69,7 +69,7 @@ public class PostController {
 				System.out.println("Error" + error.getDefaultMessage());
 			}
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-            return "redirect:/modals";
+            return "redirect:/noticias";
         }else{
             boolean response = postServiceImpl.save(post); 
             if(response){
@@ -77,7 +77,7 @@ public class PostController {
                 return "redirect:/noticias";
             }else{
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-                return "redirect:/modals";
+                return "redirect:/noticias";
             }
         }        
     }

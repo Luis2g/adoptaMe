@@ -26,8 +26,7 @@ public class Post {
     @NotEmpty(message = "Este campo es requerido")
     private String title;
 
-    @Column(name = "content", nullable = false, length = 255)
-    @Size(min = 2, max = 255)
+    @Column(columnDefinition="longtext null", name = "content", nullable = false)
     @NotEmpty(message = "Este campo es requerido")
     private String content;
 

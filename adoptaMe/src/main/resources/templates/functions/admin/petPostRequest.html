@@ -7,10 +7,42 @@
 </head>
 <body>
     <div th:replace="fragments/navbar :: navbar"></div>
-	<h1 style="margin-top: 100px" >These are the pet post requests</h1>
 	
-
-
+	<div class="container" style="margin-top: 75px"  >
+		<h1 class="text-center mt-5" style="color: #ccc;" >Solicitudes para publicar</h1>
+		<div class="row mt-5" >
+		
+			<div class="animate__animated animate__fadeInLeft" th:if="${petPostRequests.size()} == 0" >
+				<h2 style="color: #727b88" >No hay solicitudes de publicaciones</h2>
+			</div>
+		
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${petPostRequests}">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">[[${tmpPet.name}]]</h4>
+                        <p class="card-text">[[${tmpPet.description}]]</p>
+                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
+                                <a style="color:white"><span class="material-icons"
+                                    style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
+                            </button> -->
+                            <form th:action="@{/acceptPet}" method="post" >
+                            	<input name="id" th:value="${tmpPet.id}" type="hidden" >
+                            	<input name="accepted" value="true" type="hidden" >
+	                            <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Aceptar </button>
+                            </form>
+                            <form th:action="@{/acceptPet}" method="post" >
+                            	<input name="id" th:value="${tmpPet.id}" type="hidden" >
+                            	<input name="accepted" value="false" type="hidden" >
+	                            <button class="btn btn-warning" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+		
+		
+		</div>
+	</div>
     <script th:replace="fragments/footer :: footer"></script>
 </body>
 </html>

@@ -29,34 +29,72 @@
                   <form class="container row" id="userDataForm" th:action="@{/usuarios/updateUserData}" th:object="${user}" method="POST" >
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="">Nombre(s)</label>
-                          <input type="text" th:field="*{person.name}" class="form-control" id="" placeholder="Escriba un nombre" >
-                          
+                          <input 
+	                          	id="name"
+	                          	onChange="nameValidation()" 
+	                          	type="text" 
+	                          	th:field="*{person.name}" 
+	                          	class="form-control" 
+	                          	placeholder="Escriba un nombre" 
+                       	  >
+                          <span id="nameSpan" style="color: red" ></span>
                       </div>
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="">Apellido paterno</label>
-                          <input type="text" th:field="*{person.surname}" class="form-control" id="" placeholder="Escriba un apellido">
-                          
+                          <input 
+	                          	id="surname"
+	                          	onChange="surnameValidation()" 
+	                          	type="text" 
+	                          	th:field="*{person.surname}" 
+	                          	class="form-control" 
+	                          	placeholder="Escriba un apellido"
+                   		   >
+                           <span id="surnameSpan" style="color: red" ></span>
                       </div>
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="">Apellido materno</label>
-                          <input type="text" th:field="*{person.secondSurname}" class="form-control" id=""  placeholder="Escriba un apellido">
-                          
+                          <input 
+	                          	id="secondSurname" 
+	                          	onChange="secondSurnameValidation()" 
+	                          	type="text" 
+	                          	th:field="*{person.secondSurname}" 
+	                          	class="form-control" 
+	                          	placeholder="Escriba un apellido"
+                          >
+                          <span id="secondSurnameSpan" style="color: red" ></span>
                       </div>
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="exampleInputEmail1">Número telefónico</label>
-                          <input type="text" th:field="*{person.phoneNumber}" class="form-control" id=""  placeholder="Escriba un número telefónico">
-                          
+                          <input 
+                     			id="phoneNumber"
+                     			onChange="phoneNumberValidation()"  
+                     			type="text" 
+                     			th:field="*{person.phoneNumber}" 
+                     			class="form-control form-control-lg phone-mask"
+                     			maxlength="10"
+								minlength="14" 
+                     			placeholder="( ___ ) - ___ - __ - __" 
+								required
+                		   >
+                           <span id="phoneNumberSpan" style="color: red" ></span>
                       </div>
                       <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                           <label for="exampleInputEmail1">Correo electrónico</label>
-                          <input type="email" th:field="*{email}" class="form-control" id=""  placeholder="Escriba un correo electrónico">
-                          
+                          <input 
+                          		id="email"  
+                          		onChange="emailValidation()"
+                          		type="email" 
+                          		th:field="*{email}" 
+                          		class="form-control" 
+                          		placeholder="Escriba un correo electrónico"
+                    	  >
+                          <span id="emailSpan" style="color: red" ></span>
                       </div>
                       
-                      <input type="hidden" name="password" id="password" >
-                      
+                      <input name="passwordIn" type="hidden" id="passwordIn"  >
+                                            
                       <div class="col-12 text-center mt-3">
-             	          <button type="button" onClick="passwordValidation()" class="btn btn-primary col-4">Actualizar datos</button>
+             	          <button type="button" onClick="formValidation()" class="btn btn-primary col-4">Actualizar datos</button>
                       </div>                      
                   </form>
 
@@ -109,3 +147,9 @@
       
   </div>
 </div>
+	<script>
+		$(document).ready(function () {
+			$('.phone-mask').mask('(000)000-00-00');
+		});
+	</script>
+

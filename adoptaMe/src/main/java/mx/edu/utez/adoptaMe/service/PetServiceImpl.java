@@ -58,5 +58,15 @@ public class PetServiceImpl implements PetService {
     public boolean delete() {
         return false;
     }
+    
+    @Override
+    public List<Pet> findByStatus(String status){
+    	return petRepository.findByStatus(status);
+    }
+    
+    @Override
+    public void updateStatus(String status, long id) {
+    	petRepository.updateStatus(status, id);
+    }
 
 }

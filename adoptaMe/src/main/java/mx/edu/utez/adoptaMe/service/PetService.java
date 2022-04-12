@@ -5,6 +5,10 @@ import java.util.List;
 import mx.edu.utez.adoptaMe.entity.Pet;
 
 public interface PetService {
+	
+	List<Pet> findByStatus(String status);
+
+	void updateStatus(String status, long id);
     
     List<Pet> listAll();
 

@@ -11,11 +11,14 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
+import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 
@@ -30,6 +33,9 @@ public class MainController {
 
     @Autowired
     private PostServiceImpl postServiceImpl;
+    
+    @Autowired
+    private PetServiceImpl petServiceImpl;
     
     private User user;
     
@@ -49,14 +55,33 @@ public class MainController {
     
     @GetMapping("/solicitudesParaPublicar")
     @Secured("ROLE_ADMIN")
-    public String petPostRequest(Authentication authentication, HttpSession session) {
+    public String petPostRequest(Authentication authentication, HttpSession session, Model model) {
+    	
+    	model.addAttribute("petPostRequests", petServiceImpl.findByStatus("pending"));
+    	
     	if (session.getAttribute("user") == null) {
             User user = userServiceImpl.findByUsername(authentication.getName());
             user.setPassword(null);
             session.setAttribute("user", user);
         }
+    	
     	return "/functions/admin/petPostRequest";
     }    
+    
+    @PostMapping("/acceptPet")
+    @Secured("ROLE_ADMIN")
+    public String acceptPet(@RequestParam(name = "accepted", required = true) boolean accepted,
+    		@RequestParam(name = "id", required = true) long id,
+    		RedirectAttributes redirectAttributes) {
+    	
+    	petServiceImpl.updateStatus(accepted ? "accepted" : "rejected", id);
+    	
+    	redirectAttributes.addFlashAttribute("msg_success", accepted ? "La mascota se ha publicado" : "Se ha rechazado la mascota");
+    	
+    	
+    	return "redirect:/solicitudesParaPublicar";
+    }
+    
     //
     
     @GetMapping("/inicio")

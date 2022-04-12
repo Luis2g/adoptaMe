@@ -73,5 +73,10 @@ public class PetServiceImpl implements PetService {
     public void updateStatus(String status, long id) {
     	petRepository.updateStatus(status, id);
     }
+    
+    @Override
+    public List<Pet> findByTypeAndStatus (String type, String status){
+    	return petRepository.findByTypeAndStatus(type, status);
+    }
 
 }

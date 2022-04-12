@@ -22,4 +22,6 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
 	
 	List<Pet> findByType(String type);
 	
+	List<Pet> findByTypeAndStatus(String type, String status);
+	
 }

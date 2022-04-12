@@ -16,5 +16,7 @@ public interface RequestService {
     Request update();
 
     void delete();
+    
+    void removeRequest(long id, String username);
 
 }

@@ -1,5 +1,7 @@
 package mx.edu.utez.adoptaMe.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -50,19 +52,32 @@ public class PetController {
 	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
 			@PathVariable(required = true) String type) {
     	
+    	model.addAttribute("location", type);
     	type = type.equals("perros") ? "perro" : "gato";
+    	
+    	List<Pet> filteredPets = petServiceImpl.findByTypeAndStatus(type, "accepted");
     	
     	User user = new User();
         if(authentication != null) {
     		String username = authentication.getName();
+    		model.addAttribute("usernameFromModel", username);
     		user = userServiceImpl.findByUsername(username);
     		session.setAttribute("user", user);
+    		
+    		for(Pet petVar: filteredPets) {
+        		for(Request request: petVar.getRequests()) {
+        			if(request.getUser().getUsername().equals(username)) {
+        				petVar.setStatus("requestedByYou");        				
+        			}
+        		}
+        	}
     	}
+        
         pet.setUser(user);
     	model.addAttribute("user", user);
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalityList", personalityServiceImpl.listAll());
-        model.addAttribute("listPets",  petServiceImpl.findByType(type));
+        model.addAttribute("listPets",  filteredPets);
 		return "petsList";
 	}
     
@@ -184,9 +199,25 @@ public class PetController {
         }
 
     }
+    
+    @PostMapping("/removeRequest")
+    public String removeRequest(@RequestParam("petId") long petId,
+    		@RequestParam(name = "location", required = true) String location,
+    		Authentication authentication, RedirectAttributes redirectAttributes) {
+    	
+    	
+    	System.err.println("This is the id for removal " + petId);
+    	
+    	
+    	requestServiceImpl.removeRequest(petId, authentication.getName());
+    	redirectAttributes.addFlashAttribute("msg_success", "Se ha removido la solicitud con exito");
+    	
+    	return "redirect:/mascotas/" + location;
+    }
 
-    @PostMapping("/adopt")
+    @PostMapping("/requestAdoption")
     public String adopt(@RequestParam(name = "petId", required = true) long id,
+    		@RequestParam(name = "location", required = true) String location,
     		Authentication authentication,
     		RedirectAttributes redirectAttributes) {
     	
@@ -197,11 +228,11 @@ public class PetController {
     	Request response = requestServiceImpl.save(request);
     	
     	if(response.getId() > 0) {
-    		redirectAttributes.addFlashAttribute("msg_success", "Acción realizada con éxito");    		
-    		return "redirect:/mascotas";
+    		redirectAttributes.addFlashAttribute("msg_success", "Solicitud realizada con éxito");    		
+    		return "redirect:/mascotas/" + location;
     	}
     	redirectAttributes.addFlashAttribute("msg_error", "Ha ocurrido un error");
-    	return "redirect:/mascotas";
+    	return "redirect:/mascotas/" + location;
     }
 
 }

@@ -27,24 +27,22 @@
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container" style="margin-top:70px;">
         <div class="row">
-            <form id="modificarNoticia" name="modificarNoticia" novalidate th:action="@{/savePost}"
-            method="post" th:object="${post}">
+            <form name="modificarNoticia" th:action="@{/savePost}"
+            method="post" th:object="${post}" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="hidden" id="idEdit" th:field="*{id}">
-                    <input type="hidden" id="imageEdit" th:field="*{image}">
-                    <input type="hidden" id="postDate" th:field="*{postDate}">
                     <div class="form-row">
                         <div class="col-12 col-sm-6 col-md-6">
                             <label for="title" style="color: #687281;"><b>Título </b><span
                                     style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="titleEdit" th:field="*{title}"
+                            <input required type="text" class="form-control" id="titleEdit" th:field="*{title}"
                                 placeholder="Ingresa un título corto">
                         </div>
                         <div class="col-12 col-sm-4 col-md-4">
                             <div class="form-check">
                                 <label class="form-check-label" for="isPrincipalEdit"
                                     style="color: #687281;"><b>¿Es
-                                        principal? </b><span style="color: red;">*</span></label>
+                                        principal? </b></label>
                                 <input type="checkbox" class="form-check-input" id="isPrincipal"
                                     th:field="*{isMain}" style="display: block; margin-left: 0%;">
                             </div>
@@ -56,17 +54,15 @@
                                 th:field="*{content}"
                                 placeholder="Ingresa el contenido de la noticia"></textarea>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 mt-3">
                             <label for="image" style="color: #687281;"><b>Imagen </b><span
                                     style="color: red;">*</span></label>
-                            <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                imagen</button>
-                            <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
+                            <input class="form-control" type="file" name="imagenPost" id="imagenPostEdit" accept=".jpg, .jpeg, .png">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" th:action="@{/noticias}">Cancelar</button>
                     <button type="submit" class="btn btn-success">Guardar</button>
                 </div>
             </form>

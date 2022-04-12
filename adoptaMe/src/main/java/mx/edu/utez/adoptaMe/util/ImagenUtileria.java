@@ -7,13 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ImagenUtileria {
 
-    public static String guardarImagen(MultipartFile multipartFile, String ruta){
-        String nombreImagen = multipartFile.getOriginalFilename();
-
+    public static String guardarImagen(MultipartFile multipartFile, String ruta, String nombre){
 
 		try {
 
-			String rutaArchivo = ruta + "/" + nombreImagen;
+			String rutaArchivo = ruta + "/" + nombre;
 
 			System.err.println(rutaArchivo);
 
@@ -21,7 +19,7 @@ public class ImagenUtileria {
 
 			multipartFile.transferTo(imagen);
 
-			return nombreImagen;
+			return nombre;
 
 		} catch (IOException e) {
 

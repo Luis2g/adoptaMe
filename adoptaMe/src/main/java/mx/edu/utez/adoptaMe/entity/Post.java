@@ -36,7 +36,7 @@ public class Post {
     @Column(name = "post_date", nullable = true, length = 10)
     private String postDate;
 
-    @Column(nullable = true, length = 45)
+    @Column(nullable = true, length = 45, unique = true)
 	private String image;
 
 

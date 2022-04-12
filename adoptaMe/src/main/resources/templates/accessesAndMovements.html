@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<div th:replace="fragments/header :: header" ></div>
+<body>
+	<div th:replace="fragments/navbar :: navbar" ></div>
+	
+	<div style="margin-top: 75px" class="container" >
+	
+		<div class="row" >
+			<div class="col-12 d-flex justify-content-end" >
+				<a th:if="${location.equals('accesses')}" th:href="@{/usuarios/movimientos}" class="btn btn-success" >Movimientos</a>
+				<a th:if="${location.equals('movements')}" th:href="@{/usuarios/accesos}" class="btn btn-success" >Accesos</a>
+			</div>
+		</div>
+	
+		
+		<h1 th:if="${location.equals('accesses')}" style="color: #ccc" class="text-center mb-5" >Accessos</h1>
+		<h1 th:if="${location.equals('movements')}" style="color: #ccc" class="text-center mb-5" >Movimientos</h1>
+		
+		<div style="margin-inline: 10%" >
+			<div th:if="${accesses.size()} != 0" >
+				<div class="table-responsive" >
+					<table class="table" >
+						<thead>
+							<tr>
+								<th style="color: #727b88" >#</th>
+								<th style="color: #727b88" >Usuario</th>
+								<th style="color: #727b88" >Rol del usuario</th>
+								<th style="color: #727b88" >Fecha y hora de acceso</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tmpAccess: ${listPages}" >
+								<td th:text="${tmpAccess.id}" ></td>
+								<td th:text="${tmpAccess.username}" ></td>
+								<td th:text="${tmpAccess.role}" ></td>
+								<td th:text="${tmpAccess.date}" ></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div>
+						<h4 th:text="'total de pag. ' + ${listPages.totalPages}" ></h4>
+					</div>
+					
+					<nav th:if="${listPages.totalPages > 0}" aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item" th:classappend="${listPages.number == 0 ? 'disabled' : ''}">
+								<a th:href="@{/usuarios/accesos(page=${listPages.number - 1})}" class="page-link">Anterior</a>
+							</li>
+					
+							<li class="page-item" th:classappend="${i eq listPages.number + 1} ? 'active'"
+								th:each="i : ${#numbers.sequence( 1, listPages.totalPages, 1)}">
+								<a class="page-link" th:href="@{/usuarios/accesos?page={tmpPag} (tmpPag=${i-1}) }" th:text="${i}"
+									th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+							</li>
+							<li class="page-item"
+								th:classappend="${listPages.number == (listPages.totalPages - 1) ? 'disabled' : ''}">
+								<a th:href="@{/usuarios/accesos(page=${listPages.number + 1})}" class="page-link">Siguiente</a>
+							</li>
+						</ul>
+					</nav>
+				</div>	
+			</div>
+			<div th:if="${movements.size()} != 0" >
+				<div class="table-responsive" >
+					<table class="table" >
+						<thead>
+							<tr>
+								<th style="color: #727b88" >#</th>
+								<th style="color: #727b88" >Usuario</th>
+								<th style="color: #727b88" >Acción</th>
+								<th style="color: #727b88" >Objeto</th>
+								<th style="color: #727b88" >Información</th>
+								<th style="color: #727b88" >fecha y hora</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="tmpMovement, index : ${movements}" >
+								<td th:text="${index.count}" ></td>
+								<td th:text="${tmpMovement.username}" ></td>
+								<td th:text="${tmpMovement.action}" ></td>
+								<td th:text="${tmpMovement.entity}" ></td>
+								<td th:text="${tmpMovement.data}" ></td>
+								<td th:text="${tmpMovement.date}" ></td>
+							</tr>
+						</tbody>
+					</table>		
+				</div>
+			</div>
+				
+		</div>
+		
+	
+	</div>
+	
+
+	<div th:replace="fragments/footer :: footer" ></div>
+
+</body>
+</html>

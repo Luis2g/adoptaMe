@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	
         http
             .authorizeRequests()
-            .antMatchers("/", "/imagenes/**", "login", "/logout", "/inicio", "/mascotas", "/usuarios/registro", "/usuarios/guardar", "/noticias").permitAll()
+            .antMatchers("/", "/imagenes/**", "login", "/logout", "/inicio", "/mascotas", "/mascotas/perros", "/mascotas/gatos", "/usuarios/registro", "/usuarios/guardar", "/noticias").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin().successHandler(successHandler).loginPage("/login").permitAll()

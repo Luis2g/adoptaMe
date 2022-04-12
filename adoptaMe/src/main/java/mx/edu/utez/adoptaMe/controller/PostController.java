@@ -1,10 +1,8 @@
 package mx.edu.utez.adoptaMe.controller;
 
-
 import javax.validation.Valid;
 
 import javax.servlet.http.HttpSession;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,71 +25,139 @@ import mx.edu.utez.adoptaMe.service.PostServiceImpl;
 
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 import mx.edu.utez.adoptaMe.util.ImagenUtileria;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.security.access.annotation.Secured;
 
 @Controller
 public class PostController {
-    
+
     @Autowired
     private PostServiceImpl postServiceImpl;
 
-    
     @Autowired
     private UserServiceImpl userServiceImpl;
-    
 
     @GetMapping("/modals")
-    public String modals(Post post){
+    public String modals(Post post) {
 
         return "inicioModals";
     }
 
-    @PostMapping("/savePost")
-    public String savePet(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, 
-    RedirectAttributes redirectAttributes,Authentication authentication, HttpSession session, 
-    @RequestParam("imagenPost") MultipartFile multipartFile){            
-        String username = authentication.getName();
+    public String save() {
+        String token = "";
 
-        User user = userServiceImpl.findByUsername(username);
-
-        session.setAttribute("user", user);
-
-        post.setUser(user);
-
-        if(!multipartFile.isEmpty()){
-            String ruta = "C:/mascotas/img-post";
-            String nombreImagen = ImagenUtileria.guardarImagen(multipartFile, ruta);
-            if(nombreImagen != null ){
-                post.setImage(nombreImagen);
-            }
+        for (int i = 0; i < 16; i++) {
+            double numero = Math.random() * 10;
+            int parcear = (int) numero;
+            token += parcear;
         }
 
-        if(result.hasErrors()){
-            for(ObjectError error: result.getAllErrors()){
-				System.out.println("Error" + error.getDefaultMessage());
-			}
-            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-            return "redirect:/noticias";
-        }else{
-            boolean response = postServiceImpl.save(post); 
-            if(response){
-                redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
-                return "redirect:/noticias";
-            }else{
-                redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-                return "redirect:/noticias";
-            }
-        }        
+        return token;
     }
+
+    @PostMapping("/savePost")
+    @Secured("ROLE_ADMIN")
+    public String savePost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model,
+            RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
+            @RequestParam(name = "imagenPost", required = false) MultipartFile multipartFile) {
+
+        if (post.getId() == null) {
+            String username = authentication.getName();
+            User user = userServiceImpl.findByUsername(username);
+            session.setAttribute("user", user);
+            post.setUser(user);
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDateTime now = LocalDateTime.now();
+            post.setPostDate(dtf.format(now));
+
+            if (result.hasErrors()) {
+                for (ObjectError error : result.getAllErrors()) {
+                    System.out.println("Error" + error.getDefaultMessage());
+                }
+                redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                return "redirect:/noticias/editar/" + post.getId();
+            } else {
+
+                boolean response = false;
+                String generatedToken = save();
+                try {                
+                    post.setImage(generatedToken);
+                    response = postServiceImpl.save(post);
+                } catch (Exception e) {
+                    return "redirect:/savePost";
+                }
     
+                String ruta = "C:/mascotas/img-post";
+                ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
+                
+    
+                if (response) {
+                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
+                    return "redirect:/noticias";
+    
+                } else {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/noticias";
+                }
+            }
+
+        }else{
+            Post postFromDB = postServiceImpl.edit(post.getId());
+
+            postFromDB.setTitle(post.getTitle());
+            postFromDB.setContent(post.getContent());
+            postFromDB.setIsMain(post.getIsMain());
+            System.out.println(postFromDB.getImage());
+
+            if (result.hasErrors()) {
+                for (ObjectError error : result.getAllErrors()) {
+                    System.out.println("Error" + error.getDefaultMessage());
+                }
+                redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                return "redirect:/noticias/editar/" + post.getId();
+            } else {
+
+                boolean response = false;
+
+                if(multipartFile != null && !multipartFile.isEmpty()){                    
+                    String generatedToken = save();
+                    try {                
+                        postFromDB.setImage(generatedToken);
+                        response = postServiceImpl.save(postFromDB);
+                    } catch (Exception e) {
+                        return "redirect:/savePost";
+                    }
+        
+                    String ruta = "C:/mascotas/img-post";
+                    ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
+                }else{
+
+                    response = postServiceImpl.save(postFromDB);
+                }
+                
+                if (response) {
+                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la modificación correctamente!");
+                    return "redirect:/noticias";
+    
+                } else {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al modificar!");
+                    return "redirect:/noticias";
+                }
+            }
+        }
+        
+    }
 
     @GetMapping("/noticias")
-    public String news(Model model,Post post, Authentication authentication, HttpSession session) {
+    public String news(Model model, Post post, Authentication authentication, HttpSession session) {
 
-        if(authentication != null) {
-    		String username = authentication.getName();
-    		User user = userServiceImpl.findByUsername(username);
-    		session.setAttribute("user", user);
-    	}
+        if (authentication != null) {
+            String username = authentication.getName();
+            User user = userServiceImpl.findByUsername(username);
+            session.setAttribute("user", user);
+        }
 
         model.addAttribute("postList", postServiceImpl.listAll());
         Session.setUrl("/noticias");
@@ -99,19 +165,19 @@ public class PostController {
     }
 
     @GetMapping("/noticias/editar/{id}")
-    public String editNews(@PathVariable long id, Model model, RedirectAttributes redirectAttributes){
+    @Secured("ROLE_ADMIN")
+    public String editNews(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
+            HttpSession session) {
         Post post = postServiceImpl.edit(id);
-        if (post != null){
+        if (post != null) {
             model.addAttribute("post", post);
+            Session.setUrl("/noticias/editar/{i}");
             return "editNews";
-        }else{
+        } else {
             redirectAttributes.addFlashAttribute("msg_error", "Registro no encontrado");
             return "redirect:/noticias";
         }
-        
+
     }
-
-
-    
 
 }

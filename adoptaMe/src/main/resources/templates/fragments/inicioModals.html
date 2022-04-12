@@ -322,68 +322,6 @@
 
 </html> -->
 
-<!-- Este no tiene el editor <div th:fragment="modal-new">
-    <div class="modal fade" id="modalRegistrarNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar noticia</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="registrarNoticia" name="registrarNoticia" novalidate th:action="@{/savePost}"
-                        method="post" th:object="${post}">
-                        <div class="form-group">
-                            <div></div>
-                            <div class="form-row">
-                                <div class="col-12 col-sm-6 col-md-6">
-                                    <label for="title" style="color: #687281;"><b>Título </b><span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="title" th:field="*{title}"
-                                        placeholder="Ingresa un título corto">
-                                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-                                        class="alert alert-danger mb-3 mt-3"></div>
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es
-                                                principal? </b><span style="color: red;">*</span></label>
-                                        <input type="checkbox" class="form-check-input" id="isPrincipal"
-                                            th:field="*{isMain}" style="display: block; margin-left: 0%;">
-                                        <div th:if="${#fields.hasErrors('isMain')}" th:errors="*{isMain}"
-                                            class="alert alert-danger mb-3 mt-3"></div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <label for="contenido" style="color: #687281;"><b>Contenido </b><span
-                                            style="color: red;">*</span></label>
-                                    <textarea class="form-control col-12" id="contenido" th:field="*{content}"
-                                        placeholder="Ingresa el contenido de la noticia"></textarea>
-                                    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
-                                        class="alert alert-danger mb-3 mt-3"></div>
-                                </div>
-                                <div class="col-6">
-                                    <label for="image" style="color: #687281;"><b>Imagen </b><span
-                                            style="color: red;">*</span></label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 <div th:fragment="modal-new">
     <div class="modal fade" id="modalRegistrarNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true" data-backdrop="static">
@@ -404,7 +342,7 @@
                                 <div class="col-12 col-sm-6 col-md-6">
                                     <label for="title" style="color: #687281;"><b>Título </b><span
                                             style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="title" th:field="*{title}"
+                                    <input required type="text" class="form-control" id="title" th:field="*{title}"
                                         placeholder="Ingresa un título corto">
                                     <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                                         class="alert alert-danger mb-3 mt-3"></div>
@@ -412,23 +350,21 @@
                                 <div class="col-12 col-sm-4 col-md-4">
                                     <div class="form-check">
                                         <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es
-                                                principal? </b><span style="color: red;">*</span></label>
+                                                principal? </b></label>
                                         <input type="checkbox" class="form-check-input" id="isPrincipal"
                                             th:field="*{isMain}" style="display: block; margin-left: 0%;">
-                                        <div th:if="${#fields.hasErrors('isMain')}" th:errors="*{isMain}"
-                                            class="alert alert-danger mb-3 mt-3"></div>
                                     </div>
                                 </div>
                                 <div class="col-12 mt-3">
                                     <label for="contenido" style="color: #687281;"><b>Contenido </b><span
                                             style="color: red;">*</span></label>
-                                    <textarea class="form-control form-control-lg col-12" id="content"
+                                    <textarea required class="form-control form-control-lg col-12" id="content"
                                         th:field="*{content}" placeholder="Ingresa el contenido de la noticia"
                                         rows="10"></textarea>
                                     <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
                                         class="alert alert-danger mb-3 mt-3"></div>
                                 </div>
-                                <div class="col">
+                                <div class="col mt-3">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
                                     <input class="form-control" type="file" name="imagenPost" id="image" accept=".jpg, .jpeg, .png">
@@ -445,58 +381,3 @@
         </div>
     </div>
 </div>
-<!-- Este no tiene el editor <div th:fragment="modal-editNew">
-    <div class="modal fade" id="modalModificarNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modificar entrada de blog</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="modificarNoticia" name="modificarNoticia" novalidate th:object="${post}">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <input type="text" th:field="*{id}" />
-                                <div class="col-12 col-sm-6 col-md-6">
-                                    <label for="title" style="color: #687281;"><b>Título </b><span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" class="form-control" id="title" th:field="*{title}"
-                                        placeholder="Ingresa un título corto">
-                                </div>
-                                <div class="col-12 col-sm-4 col-md-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="isPrincipal" style="color: #687281;"><b>¿Es
-                                                principal? </b><span style="color: red;">*</span></label>
-                                        <input type="checkbox" class="form-check-input" id="isPrincipal" th:field="*{isMain}"
-                                            style="display: block; margin-left: 0%;">
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3">
-                                    <label for="contenido" style="color: #687281;"><b>Contenido </b><span
-                                            style="color: red;">*</span></label>
-                                    <textarea class="form-control col-12" id="contenido" th:field="*{content}"
-                                        placeholder="Ingresa el contenido de la noticia"></textarea>
-                                </div>
-                                <div class="col-6">
-                                    <label for="image" style="color: #687281;"><b>Imagen </b><span
-                                            style="color: red;">*</span></label>
-                                    <button type="button" onclick="uploadFile()" class="col-12 btn btn-info">Subir
-                                        imagen</button>
-                                    <input type="file" style="display: none;" id="image" accept=".jpg, .jpeg, .png">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning">Modificar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->

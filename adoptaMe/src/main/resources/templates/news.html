@@ -84,14 +84,14 @@
 
             <div th:each="tmpPost : ${postList}">
                 <a th:href="@{/noticias/editar/{id} (id = ${tmpPost.id})}" style="text-decoration: none; color: black;">
-                        <div
+                        <div th:id="${tmpPost.id}"
                             class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
                             <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
                                 <div class="d-flex justify-content-between">
                                     <h3 th:text="${tmpPost.title}"></h3>
                                 </div>
-                                <strong class="d-inline-block mb-2 text-success"
-                                    th:text="${tmpPost.isMain == true} ? 'Principal':'Normal' "></strong>
+                                <strong class="badge badge-success mb-2 col-2"
+                                    th:text="${tmpPost.isMain == true} ? 'Principal':'' "></strong>
                                 <div class="mb-1 text-muted">Publicado: [[${tmpPost.postDate}]]</div>
                                 <p class="card-text mb-auto" th:utext="${tmpPost.content}"></p>
                             </div>

@@ -1,5 +1,8 @@
 package mx.edu.utez.adoptaMe.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -21,8 +24,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.entity.Access;
+import mx.edu.utez.adoptaMe.entity.Log;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 import mx.edu.utez.adoptaMe.service.AccessServiceImpl;
+import mx.edu.utez.adoptaMe.service.LogServiceImpl;
 import mx.edu.utez.adoptaMe.service.RoleServiceImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +44,9 @@ public class UserController {
 
 	@Autowired
 	private AccessServiceImpl accessServiceImpl;
+	
+	@Autowired
+	private LogServiceImpl logServiceImpl;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -179,13 +187,35 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		Page<Access> listPages = accessServiceImpl.listarPaginacion(PageRequest.of(pageable.getPageNumber(), 5, Sort.by("date")));
+		Page<Access> listPages = accessServiceImpl.listarPaginacion(PageRequest.of(pageable.getPageNumber(), 5, Sort.by(Sort.Direction.DESC, "date")));
 		model.addAttribute("listPages", listPages);
 		System.out.println("listPages: " + listPages);
-
+		
+		List<Log> movements = new ArrayList<>();
+		
+		model.addAttribute("location", "accesses");
+		model.addAttribute("movements", movements);
 		model.addAttribute("accesses", accessServiceImpl.findAll());
 
-		return "/accesses";
+		return "/accessesAndMovements";
+	}
+	
+	@GetMapping("/movimientos")
+	public String movements(Authentication authentication, HttpSession session, Model model) {
+		
+		if(authentication != null) {
+    		String username = authentication.getName();
+    		User user = userServiceImpl.findByUsername(username);
+    		session.setAttribute("user", user);
+    	}
+		
+		List<Access> accesses = new ArrayList<>();
+		
+		model.addAttribute("location", "movements");
+		model.addAttribute("accesses", accesses);
+		model.addAttribute("movements", logServiceImpl.findAll());
+		
+		return "/accessesAndMovements";
 	}
 
 }

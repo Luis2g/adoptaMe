@@ -14,6 +14,11 @@ public class PetServiceImpl implements PetService {
 
     @Autowired
     private PetRepository petRepository;
+    
+    @Override
+    public List<Pet> findByType(String type){
+    	return petRepository.findByType(type);
+    }
 
     @Override
     public List<Pet> listAll() {

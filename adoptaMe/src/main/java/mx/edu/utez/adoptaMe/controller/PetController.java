@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
+import mx.edu.utez.adoptaMe.entity.Request;
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
+import mx.edu.utez.adoptaMe.service.RequestServiceImpl;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 
 @Controller
@@ -39,9 +42,16 @@ public class PetController {
     
     @Autowired
     private UserServiceImpl userServiceImpl;
+    
+    @Autowired
+    private RequestServiceImpl requestServiceImpl;
 
-    @GetMapping("")
-	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session) {
+    @GetMapping("/{type}")
+	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
+			@PathVariable(required = true) String type) {
+    	
+    	type = type.equals("perros") ? "perro" : "gato";
+    	
     	User user = new User();
         if(authentication != null) {
     		String username = authentication.getName();
@@ -52,7 +62,7 @@ public class PetController {
     	model.addAttribute("user", user);
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalityList", personalityServiceImpl.listAll());
-        model.addAttribute("listPets", petServiceImpl.listAll());
+        model.addAttribute("listPets",  petServiceImpl.findByType(type));
 		return "petsList";
 	}
     
@@ -175,6 +185,23 @@ public class PetController {
 
     }
 
-    
+    @PostMapping("/adopt")
+    public String adopt(@RequestParam(name = "petId", required = true) long id,
+    		Authentication authentication,
+    		RedirectAttributes redirectAttributes) {
+    	
+    	User user = userServiceImpl.findByUsername(authentication.getName());
+    	Pet pet = petServiceImpl.editPet(id);
+    	
+    	Request request = new Request(user, pet);
+    	Request response = requestServiceImpl.save(request);
+    	
+    	if(response.getId() > 0) {
+    		redirectAttributes.addFlashAttribute("msg_success", "Acción realizada con éxito");    		
+    		return "redirect:/mascotas";
+    	}
+    	redirectAttributes.addFlashAttribute("msg_error", "Ha ocurrido un error");
+    	return "redirect:/mascotas";
+    }
 
 }

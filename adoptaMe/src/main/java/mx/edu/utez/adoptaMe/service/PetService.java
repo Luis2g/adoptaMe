@@ -9,6 +9,8 @@ public interface PetService {
 	List<Pet> findByStatus(String status);
 
 	void updateStatus(String status, long id);
+	
+	List<Pet> findByType(String type);
     
     List<Pet> listAll();
 

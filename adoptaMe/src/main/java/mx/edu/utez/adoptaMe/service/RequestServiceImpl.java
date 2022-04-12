@@ -2,28 +2,34 @@ package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import mx.edu.utez.adoptaMe.entity.Request;
+import mx.edu.utez.adoptaMe.repository.RequestRepository;
 
 @Service
 public class RequestServiceImpl implements RequestService{
+	
+	@Autowired
+	private RequestRepository requestRepository;
     
     private List<Request> list = null;
 
     @Override
     public List<Request> listAll(){
-        return list;
+        return requestRepository.findAll();
     }
 
     @Override
-    public Request save() {
-        return null;
+    public Request save(Request request) {
+        return requestRepository.save(request);
     }
 
     @Override
-    public Request edit() {
-        return null;
+    public Request edit(long id) {
+        return requestRepository.getById(id);
     }
 
     @Override

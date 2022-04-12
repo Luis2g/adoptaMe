@@ -2,15 +2,16 @@ package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import mx.edu.utez.adoptaMe.entity.Request;
+
 
 public interface RequestService {
     
     List<Request> listAll();
 
-    Request save();
+    Request save(Request request);
 
-    Request edit();
+    Request edit(long id);
 
     Request update();
 

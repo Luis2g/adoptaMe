@@ -109,7 +109,7 @@
                         </span>
                         &nbsp;Filtrar
                     </button>
-                    <a th:href="@{/mascotas/registro}" class="btn btn-success">Registrar
+                    <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:href="@{/mascotas/registro}" class="btn btn-success">Registrar
                     </a> 
                 </div>
 
@@ -127,14 +127,22 @@
                             </button> -->
                             <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Â¡Adoptar!</button> 
                             <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > Â¡Adoptar! </a>-->
-                            <button sec:authorize="hasAuthority('ROLE_ADOPTER')" class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas información</button >
-                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
-
+                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas información</button >
+                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:if="${tmpPet.user.username.equals(usernameFromModel)}" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
                     </div>
 
                     <div class="card-footer text-muted">
                         <div class="row">
                             <div class="col-12 text-right">
+                            	<div th:if="${tmpPet.status.equals('requestedByYou')}"  >
+                            		<form th:action="@{/mascotas/removeRequest}" method="POST" th:attr="id=${'removalForm' + tmpPet.id}" >
+                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+                            			<input type="hidden" name="location" th:value="${location}" >
+	                            		<button type="button" th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'" class="btn btn-warning" >Retirar solicitud</button>
+                            		</form>
+	                            	<h4 >Solicitada</h4>
+                            	</div>
+                            
                                 <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
                                     <i class="feather-14" data-feather="heart"></i>
                                 </button>
@@ -192,9 +200,10 @@
                                             <p style="text-align: justify;">[[${pet.description}]]</p>
                                         </div>
 	                                        <div class="col-12 d-flex justify-content-end" >
-		                                        <form th:action="@{/mascotas/adopt}" method='POST' >
+		                                        <form th:if="${!pet.status.equals('requestedByYou')}" sec:authorize="hasAuthority('ROLE_ADOPTER')" th:action="@{/mascotas/requestAdoption}" method='POST' >
                 		                        	<input name="petId" type="hidden" th:value="${pet.id}" >
-	                    	                    	<button  class="btn btn-success" > Solicitar adopción </button>
+                		                        	<input name="location" type="hidden" th:value="${location}" > 
+	                    	                    	<button class="btn btn-success" > Solicitar adopción </button>
         		                                </form>
 	                                        </div>                                        
                                     </div>
@@ -254,6 +263,7 @@
         $("#id").val(ID);
     }
     </script>
+    <script th:src="@{/js/petFunctions.js}" ></script>
 </body>
 
 </html>

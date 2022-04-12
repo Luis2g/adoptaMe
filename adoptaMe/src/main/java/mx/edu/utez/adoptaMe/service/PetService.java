@@ -23,5 +23,7 @@ public interface PetService {
     Pet update();
 
     boolean delete();
+    
+    List<Pet> findByTypeAndStatus(String type, String status);
 
 }

@@ -68,8 +68,6 @@ public class Pet {
     public Pet() {
     }
 
-    
-
     public Pet(Long id,
 			@Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50, message = "El nombre de la mascota debe contener al menos 2 caracteres") String name,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 15, max = 500, message = "La descripción debe tener al menos 15 caracteres") String description,

@@ -46,7 +46,18 @@
         <div class="row">
 
             <div class="col-12">
-                <div class="row" >
+                <div class="row" >	
+                	<div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-12 mt-4" > 
+                		<h1 style="color: #ccc" class="text-center" >Mascotas publicadas</h1> 
+                	</div>
+                	<div sec:authorize="hasAuthority('ROLE_ADOPTER')" class="col-12 mt-4" >
+                		<h1 style="color: #ccc" class="text-center" >¡Adopta una mascota hoy!</h1>
+                		<h3 style="color: #ccc" class="text-center" >y ayudales a conseguir un hogar</h3>
+               		</div>
+                	<div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="col-12 mt-4" > 
+                		<h1 style="color: #ccc" class="text-center" >Publica una mascota</h1> 
+                		<h3 style="color: #ccc" class="text-center" >y asi podrá encontrar un hogar </h3>
+                	</div>
                     <div class="offset-md-8  col-12 col-md-4 " >
                         <label for="basic-url">Busqueda</label>
                         <div class="input-group mb-3">
@@ -116,8 +127,8 @@
                             </button> -->
                             <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Â¡Adoptar!</button> 
                             <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > Â¡Adoptar! </a>-->
-                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Â¡Adoptar!</button >
-                            <a th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
+                            <button sec:authorize="hasAuthority('ROLE_ADOPTER')" class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas información</button >
+                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
 
                     </div>
 
@@ -180,6 +191,12 @@
                                             <label for="description" style="color: #687281;"><b>DescripciÃ³n de la mascota </b></label>
                                             <p style="text-align: justify;">[[${pet.description}]]</p>
                                         </div>
+	                                        <div class="col-12 d-flex justify-content-end" >
+		                                        <form th:action="@{/mascotas/adopt}" method='POST' >
+                		                        	<input name="petId" type="hidden" th:value="${pet.id}" >
+	                    	                    	<button  class="btn btn-success" > Solicitar adopción </button>
+        		                                </form>
+	                                        </div>                                        
                                     </div>
                                 </div>
                         </div>

@@ -20,4 +20,6 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
     @Query(value="update pets set status= :statusIn where id = :idIn", nativeQuery=true)
     void updateStatus(String statusIn, long idIn);
 	
+	List<Pet> findByType(String type);
+	
 }

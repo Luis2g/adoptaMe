@@ -23,6 +23,12 @@ public class Request {
 
     public Request() {
     }
+    
+    public Request(User user, Pet pet) {
+    	this.user = user;
+    	this.petRequest = pet;
+    	this.isAccepted = false;
+    }
 
     public Request(Long id, Boolean isAccepted, User user, Pet petRequest) {
         this.id = id;

@@ -44,9 +44,9 @@ public class Person {
     @NotEmpty(message = "Este campo es requerido")
     private String gender;
 
-    @Column(name = "phone_number", nullable = false, length = 10)
-    @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros")
-    @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros")
+    @Column(name = "phone_number", nullable = false, length = 14)
+    @Size(min = 7, max = 14, message = "El numero telefónico debe contener al menos 7 numeros")
+    @Pattern(regexp = "[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "Este campo solo debe contener numeros")
     @NotEmpty(message = "Este campo es requerido")
     private String phoneNumber;
 

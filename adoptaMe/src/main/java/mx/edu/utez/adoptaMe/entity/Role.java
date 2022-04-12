@@ -43,15 +43,6 @@ public class Role {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
-	}
-
-
-    //This used to be the old configuration before Spring Security
-//    // configuration for roleHasPermit
-//    @OneToMany(mappedBy = "role")
-//    @JsonIgnore
-//    private List<RoleHasPermit> rolesHasPermits;
-
-    
+	} 
 
 }

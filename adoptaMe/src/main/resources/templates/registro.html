@@ -12,28 +12,32 @@
             </div>
 
 
-            <form  th:action="@{/usuarios/guardar}" class="row" th:object="${user}" method="POST" >
+            <form  th:action="@{/usuarios/guardar}" id="registerForm" class="row" th:object="${user}" method="POST" >
             	<input type="hidden" th:field="*{enabled}" th:value="true" >
             	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
                     <label for="name" >Nombre <span style="color:red" >*</span> </label>
                     <input 
                         id="name"
+                        onChange="validations.name()"
                         class="form-control" 
                         type="text" 
                         th:field="*{person.name}" 
                         placeholder="Nombre"
                     >
+                    <span style="color: red" id="nameSpan" > </span>
                     <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
                 <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
                     <label for="surname" >Apellido paterno <span style="color:red" >*</span></label>
                     <input 
                         id="surname"
+                        onChange="validations.surname()"
                         class="form-control" 
                         type="text" 
                         th:field="*{person.surname}" 
                         placeholder="Apellido Paterno"
                     >
+    				<span style="color: red" id="surnameSpan" > </span>
                     <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
@@ -41,23 +45,30 @@
                     <label for="secondSurname" >Apellido materno <span style="color:red" >*</span> </label>
                     <input 
                         id="secondSurname"
+                        onChange="validations.secondSurname()"
                         class="form-control " 
                         type="text" 
                         th:field="*{person.secondSurname}" 
                         placeholder="Apellido Materno"
-                        >
-                        <div th:if="${#fields.hasErrors('person.secondSurname')}" th:errors="*{person.secondSurname}" class="alert alert-danger mb-3 mt-3"></div>
+                    >
+					<span style="color: red" id="secondSurnameSpan" > </span>
+                    <div th:if="${#fields.hasErrors('person.secondSurname')}" th:errors="*{person.secondSurname}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
                 <div class="col-12 col-sm-6">
-                    <label for="phoneNumber" >Número telefonico <span style="color:red" >*</span> </label>
+                    <label for="phoneNumber" >Número telefonico <span style="color:red" >*</span> </label>                    
                     <input 
-                        id="phoneNumber"
-                        class="form-control" 
-                        type="text" 
-                        th:field="*{person.phoneNumber}" 
-                        placeholder="Número telefónico"
-                    >
+                    	id="phoneNumber"
+                    	onChange="validations.phoneNumber()"
+                    	th:field="*{person.phoneNumber}" 
+                    	type="text" 
+                    	class="form-control form-control-lg phone-mask" 
+                    	maxlength="10"
+						minlength="14" 
+						placeholder="( ___ ) - ___ - __ - __" 
+						required
+					>
+                    <span style="color: red" id="phoneNumberSpan" > </span>
                     <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
@@ -66,6 +77,8 @@
                     <div  style="display: block">
                         <input
                             id="man"
+                            onChange="validations.gender()"
+                        	name="gender"
                             type="radio" 
                             th:field="*{person.gender}" 
                             value="H" 
@@ -75,14 +88,16 @@
                     <div  style="display: block">
                         <input 
                             id="woman"
+                            onChange="validations.gender()"
+                            name="gender"
                             type="radio" 
                             th:field="*{person.gender}" 
-                            name="gender" 
                             value="M" 
                         >
                         <label style="margin-block: 0px;" for="woman" >Mujer</label>
                     </div>
                     <div th:if="${#fields.hasErrors('person.gender')}" th:errors="*{person.gender}" class="alert alert-danger mb-3 mt-3"></div>
+                	<span style="color: red" id="genderSpan" ></span>
                 </div>
                     
                 
@@ -92,11 +107,13 @@
                     <label for="username" >Nombre de usuario<span style="color:red" >*</span> </label>
                 	<input 
                         id="username"
+                        onChange="validations.username()"
                         class="form-control" 
                         th:field="*{username}" 
                         type="text" 
                         placeholder="Nombre de usuario"
                     >
+                    <span style="color: red" id="usernameSpan" ></span>
                     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
@@ -105,23 +122,27 @@
                     <label for="password" >Contraseña<span style="color:red" >*</span> </label>
                 	<input 
                         id="password"
+                        onChange="validations.password()"
                         class="form-control" 
                         th:field="*{password}" 
                         type="password" 
                         placeholder="********"
                     >
+                    <span style="color: red" id="passwordSpan" ></span>
                     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
                 <div class="mb-3 col-12 col-sm-4">
                     <label for="confirmacion" >Confirmación<span style="color:red" >*</span> </label>
                 	<input 
-                        id="confirmacion"
+                        id="passwordConfirmation"
+                        onChange="validations.passwordConfirmation()"
                         class="form-control" 
                         name="confirmation"
-                        type="passsword" 
+                        type="password" 
                         placeholder="********"
                     >
+                    <span style="color: red" id="passwordConfirmationSpan" ></span> 
                     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
@@ -135,11 +156,13 @@
                     <label for="email" >Correo electrónico<span style="color:red" >*</span> </label>
                 	<input 
                         id="email"
+                        onChange="validations.email()"
                         class="form-control" 
                         th:field="*{email}" 
                         type="email" 
                         placeholder="ejemplo@gmail.com"
                     >
+					<span style="color: red" id="emailSpan" ></span>
                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
@@ -162,7 +185,7 @@
                         <div class="col-12 sm-ml-4 mt-2">
                             <strong class="text-primary col-12 mb-3"><a href="" >Prefiero iniciar sesión</a></strong>
                             <div class="col-12">
-                                <input type="submit" value="Continuar" class="btn btn-success col-8 col-sm-5">
+                                <input type="button" onClick="registerUser()" value="Registrar cuenta" class="btn btn-success col-8 col-sm-5">
                             </div>
                         </div>
                     </div>
@@ -189,5 +212,13 @@
         });
 
     </script>
+    <script th:src="@{/js/userRegistryValidations.js}" ></script>
+    <script th:src="@{/js/jquery.mask.min.js}" ></script>
+    <script>
+		$(document).ready(function () {
+			$('.phone-mask').mask('(000)000-00-00');
+		});
+	</script>
+    
 </body>
 </html>

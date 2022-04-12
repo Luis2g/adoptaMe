@@ -113,8 +113,6 @@ public class User {
 		this.authorities = authorities;
 	}
 
-
-
 	// foreign key for person
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "person_id", nullable = false, unique = true)
@@ -125,11 +123,6 @@ public class User {
     @JsonIgnore
     private List<Donation> donations;
 
-    //This used to be the old configuration before spring security
-//    // configuration for UserHasRole
-//    @OneToMany(mappedBy = "user")
-//    @JsonIgnore
-//    private List<UserHasRole> userHasRoles; 
 
 	@ManyToMany
 	@JoinTable(

@@ -37,26 +37,5 @@ const comparePasswords = () => {
 
 
 
-const passwordValidation = () => {
-	
-	let userDataForm = document.getElementById("userDataForm");
-	let inputPassword = document.getElementById("password");
 
-	Swal.fire({
-	  title: 'Ingrese contraseña para realizar la actualización',
-	  html: `<input type="password" id="password" name="password" class="swal2-input" placeholder="Contraseña">`,
-	  confirmButtonText: 'Validar',
-	  focusConfirm: false,
-	  preConfirm: () => {
-	    const password = Swal.getPopup().querySelector('#password').value
-	    if (!password) {
-	      Swal.showValidationMessage(`La contraseña es requerida`)
-		  return;
-	    }
-		
-		inputPassword.value = password;
-		userDataForm.submit();
-	  }
-	})
-}
 

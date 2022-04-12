@@ -20,14 +20,32 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="tmpAccess, index : ${accesses}" >
-							<td th:text="${index.count}" ></td>
+						<tr th:each="tmpAccess: ${listPages}" >
+							<td th:text="${tmpAccess.id}" ></td>
 							<td th:text="${tmpAccess.username}" ></td>
 							<td th:text="${tmpAccess.role}" ></td>
 							<td th:text="${tmpAccess.date}" ></td>
 						</tr>
 					</tbody>
-				</table>		
+				</table>
+				[[${listPages.totalPages}]]
+				<nav th:if="${listPages.totalPages > 0}" aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item" th:classappend="${listPages.number == 0 ? 'disabled' : ''}">
+							<a th:href="@{/usuarios/accesos(page=${listPages.number - 1})}" class="page-link">Anterior</a>
+						</li>
+				
+						<li class="page-item" th:classappend="${i eq listPages.number + 1} ? 'active'"
+							th:each="i : ${#numbers.sequence( 1, listPages.totalPages, 1)}">
+							<a class="page-link" th:href="@{/usuarios/accesos?page={tmpPag} (tmpPag=${i-1}) }" th:text="${i}"
+								th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+						</li>
+						<li class="page-item"
+							th:classappend="${listPages.number == (listPages.totalPages - 1) ? 'disabled' : ''}">
+							<a th:href="@{/usuarios/accesos(page=${listPages.number + 1})}" class="page-link">Siguiente</a>
+						</li>
+					</ul>
+				</nav>
 			</div>		
 		</div>
 		

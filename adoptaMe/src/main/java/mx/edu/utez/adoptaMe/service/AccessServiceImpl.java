@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,11 @@ public class AccessServiceImpl implements AccessService{
 		List<Access> accesses = accessRepository.findAll(Sort.by(Sort.Direction.DESC, "date"));
 
 		return accesses;
+	}
+
+	@Override
+	public Page<Access> listarPaginacion(Pageable page) {
+		return accessRepository.findAll(page);
 	}
 
 }

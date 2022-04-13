@@ -50,5 +50,9 @@ public class PostServiceImpl implements PostService{
         return false;
     }
 
+    @Override
+    public List<Post> findByStatus(){
+        return postRepository.findByStatus("enabled");
+    }
 
 }

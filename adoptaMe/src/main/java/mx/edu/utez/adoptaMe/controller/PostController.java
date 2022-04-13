@@ -84,6 +84,7 @@ public class PostController {
                 String generatedToken = save();
                 try {                
                     post.setImage(generatedToken);
+                    post.setStatus("enabled");
                     response = postServiceImpl.save(post);
                 } catch (Exception e) {
                     return "redirect:/savePost";
@@ -157,11 +158,42 @@ public class PostController {
             String username = authentication.getName();
             User user = userServiceImpl.findByUsername(username);
             session.setAttribute("user", user);
+            model.addAttribute("postList", postServiceImpl.listAll());
+        }else{
+            model.addAttribute("postList", postServiceImpl.findByStatus());
         }
 
-        model.addAttribute("postList", postServiceImpl.listAll());
+        
         Session.setUrl("/noticias");
         return "news";
+    }
+
+    @GetMapping("/noticias/deshabilitar/{id}")
+    @Secured("ROLE_ADMIN")
+    public String disableNew(@PathVariable long id, RedirectAttributes redirectAttributes){
+        Post post = postServiceImpl.edit(id);
+        post.setStatus("disabled");
+        boolean response = postServiceImpl.save(post);
+        if(response){
+            redirectAttributes.addFlashAttribute("msg_success", "¡Se deshabilitó correctamente la noticia!");
+        }else{
+            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al deshabilitar la noticia!");
+        }
+        return "redirect:/noticias";
+    }
+
+    @GetMapping("/noticias/habilitar/{id}")
+    @Secured("ROLE_ADMIN")
+    public String enableNew(@PathVariable long id, RedirectAttributes redirectAttributes){
+        Post post = postServiceImpl.edit(id);
+        post.setStatus("enabled");
+        boolean response = postServiceImpl.save(post);
+        if(response){
+            redirectAttributes.addFlashAttribute("msg_success", "¡Se habilitó correctamente la noticia!");
+        }else{
+            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al habilitar la noticia!");
+        }
+        return "redirect:/noticias";
     }
 
     @GetMapping("/noticias/editar/{id}")

@@ -15,5 +15,7 @@ public interface PostService {
     Post update();
 
     boolean delete();
+
+    List<Post> findByStatus();
     
 }

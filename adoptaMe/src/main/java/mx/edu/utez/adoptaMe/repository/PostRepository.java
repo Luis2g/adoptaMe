@@ -3,7 +3,8 @@ package mx.edu.utez.adoptaMe.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import mx.edu.utez.adoptaMe.entity.Post;
+import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    
+    List<Post> findByStatus(String status);
 }

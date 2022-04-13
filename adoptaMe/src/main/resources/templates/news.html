@@ -28,14 +28,14 @@
         <div class="row">
             <div class="col-12 mb-3">
                 <div class="col-12 row">
-                    <div class="col-9">
+                    <div class="col-md-8 col-sm-12 col-xs-12 mt-2">
                         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                             <span class="material-icons" style="vertical-align: middle;">add</span>
                             Más noticias
                         </button>
                     </div>
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col ml-5">
+                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-md-3 col-sm-12 col-xs-12 mt-2">
                         <button class="btn btn-primary" type="button" data-toggle="modal"
                             data-target="#modalRegistrarNoticia">
                             <span class="material-icons" style="vertical-align: middle;">create</span>
@@ -82,28 +82,40 @@
             </div>
 
             <div th:each="tmpPost : ${postList}">
-                <a th:href="@{/noticias/editar/{id} (id = ${tmpPost.id})}" style="text-decoration: none; color: black;">
-                        <div th:id="${tmpPost.id}"
-                            class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
-                            <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
-                                <div class="d-flex justify-content-between">
-                                    <h3 th:text="${tmpPost.title}"></h3>
-                                </div>
-                                <strong class="badge badge-success mb-2 col-2"
-                                    th:text="${tmpPost.isMain == true} ? 'Principal':'' "></strong>
-                                <div class="mb-1 text-muted">Publicado: [[${tmpPost.postDate}]]</div>
-                                <p class="card-text mb-auto" th:utext="${tmpPost.content}"></p>
-                            </div>
-                            <div class="col-12 col-md-4 mt-2 d-lg-block">
-                                <img class="rounded" style="width: 95%; height: 200px; object-fit: cover"
-                                    th:src="@{/imagenes/{i} (i = ${tmpPost.image})}">
-                            </div>
+                <div th:id="${tmpPost.id}"
+                    class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+                    <div class="col-12 col-md-8 p-4 d-flex flex-column position-static">
+                        <div class="d-flex justify-content-between">
+                            <h3 th:text="${tmpPost.title}"></h3>
                         </div>
+                        <strong class="badge badge-success mb-2 col-2"
+                            th:text="${tmpPost.isMain == true} ? 'Principal':'' "></strong>
+                        <strong class="badge badge-primary mb-2 col-2" sec:authorize="hasAuthority('ROLE_ADMIN')"
+                            th:text="${tmpPost.status == 'enabled'} ? 'Habilitada':'' "></strong>
+                        <strong class="badge badge-danger mb-2 col-2" sec:authorize="hasAuthority('ROLE_ADMIN')"
+                            th:text="${tmpPost.status == 'disabled'} ? 'Deshabilitada':'' "></strong>
+                        <div class="mb-1 text-muted">Publicado: [[${tmpPost.postDate}]]</div>
+                        <p class="card-text" th:utext="${tmpPost.content}"></p>
                     </div>
-                </a>
+                    <div class="col-12 col-md-4 mt-2 d-lg-block">
+                        <img class="rounded" style="width: 95%; height: 200px; object-fit: cover"
+                            th:src="@{/imagenes/{i} (i = ${tmpPost.image})}">
+                    </div>
+                    <div class="mb-2 d-flex justify-content-end">
+                        <a class="btn btn-warning text-white mr-2" sec:authorize="hasAuthority('ROLE_ADMIN')"
+                            th:href="@{/noticias/editar/{id} (id = ${tmpPost.id})}" method="get">Editar</a>
+                        <a th:if="${tmpPost.status == 'enabled'}" class="btn btn-danger text-white"
+                            sec:authorize="hasAuthority('ROLE_ADMIN')"
+                            th:href="@{/noticias/deshabilitar/{id} (id = ${tmpPost.id})}" method="get">Deshabilitar</a>
+                        <a th:if="${tmpPost.status == 'disabled'}" class="btn btn-success text-white"
+                            sec:authorize="hasAuthority('ROLE_ADMIN')"
+                            th:href="@{/noticias/habilitar/{id} (id = ${tmpPost.id})}" method="get">Habilitar</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div th:replace="fragments/inicioModals :: modal-new"></div>
+    </div>
+    <div th:replace="fragments/inicioModals :: modal-new"></div>
 
     </div>
     <script th:replace="fragments/footer :: footer"></script>

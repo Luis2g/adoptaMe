@@ -24,10 +24,9 @@
                             </div>
                         </div>
                         <div class="carousel-item" th:each="tmpPost : ${postList}">
-                            <img th:src="@{/imagenes/{i} (i = ${tmpPost.image})}" style="width:100%; height: 600px; object-fit: cover;"
+                            <img th:id="${tmpPost.id}" th:src="@{/imagenes/{i} (i = ${tmpPost.image})}" style="width:100%; height: 600px; object-fit: cover;"
                                 class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h1 th:text="${tmpPost.title}" style="color: black;"></h1>
+                            <div class="carousel-caption d-none d-md-block">                                
                             </div>
                         </div>
                     </div>
@@ -81,59 +80,14 @@
 
                 <!--First slide-->
                 <div class="carousel-item active">
-
-                    <div class="col-md-3" style="float:left">
+                    <div class="col-md-3" th:each="tmpPet : ${petList}" style="float:left">
                         <div class="card mb-2">
                             <img class="card-img-top"
                                 src="/images/perrosygatos.webp"
                                 alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
+                                <h4 class="card-title" th:text="${tmpPet.name}"></h4>
+                                <p class="card-text" th:utext="${tmpPet.description}"></p>
                                 <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
                             </div>
                         </div>
@@ -142,67 +96,19 @@
                 <!--/.First slide-->
 
                 <!--Second slide-->
-                <div class="carousel-item">
-
+                <div class="carousel-item" th:each="secondTmpPet : ${secondPetList}">
                     <div class="col-md-3" style="float:left">
                         <div class="card mb-2">
                             <img class="card-img-top"
                                 src="/images/perrosygatos.webp"
                                 alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
+                                <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
+                                <p class="card-text" th:utext="${secondTmpPet.description}"></p>
                                 <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3" style="float:left">
-                        <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make
-                                    up the bulk of the
-                                    card's content.</p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                    
                 </div>
                 <!--/.Second slide-->
             </div>
@@ -213,5 +119,12 @@
     <!--End the cards-->
     <div th:insert="fragments/footer :: footer"></div>
 </body>
+
+<script>
+    function showTitle(img){
+        var imagen = document.getElementById(img);
+        imagen.src = gray(img);
+    }
+</script>
 
 </html>

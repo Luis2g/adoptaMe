@@ -14,6 +14,8 @@ public interface PetService {
     
     List<Pet> listAll();
 
+    List<Pet> listSortedPets();
+
     boolean save(Pet pet);
 
     Pet showPetRequest(Long id);

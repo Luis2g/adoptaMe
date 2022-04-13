@@ -101,7 +101,7 @@
                         <img class="rounded" style="width: 95%; height: 200px; object-fit: cover"
                             th:src="@{/imagenes/{i} (i = ${tmpPost.image})}">
                     </div>
-                    <div class="mb-2 d-flex justify-content-end">
+                    <div class="mb-2 mt-2 d-flex justify-content-end">
                         <a class="btn btn-warning text-white mr-2" sec:authorize="hasAuthority('ROLE_ADMIN')"
                             th:href="@{/noticias/editar/{id} (id = ${tmpPost.id})}" method="get">Editar</a>
                         <a th:if="${tmpPost.status == 'enabled'}" class="btn btn-danger text-white"

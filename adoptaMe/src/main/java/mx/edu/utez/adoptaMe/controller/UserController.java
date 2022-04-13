@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -179,6 +180,7 @@ public class UserController {
 	}
 
 	@GetMapping("/accesos")
+	@Secured("ROLE_ADMIN")
 	public String accesses(Authentication authentication, HttpSession session, Model model, Pageable pageable) {
 		
 		if (authentication != null) {
@@ -201,6 +203,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/movimientos")
+	@Secured("ROLE_ADMIN")
 	public String movements(Authentication authentication, HttpSession session, Model model) {
 		
 		if(authentication != null) {

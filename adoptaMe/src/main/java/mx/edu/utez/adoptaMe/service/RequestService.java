@@ -20,5 +20,7 @@ public interface RequestService {
     void removeRequest(long id, String username);
     
     List<Request> getUserVolunteerRequests(String username);
+    
+    void endAdoption(long petId, String username);
 
 }

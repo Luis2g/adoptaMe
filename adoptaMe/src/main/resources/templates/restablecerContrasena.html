@@ -9,30 +9,31 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-4 mb-2">
 
                                 <div class="card-header text-center">
                                     <strong class="text-center">Solicitud de recuperación de contraseña</strong>
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="img-fluid text-left">
-                                        <a type="" style="font-size: 13px" ><i class="fas fa-arrow-circle-left fa-2x"></i>
-                                        </a>
-                                    </div>
+                                    <a th:href="@{/login}">
+                                        <span class="material-icons" style="vertical-align: middle;">
+                                            arrow_back
+                                        </span>
+                                    </a>
                                     <figure>
-
                                         <div class="img-fluid text-center">
-                                            <img th:src="@{/images/logo.png}" class="img-fluid" width="200px" >
+                                            <img th:src="@{/images/logo.png}" class="img-fluid" width="150px" >
                                         </div>
                                     </figure>
                                     <div class="text-center small text-muted mb-4">Ingresa el correo electronico asociado donde se enviará el enlace para recuperar tu contraseña.</div>
-                                    <form novalidate id="formRecuperacion"  name="loginForm">
-                                        <div class="form-group" >
+                                    <form th:action="@{/reset/password/email}" method="post">
+                                        <div class="form-group">
+                                            <label class="mb-1" style="font-weight: 700; color: #687281;">Correo electrónico</label>
                                             <input type="email"
-                                                    name="correo"
+                                                    name="email"
                                                     class="form-control py-4" 
-                                                    placeholder="Correo electrónico" 
+                                                    placeholder="ejemplo@gmail.com" 
                                                     id="inputEmailAddress"
                                                     minlength="10"
                                                     maxlength="100"

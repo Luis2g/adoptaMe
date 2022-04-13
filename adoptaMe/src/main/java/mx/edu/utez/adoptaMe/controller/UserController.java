@@ -204,13 +204,16 @@ public class UserController {
 	
 	@GetMapping("/movimientos")
 	@Secured("ROLE_ADMIN")
-	public String movements(Authentication authentication, HttpSession session, Model model) {
+	public String movements(Authentication authentication, HttpSession session, Model model, Pageable pageable) {
 		
 		if(authentication != null) {
     		String username = authentication.getName();
     		User user = userServiceImpl.findByUsername(username);
     		session.setAttribute("user", user);
     	}
+
+		Page<Log> listPages = logServiceImpl.listarPaginacion(PageRequest.of(pageable.getPageNumber(), 5, Sort.by(Sort.Direction.DESC, "date")));
+		model.addAttribute("listMovements", listPages);
 		
 		List<Access> accesses = new ArrayList<>();
 		

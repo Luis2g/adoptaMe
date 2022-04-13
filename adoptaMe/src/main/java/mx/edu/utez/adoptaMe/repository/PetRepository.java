@@ -24,4 +24,10 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
 	
 	List<Pet> findByTypeAndStatus(String type, String status);
 	
+	
+	@Modifying
+	@Transactional
+    @Query(value="SELECT * FROM pets P JOIN requests R ON p.id = R.pet_id WHERE P.user_id = :username", nativeQuery=true)
+    List<Pet> getRequestedPetsForVolunteer(String username);
+	
 }

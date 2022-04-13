@@ -46,5 +46,10 @@ public class RequestServiceImpl implements RequestService{
     public void removeRequest(long id, String username) {
     	requestRepository.deleteRequest(id, username);
     }
+    
+    @Override
+    public List<Request> getUserVolunteerRequests(String username){
+    	return requestRepository.getUserVolunteerRequests(username);
+    }
 
 }

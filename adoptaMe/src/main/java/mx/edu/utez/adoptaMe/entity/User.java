@@ -137,11 +137,11 @@ public class User {
     @JsonIgnore
     private List<Pet> pets;
 
-    @Override
-    public String toString() {
-        return "User [donations=" + donations + ", email=" + email + ", password=" + password
-                + ", person=" + person + ", pets=" + pets + ", username=" + username
-                + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "User [donations=" + donations + ", email=" + email + ", password=" + password
+//                + ", person=" + person + ", pets=" + pets + ", username=" + username
+//                + "]";
+//    }
 
 }

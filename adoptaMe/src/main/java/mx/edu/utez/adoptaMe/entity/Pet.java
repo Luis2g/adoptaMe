@@ -259,12 +259,12 @@ public class Pet {
     @JsonIgnore
     private List<Commentary> commentaries;
     
-    @Override
-    public String toString() {
-        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", name=" + name
-                + ", personality=" + ", registrationDate=" + registrationDate + ", requests="
-                + ", sex=" + sex + ", size=" + size + ", type=" + type + ", user=" + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "Pet [age=" + age + ", color=" + ", description=" + description + ", favoriteOnes=" + ", id=" + id + ", images=" + ", name=" + name
+//                + ", personality=" + ", registrationDate=" + registrationDate + ", requests="
+//                + ", sex=" + sex + ", size=" + size + ", type=" + type + ", user=" + "]";
+//    }
 
     
 

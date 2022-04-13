@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> findByIsMain(){
-        return postRepository.findByIsMain(true);
+        return postRepository.findByStatusAndIsMain("enabled", true);
     }
 
 }

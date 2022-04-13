@@ -28,7 +28,7 @@ public class PetServiceImpl implements PetService {
 
     @Override 
     public List<Pet> listSortedPets(){
-        return petRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        return petRepository.findTop8ByStatusOrderByIdDesc("accepted");
     }
 
     @Override

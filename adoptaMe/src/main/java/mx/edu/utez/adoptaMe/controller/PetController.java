@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -201,6 +202,7 @@ public class PetController {
     }
     
     @PostMapping("/removeRequest")
+    @Secured("ROLE_ADOPTER")
     public String removeRequest(@RequestParam("petId") long petId,
     		@RequestParam(name = "location", required = true) String location,
     		Authentication authentication, RedirectAttributes redirectAttributes) {
@@ -216,6 +218,7 @@ public class PetController {
     }
 
     @PostMapping("/requestAdoption")
+    @Secured("ROLE_ADOPTER")
     public String adopt(@RequestParam(name = "petId", required = true) long id,
     		@RequestParam(name = "location", required = true) String location,
     		Authentication authentication,
@@ -233,6 +236,24 @@ public class PetController {
     	}
     	redirectAttributes.addFlashAttribute("msg_error", "Ha ocurrido un error");
     	return "redirect:/mascotas/" + location;
+    }
+    
+    @PostMapping("/endAdoption")
+    @Secured("ROLE_VOLUNTEER")
+    public String endAdoption(@RequestParam(name = "petId", required = true)long petId,
+    		@RequestParam(name = "adopterName", required = true) String adopterName,
+    		RedirectAttributes redirectAttributes) {
+    	
+    	System.out.println("it gets to the method end adoption in java");
+    	System.out.println("This is the first parameter " + petId);
+    	System.out.println("This is the second parameter " + adopterName);
+    	
+    	
+    	requestServiceImpl.endAdoption(petId, adopterName);
+    	redirectAttributes.addFlashAttribute("msg_success", "Se ha confirmado la adopcion para el usuario " + adopterName);
+    	
+    	
+    	return "redirect:/mascotas/misPublicaciones";
     }
 
 }

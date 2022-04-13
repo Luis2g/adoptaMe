@@ -22,7 +22,12 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	@Transactional
 	@Query(value = "SELECT * FROM requests WHERE user_id = :usernameIn", nativeQuery=true)
 	List<Request> getUserVolunteerRequests(String usernameIn);
+
 	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE requests SET is_accepted = 1 WHERE pet_id = :petId AND user_id = :username", nativeQuery=true)
+	void endAdoption(long petId, String username);
 	
 	
 }

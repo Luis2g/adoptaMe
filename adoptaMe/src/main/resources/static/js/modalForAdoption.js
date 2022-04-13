@@ -23,6 +23,7 @@ $(document).ready(() => {
 		
 		for(let i = 0; json.users.length > i; i++){
 			var form = document.createElement("form");
+			form.setAttribute("id", "submitForm" + json.users[i].username);
 			
 			let divRow = document.createElement("div");
 			divRow.setAttribute("class", "row");
@@ -67,7 +68,7 @@ $(document).ready(() => {
 			let button = document.createElement("button");
 			button.setAttribute("class", "btn btn-success");
 			button.setAttribute("type", "button")
-			button.setAttribute("onClick", "confirmAdoption('"+ json.users[i].username +"' );")
+			button.setAttribute("onClick", "confirmAdoption('"+ json.users[i].username +"');")
 			button.innerHTML = "Confirmar adopción";
 			
 			let divCol4 = document.createElement("div");
@@ -79,14 +80,26 @@ $(document).ready(() => {
 			divRow.appendChild(divCol3);
 			divRow.appendChild(divCol4);
 			
+			//value for parameters
 			
+			let param1 = document.createElement("input");
+			param1.setAttribute("type", "text");
+			param1.setAttribute("name", "petId");
+			param1.setAttribute("value", json.pet.id);
+
+			let param2 = document.createElement("input");
+			param2.setAttribute("type", "text");
+			param2.setAttribute("name", "adopterName");
+			param2.setAttribute("value", json.users[i].username);
+			
+			
+			form.appendChild(param1);
+			form.appendChild(param2);
 			form.appendChild(divRow);
 			
-			form.setAttribute("th:action", "@{/}");
+			form.setAttribute("action", "/mascotas/endAdoption");
 			form.setAttribute("method", "POST");
-//			var text = document.createElement("h5");
-//			text.innerHTML = "Solicitado por:";
-//			form.appendChild(text);
+
 			forms.appendChild(form);
 		}
 		
@@ -103,6 +116,10 @@ $(document).ready(() => {
 
 const confirmAdoption = (username) => {
 	
+	console.log("This is the username in the confirmation adoptions", username);
+	
+	let submitForm = document.getElementById("submitForm"+username);
+	console.log("This is the submitForm ", submitForm);
 	
 	Swal.fire({
 	  title: '¿Esta seguro?',
@@ -114,7 +131,9 @@ const confirmAdoption = (username) => {
 	  confirmButtonText: 'Aceptar!'
 	}).then((result) => {
 	  if (result.isConfirmed) {
-	    removalForm.submit();
+		
+		console.log("Entra al if del sweetalert");
+	    submitForm.submit();
 	  }
 	})
 	

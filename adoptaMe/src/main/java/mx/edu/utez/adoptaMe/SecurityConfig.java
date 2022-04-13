@@ -38,14 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
+    
     	
         http
             .authorizeRequests()
             .antMatchers("/", "/imagenes/**", "login", "/logout", "/inicio", "/mascotas", "/mascotas/perros", "/mascotas/gatos", "/usuarios/registro", "/usuarios/guardar", "/noticias").permitAll()
-            .anyRequest().authenticated()
-            .and()
+            .anyRequest().authenticated().and().httpBasic().and().csrf().disable()
+           
             .formLogin().successHandler(successHandler).loginPage("/login").permitAll()
-//            .loginPage("/login").permitAll()
             .and()
             .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .invalidateHttpSession(true)

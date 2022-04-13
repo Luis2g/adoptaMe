@@ -52,4 +52,9 @@ public class RequestServiceImpl implements RequestService{
     	return requestRepository.getUserVolunteerRequests(username);
     }
 
+    @Override
+    public void endAdoption(long petId, String username) {
+    	requestRepository.endAdoption(petId, username);
+    }
+    
 }

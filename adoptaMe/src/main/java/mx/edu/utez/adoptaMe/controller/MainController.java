@@ -133,7 +133,31 @@ public class MainController {
     		User user = userServiceImpl.findByUsername(username);
     		session.setAttribute("user", user);
     	}
-        model.addAttribute("postList", postServiceImpl.listAll());
+        List<Pet> sortedPets = petServiceImpl.listSortedPets();
+        List<Pet> petList = new ArrayList<>();
+        List<Pet> secondPetList = new ArrayList<>();
+
+        if (sortedPets.size() > 3) {
+            for (int i = 0; i < 4; i++) {
+                petList.add(sortedPets.get(i));
+            }
+            model.addAttribute("petList", petList);
+        } else {
+            model.addAttribute("petList", sortedPets);
+        }
+
+        if (sortedPets.size() > 7) {
+            for (int i = 4; i < 8; i++) {
+                secondPetList.add(sortedPets.get(i));
+            }
+        }else if(sortedPets.size() > 4){
+            for (int i = 4; i < sortedPets.size(); i++) {
+                secondPetList.add(sortedPets.get(i));
+            }
+        }
+
+        model.addAttribute("postList", postServiceImpl.findByIsMain());
+        model.addAttribute("secondPetList", secondPetList);
         return "/landingPage";
     }
     

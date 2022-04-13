@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
@@ -23,6 +24,11 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<Pet> listAll() {
         return petRepository.findAll();
+    }
+
+    @Override 
+    public List<Pet> listSortedPets(){
+        return petRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Override

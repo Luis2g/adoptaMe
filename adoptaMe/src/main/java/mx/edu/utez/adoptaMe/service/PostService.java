@@ -17,5 +17,7 @@ public interface PostService {
     boolean delete();
 
     List<Post> findByStatus();
+
+    List<Post> findByIsMain();
     
 }

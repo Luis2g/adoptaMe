@@ -14,6 +14,7 @@ import mx.edu.utez.adoptaMe.entity.Pet;
 public interface PetRepository extends JpaRepository<Pet, Long>{
     
 	List<Pet> findByStatus(String status);
+	List<Pet> findTop8ByStatusOrderByIdDesc(String status);
 	
 	@Modifying
 	@Transactional

@@ -5,7 +5,7 @@
 
 <body>
 
-	<div th:replace="fragments/navbar :: navbar"></div>						
+    <div th:replace="fragments/navbar :: navbar"></div>
 
     <div class="container-fluid" style="margin-top:48px">
         <!--Start the carousel-->
@@ -14,7 +14,8 @@
                 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                        <li th:each="tmpPost : ${postList}" data-target="#carouselExampleCaptions" th:data-slide-to="${tmpPost.id}"></li>
+                        <li th:each="tmpPost : ${postList}" data-target="#carouselExampleCaptions"
+                            th:data-slide-to="${tmpPost.id}"></li>
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -24,9 +25,15 @@
                             </div>
                         </div>
                         <div class="carousel-item" th:each="tmpPost : ${postList}">
-                            <img th:id="${tmpPost.id}" th:src="@{/imagenes/{i} (i = ${tmpPost.image})}" style="width:100%; height: 600px; object-fit: cover;"
-                                class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">                                
+                            <div class="post">
+                                <img th:id="${tmpPost.id}" th:src="@{/imagenes/{i} (i = ${tmpPost.image})}"
+                                    style="width:100%; height: 600px; object-fit: cover;" class="d-block w-100"
+                                    alt="...">
+                                <footer>
+                                    <h2 th:text="${tmpPost.title}"></h2>
+                                </footer>
+                            </div>
+                            <div class="carousel-caption d-none d-md-block">
                             </div>
                         </div>
                     </div>
@@ -41,19 +48,19 @@
                 </div>
             </div>
 
-            
-        </div>      
-        
-        
-        <div class="container-fluid mt-3 mb-3 text-center" >
-            
+
+        </div>
+
+
+        <div class="container-fluid mt-3 mb-3 text-center">
+
             <!--Controls-->
             <div class="controls-top">
                 <a class="btn-floating" href="#multi-item-example" data-slide="prev"><span class="material-icons"
-                    style="vertical-align: middle;">chevron_left</span>&nbsp;Anterior</a>
+                        style="vertical-align: middle;">chevron_left</span>&nbsp;Anterior</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a class="btn-floating" href="#multi-item-example" data-slide="next">Siguiente&nbsp;<span
-                    class="material-icons" style="vertical-align: middle;">chevron_right</span></a>
+                        class="material-icons" style="vertical-align: middle;">chevron_right</span></a>
             </div>
             <!--Controls-->
         </div>
@@ -62,7 +69,7 @@
         <!--Start the cards-->
     </div>
     <div class="col-12">
-        
+
 
         <!--Carousel Wrapper-->
         <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
@@ -82,13 +89,12 @@
                 <div class="carousel-item active">
                     <div class="col-md-3" th:each="tmpPet : ${petList}" style="float:left">
                         <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
+                            <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${tmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${tmpPet.description}"></p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+                                <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                        style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
                             </div>
                         </div>
                     </div>
@@ -99,16 +105,15 @@
                 <div class="carousel-item" th:each="secondTmpPet : ${secondPetList}">
                     <div class="col-md-3" style="float:left">
                         <div class="card mb-2">
-                            <img class="card-img-top"
-                                src="/images/perrosygatos.webp"
-                                alt="Card image cap">
+                            <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${secondTmpPet.description}"></p>
-                                <a class="btn btn-primary" style="color:white" ><span class="material-icons" style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+                                <a class="btn btn-primary" style="color:white"><span class="material-icons"
+                                        style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <!--/.Second slide-->
             </div>
@@ -121,7 +126,7 @@
 </body>
 
 <script>
-    function showTitle(img){
+    function showTitle(img) {
         var imagen = document.getElementById(img);
         imagen.src = gray(img);
     }

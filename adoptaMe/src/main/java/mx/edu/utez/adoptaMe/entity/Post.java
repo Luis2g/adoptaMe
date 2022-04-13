@@ -39,22 +39,25 @@ public class Post {
     @Column(nullable = true, length = 45, unique = true)
 	private String image;
 
+    @Column(name = "status")
+    private String status;
+
 
     public Post() {
     }
 
     public Post(Long id, @Size(min = 2, max = 150) @NotEmpty(message = "Este campo es requerido") String title,
-            @Size(min = 2, max = 255) @NotEmpty(message = "Este campo es requerido") String content, Boolean isMain,
-            String postDate, String image, User user) {
+            @NotEmpty(message = "Este campo es requerido") String content, Boolean isMain, String postDate,
+            String image, String status, User user) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.isMain = isMain;
         this.postDate = postDate;
         this.image = image;
+        this.status = status;
         this.user = user;
     }
-
 
     public Long getId() {
         return id;
@@ -110,9 +113,16 @@ public class Post {
     }
 
 
-
     public void setPostDate(String postDate) {
         this.postDate = postDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

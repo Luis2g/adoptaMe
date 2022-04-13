@@ -1,12 +1,15 @@
 package mx.edu.utez.adoptaMe.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +18,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mx.edu.utez.adoptaMe.entity.Pet;
+import mx.edu.utez.adoptaMe.entity.Request;
+import mx.edu.utez.adoptaMe.entity.RequestedPet;
 import mx.edu.utez.adoptaMe.entity.User;
-import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 import mx.edu.utez.adoptaMe.service.PostServiceImpl;
+import mx.edu.utez.adoptaMe.service.RequestServiceImpl;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper; 
+import com.fasterxml.jackson.databind.ObjectWriter; 
 
 @Controller
 public class MainController {
@@ -37,19 +47,51 @@ public class MainController {
     @Autowired
     private PetServiceImpl petServiceImpl;
     
+    @Autowired
+    private RequestServiceImpl requestServiceImpl;
+    
     private User user;
     
     // Remember to move this to the petController, it's just here to not create github problems 
     
     @GetMapping("/misPublicaciones")
     @Secured("ROLE_VOLUNTEER")
-    public String postedPets(Authentication authentication, HttpSession session) {
+    public String postedPets(Authentication authentication, HttpSession session, Model model) {
     	
-    	if(authentication != null) {
-    		String username = authentication.getName();
-    		User user = userServiceImpl.findByUsername(username);
-    		session.setAttribute("user", user);
+		String username = authentication.getName();
+		User user = userServiceImpl.findByUsername(username);
+		session.setAttribute("user", user);
+
+    	
+    	List<Pet> pets = petServiceImpl.getRequestedPetsForVolunteer(username);
+    	List<Pet> filteredPets = pets.stream().distinct().collect(Collectors.toList());
+    	List<RequestedPet> requestedPets = new ArrayList<>();
+    	    	
+    	for(Pet pet: filteredPets) {
+    		
+    		List<User> usersRequesting = new ArrayList<>();
+    		for(Request request: pet.getRequests()) {
+    			User userRequesting = new User();
+    			userRequesting = userServiceImpl.findByUsername(request.getUser().getUsername());
+    			userRequesting.setPassword("");
+    			usersRequesting.add(userRequesting);
+    		}
+    		
+    		RequestedPet requestedPet = new RequestedPet(pet, usersRequesting);
+    		requestedPets.add(requestedPet);
     	}
+
+    	ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    	for(RequestedPet requestedPet: requestedPets) {
+    		try {
+    			String json = ow.writeValueAsString(requestedPet);
+    			requestedPet.setJsonForFront(json);
+    		} catch (JsonProcessingException e) {
+    			e.printStackTrace();
+    		}    		
+    	}
+    	
+    	model.addAttribute("pets", requestedPets);
     	return "/functions/volunteer/postedPets";
     }
     

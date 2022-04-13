@@ -18,5 +18,7 @@ public interface RequestService {
     void delete();
     
     void removeRequest(long id, String username);
+    
+    List<Request> getUserVolunteerRequests(String username);
 
 }

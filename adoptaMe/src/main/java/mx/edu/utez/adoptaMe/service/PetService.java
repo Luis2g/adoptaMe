@@ -25,5 +25,7 @@ public interface PetService {
     boolean delete();
     
     List<Pet> findByTypeAndStatus(String type, String status);
+    
+    List<Pet> getRequestedPetsForVolunteer(String username);
 
 }

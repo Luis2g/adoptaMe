@@ -16,7 +16,7 @@ const removeRequest = (id) => {
 	  if (result.isConfirmed) {
 	    removalForm.submit();
 	  }
-	})
+	});
 	
 }
 

@@ -78,5 +78,10 @@ public class PetServiceImpl implements PetService {
     public List<Pet> findByTypeAndStatus (String type, String status){
     	return petRepository.findByTypeAndStatus(type, status);
     }
+    
+    @Override
+    public List<Pet> getRequestedPetsForVolunteer(String username){
+    	return petRepository.getRequestedPetsForVolunteer(username);
+    }
 
 }

@@ -79,4 +79,10 @@ public class Request {
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet petRequest;
 
+	@Override
+	public String toString() {
+		return "Request [id=" + id + ", isAccepted=" + isAccepted + ", petRequest=" + petRequest
+				+ "]";
+	}
+
 }

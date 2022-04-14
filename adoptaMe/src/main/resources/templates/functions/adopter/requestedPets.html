@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"  >
+<html lang="es" xml:th="http://thymeleaf.org"  >
 
 <div th:replace="fragments/header :: header" ></div>
 
@@ -13,8 +13,6 @@
 			<div class="col-12" >
 				<h1 class="text-center mb-4" style="color: #ccc" >Mascotas solicitadas</h1>
 			</div>
-			
-				
 				
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${adopterRequestedPets}">
                 <div class="card mb-2">
@@ -33,14 +31,13 @@
 						</div>                    
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
                         <p class="card-text">[[${tmpPet.description}]]</p>
-                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
-                                <a style="color:white"><span class="material-icons"
-                                    style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
-                            </button> -->
-                            <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
-                            <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > ¡Adoptar! </a>-->
-                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas informaci�n</button >
-                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:if="${tmpPet.user.username.equals(usernameFromModel)}" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
+                        <button  
+                        	type="button"
+                        	class="btn btn-success btn-justInformationAdopter"
+                        	th:attr="data-name=${tmpPet.name}, data-age=${tmpPet.age}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
+                   	 	>
+                     	 Detalles
+                    	</button >
                     </div>
 
                     <div class="card-footer text-muted">
@@ -66,7 +63,9 @@
            </div>				
 		</div>
 	</div>
-
+	
+	<div th:replace="fragments/modalForInformation :: modalInformation" ></div>
 	<div th:replace="fragments/footer :: footer" ></div>
+	<script th:src="@{/js/petFunctions.js}" ></script>
 </body>
 </html>

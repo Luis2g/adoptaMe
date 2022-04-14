@@ -77,6 +77,56 @@ const confirmationBeforeCreation = () => {
 	    	formForPetCreation.submit();
 	  }
 	});
-	
-	
 }
+
+//This function is just to show information in the volunteer view
+$(document).ready(() => {
+	$(".btn-justInformationVolunteer").on("click", function () {
+		console.log("This is the proof");
+		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
+		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender");
+		document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
+		document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
+		document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
+		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
+		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age");
+		
+		$('#modalForJustForInformation').modal('show');
+	
+	});
+
+//This function show information for adopter view
+	$(".btn-justInformationAdopter").on("click", function () {
+		console.log("This is the proof");
+		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
+		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender");
+		document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
+		document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
+		document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
+		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
+		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age");
+		
+		$('#modalForJustForInformation').modal('show');
+	
+	});
+	
+//This functions shows information about a pet in landing page
+	$(".btn-justInformationEveryone").on("click", function () {
+		console.log("This is the proof");
+		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
+		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender");
+		document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
+		document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
+		document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
+		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
+		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age");
+		
+		$('#modalForJustForInformation').modal('show');
+	
+	});
+	
+	
+	
+});
+
+

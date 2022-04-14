@@ -50,7 +50,7 @@
 		
 		<div class="row" >
 			<div class="col-12" >
-				<h1 class="text-center" style="color: #ccc" >Publicaciones en espera</h1>
+				<h1 class="text-center" style="color: #ccc" >Publicaciones</h1>
 				<div class="row mt-5" >			
 					<div class="col-4" th:each="pendingPet: ${pendingPets}">
 		                <div class="card mb-2">
@@ -59,9 +59,10 @@
 		                    	<span class="badge badge-warning" style="color: #fff" >En espera</span>
 		                        <h4 class="card-title mt-3" th:text="${pendingPet.name}" ></h4>
 		                        <p class="card-text" th:text="${pendingPet.description}" ></p>  
-		                        <button  
+		                       <button  
 		                        	type="button"
-		                        	class="btn btn-success btn-information"
+		                        	class="btn btn-success btn-justInformationVolunteer"
+		                        	th:attr="data-name=${pendingPet.name}, data-age=${pendingPet.age}, data-description=${pendingPet.description}, data-date=${pendingPet.registrationDate}, data-type=${pendingPet.type}, data-color=${pendingPet.color.name}, data-personality=${pendingPet.personality.name}, data-size=${pendingPet.size}, data-gender=${pendingPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -85,7 +86,8 @@
 		                        <p class="card-text" th:text="${acceptedPet.description}" ></p>  
 		                        <button  
 		                        	type="button"
-		                        	class="btn btn-success btn-information"
+		                        	class="btn btn-success btn-justInformationVolunteer"
+		                        	th:attr="data-name=${acceptedPet.name}, data-age=${acceptedPet.age}, data-description=${acceptedPet.description}, data-date=${acceptedPet.registrationDate}, data-type=${acceptedPet.type}, data-color=${acceptedPet.color.name}, data-personality=${acceptedPet.personality.name}, data-size=${acceptedPet.size}, data-gender=${acceptedPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -109,7 +111,8 @@
 		                        <p class="card-text" th:text="${rejectedPet.description}" ></p>  
 		                        <button  
 		                        	type="button"
-		                        	class="btn btn-success btn-information"
+		                        	class="btn btn-success btn-justInformationVolunteer"
+		                        	th:attr="data-name=${rejectedPet.name}, data-age=${rejectedPet.age}, data-description=${rejectedPet.description}, data-date=${rejectedPet.registrationDate}, data-type=${rejectedPet.type}, data-color=${rejectedPet.color.name}, data-personality=${rejectedPet.personality.name}, data-size=${rejectedPet.size}, data-gender=${rejectedPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -128,7 +131,7 @@
 			</div>
 		</div>
 		
-		
+<!-- 	This modal is to show who are interested in the adoption of a pet -->
 		<div class="modal fade" id="requesters" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class=" modal-lg modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
@@ -166,21 +169,20 @@
 				  	<div id="innerLayout" >
 				  	</div>
 				  </div>
-				  
-				  
 			  </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
-	
+		
+		<div th:replace="fragments/modalForInformation :: modalInformation" ></div>	
 	
 	</div>
-
+	
 	<div th:replace="fragments/footer :: footer" ></div>
 	<script th:src="@{/js/modalForAdoption.js}" ></script>
+	<script th:src="@{/js/petFunctions.js}" ></script>
 </body>
 </html>

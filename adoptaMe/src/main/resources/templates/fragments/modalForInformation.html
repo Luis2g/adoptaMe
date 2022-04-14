@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<div th:fragment="modalInformation" >
+	
+	
+	<div id="modalForJustForInformation" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   		<div class="modal-dialog  modal-lg">
+       		<div class="modal-content">
+		  		<div class="modal-body">
+	    			<div class="row" >
+                       	<div class="container">
+	                        <div class="form-group">
+	                            <div class="row">
+                                	<div class="col-12 col-sm-4">
+	                                    <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+	                                        src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+	                                    <div class="row">
+	                                    </div>
+	                                </div>
+	                                <div class="row col-12 col-sm-8">
+	                                    <div class="col-12">
+	                                        <label for="name" style="color: #687281;"><b>Nombre de la mascota </b></label>
+	                                        <p id="petNameJustInfo" ></p>
+	                                    </div>
+	                                    <div class="col-6 col-sm-3">
+	                                        <label for="name" style="color: #687281;"><b>Sexo</b></label>
+	                                        <p id="petGenderJustInfo"></p  >
+	                                    </div>
+	                                    <div class="col-6 col-sm-3">
+	                                        <label for="name" style="color: #687281;"><b>Edad</b></label>
+	                                        <p id="petAgeJustInfo" ></p>
+	                                    </div>
+	                                    <div class="col-6 col-sm-3">
+	                                        <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+	                                        <p id="petSizeJustInfo" ></p>
+	                                    </div>
+	                                    <div class="col-6 col-sm-3">
+	                                        <label for="name" style="color: #687281;"><b>Color</b></label>
+	                                        <p id="petColorJustInfo" ></p>
+	                                    </div>
+	                                    <div class="col-6 col-sm-3">
+	                                        <label for="name" style="color: #687281;"><b>Carácter</b></label>
+	                                        <p id="petPersonalityJustInfo" ></p>
+	                                    </div>
+	                                </div>
+	                                <div class="col-12">
+	                                    <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
+	                                    <p style="text-align: justify;" id="petDescriptionJustInfo" ></p>
+	                                </div>
+	                                <div class="col-12 d-flex justify-content-end" >
+		                               
+	                                </div>                                        
+	                    		</div>
+	                		</div>
+                		</div>
+            		</div>
+		    	</div>
+			    <div class="modal-footer">
+			    </div>
+			</div>
+	  	</div>
+	  </div>
+</div>

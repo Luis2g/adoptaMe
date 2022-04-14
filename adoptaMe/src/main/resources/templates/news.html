@@ -125,10 +125,74 @@
 
     <script>
 
-        let file = document.getElementById("image");
+        var blacklist = [",", ";", "/*", "*/", "@@", "@",
+            "SELECT", "select", "script", "<script","UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker"];
 
-        const uploadFile = () => {
-            file.click();
+        var blacklist2 = ["@@", "SELECT", "select", "script", "<script","UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker"];
+
+        const validarDatos = () => {
+            var title = document.getElementById("title").value.toLowerCase();
+            var image = document.getElementById("image").value;
+            var content = tinymce.get('content').getContent({format : 'raw'}).toLowerCase();
+            console.log(content)
+            var flag = false;
+            var flag2 = false;
+            var flag3 = false;
+
+            for (var i = 0; i < blacklist.length; i++) {
+                if (title.includes(blacklist[i].toLowerCase)) {                    
+                    document.getElementById("titleValid").removeAttribute("hidden");
+                    flag = true;
+                }
+            }
+
+            for (var i = 0; i < blacklist2.length; i++) {
+                if (content.includes(blacklist2[i])) {
+                    document.getElementById("contentValid").removeAttribute("hidden");
+                    flag2 = true;
+                }
+            }
+
+            if(title == ""){
+                document.getElementById("titleVoid").removeAttribute("hidden");
+                flag = true;
+            }
+
+            if(content == '<p><br data-mce-bogus="1"></p>'){
+                document.getElementById("contentVoid").removeAttribute("hidden");
+                flag2 = true;
+            }
+
+            if(image == ""){
+                document.getElementById("imageValid").removeAttribute("hidden");
+                flag3 = true;
+            }
+
+            if(flag == false && flag2 == false && flag3 == false){
+                document.getElementById("registrarNoticia").submit();
+            }else{
+            }
+
         }
 
     </script>

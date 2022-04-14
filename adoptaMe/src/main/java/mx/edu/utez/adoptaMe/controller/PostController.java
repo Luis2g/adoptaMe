@@ -62,7 +62,46 @@ public class PostController {
             RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
             @RequestParam(name = "imagenPost", required = false) MultipartFile multipartFile) {
 
+        String[] blacklist = { ",", ";", "/*", "*/", "@@", "@",
+                "SELECT", "select", "script", "<script", "UPDATE",
+                "update", "DELETE", "delete", "input", "button",
+                "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+                "int", "integer", "String", "sys", "sysobjects",
+                "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+                "estúpido", "estupideces", "idioteces", "pendejadas",
+                "encabronarse", "cabron", "cabrón", "chingada", "verga",
+                "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+                "culero", "panocha", "fuck", "dick", "asshole", "ass",
+                "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+                "deep throat", "bbc", "cock", "motherfucker", "fucker" };
+
+        String[] blacklist2 = { "@@", "SELECT", "select", "script", "<script", "UPDATE",
+                "update", "DELETE", "delete", "input", "button",
+                "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+                "int", "integer", "String", "sys", "sysobjects",
+                "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+                "estúpido", "estupideces", "idioteces", "pendejadas",
+                "encabronarse", "cabron", "cabrón", "chingada", "verga",
+                "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+                "culero", "panocha", "fuck", "dick", "asshole", "ass",
+                "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+                "deep throat", "bbc", "cock", "motherfucker", "fucker" };
+
+
         if (post.getId() == null) {
+            for (int i = 0; i < blacklist.length; i++) {
+                if (post.getTitle().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/noticias";
+                }
+            }
+
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (post.getContent().toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/noticias";
+                }
+            }
             String username = authentication.getName();
             User user = userServiceImpl.findByUsername(username);
             session.setAttribute("user", user);
@@ -77,34 +116,47 @@ public class PostController {
                     System.out.println("Error" + error.getDefaultMessage());
                 }
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-                return "redirect:/noticias/editar/" + post.getId();
+                return "redirect:/noticias";
             } else {
 
                 boolean response = false;
                 String generatedToken = save();
-                try {                
+                try {
                     post.setImage(generatedToken);
                     post.setStatus("enabled");
                     response = postServiceImpl.save(post);
                 } catch (Exception e) {
                     return "redirect:/savePost";
                 }
-    
+
                 String ruta = "C:/mascotas/img-post";
                 ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
-                
-    
+
                 if (response) {
                     redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
                     return "redirect:/noticias";
-    
+
                 } else {
                     redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
                     return "redirect:/noticias";
                 }
             }
 
-        }else{
+        } else {
+
+            for (int i = 0; i < blacklist.length; i++) {
+                if (post.getTitle().contains(blacklist[i])) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/noticias/editar/" + post.getId();
+                }
+            }
+
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (post.getContent().contains(blacklist2[i])) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/noticias/editar/" + post.getId();
+                }
+            }
             Post postFromDB = postServiceImpl.edit(post.getId());
 
             postFromDB.setTitle(post.getTitle());
@@ -122,33 +174,34 @@ public class PostController {
 
                 boolean response = false;
 
-                if(multipartFile != null && !multipartFile.isEmpty()){                    
+                if (multipartFile != null && !multipartFile.isEmpty()) {
                     String generatedToken = save();
-                    try {                
+                    try {
                         postFromDB.setImage(generatedToken);
                         response = postServiceImpl.save(postFromDB);
                     } catch (Exception e) {
                         return "redirect:/savePost";
                     }
-        
+
                     String ruta = "C:/mascotas/img-post";
                     ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
-                }else{
+                } else {
 
                     response = postServiceImpl.save(postFromDB);
                 }
-                
+
                 if (response) {
-                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la modificación correctamente!");
+                    redirectAttributes.addFlashAttribute("msg_success",
+                            "¡Se ha realizado la modificación correctamente!");
                     return "redirect:/noticias";
-    
+
                 } else {
                     redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al modificar!");
                     return "redirect:/noticias";
                 }
             }
         }
-        
+
     }
 
     @GetMapping("/noticias")
@@ -159,24 +212,23 @@ public class PostController {
             User user = userServiceImpl.findByUsername(username);
             session.setAttribute("user", user);
             model.addAttribute("postList", postServiceImpl.listAll());
-        }else{
+        } else {
             model.addAttribute("postList", postServiceImpl.findByStatus());
         }
 
-        
         Session.setUrl("/noticias");
         return "news";
     }
 
     @GetMapping("/noticias/deshabilitar/{id}")
     @Secured("ROLE_ADMIN")
-    public String disableNew(@PathVariable long id, RedirectAttributes redirectAttributes){
+    public String disableNew(@PathVariable long id, RedirectAttributes redirectAttributes) {
         Post post = postServiceImpl.edit(id);
         post.setStatus("disabled");
         boolean response = postServiceImpl.save(post);
-        if(response){
+        if (response) {
             redirectAttributes.addFlashAttribute("msg_success", "¡Se deshabilitó correctamente la noticia!");
-        }else{
+        } else {
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al deshabilitar la noticia!");
         }
         return "redirect:/noticias";
@@ -184,13 +236,13 @@ public class PostController {
 
     @GetMapping("/noticias/habilitar/{id}")
     @Secured("ROLE_ADMIN")
-    public String enableNew(@PathVariable long id, RedirectAttributes redirectAttributes){
+    public String enableNew(@PathVariable long id, RedirectAttributes redirectAttributes) {
         Post post = postServiceImpl.edit(id);
         post.setStatus("enabled");
         boolean response = postServiceImpl.save(post);
-        if(response){
+        if (response) {
             redirectAttributes.addFlashAttribute("msg_success", "¡Se habilitó correctamente la noticia!");
-        }else{
+        } else {
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error al habilitar la noticia!");
         }
         return "redirect:/noticias";

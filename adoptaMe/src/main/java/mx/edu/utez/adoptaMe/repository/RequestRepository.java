@@ -26,8 +26,13 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	
 	@Modifying
 	@Transactional
-	@Query(value = "UPDATE requests SET is_accepted = 1 WHERE pet_id = :petId AND user_id = :username", nativeQuery=true)
+	@Query(value = "UPDATE requests SET is_accepted = 'accepted' WHERE pet_id = :petId AND user_id = :username", nativeQuery=true)
 	void endAdoption(long petId, String username);
+
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE requests SET is_accepted = 'rejected' WHERE pet_id = :petId AND is_accepted != 'accepted';", nativeQuery=true)
+	void cancelRequestsOfOtherUsers(long petId);
 	
 	
 }

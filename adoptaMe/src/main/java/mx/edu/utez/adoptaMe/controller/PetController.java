@@ -84,7 +84,8 @@ public class PetController {
     
 
     @GetMapping("/registro")
-    public String createPet(Model model, Pet pet){
+    public String createPet(Model model, Pet pet, @RequestParam("location") String location){
+    	model.addAttribute("location", location);
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
         return "/createPet";
@@ -119,13 +120,15 @@ public class PetController {
     }
 
     @PostMapping("/save")
-    public String savePet(Model model, @Valid @ModelAttribute("pet") Pet pet, BindingResult bindingResult, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session){
+    public String savePet(Model model, @Valid @ModelAttribute("pet") Pet pet,
+    		@RequestParam("location") String location,
+    		BindingResult bindingResult, 
+    		RedirectAttributes redirectAttributes, 
+    		Authentication authentication, HttpSession session){
         // All pet when is created, the available always is true
     	if(pet.getId() == null) {
     		System.out.println("Entro a registrar");
          // Configuration for user before controller session is created
-            int idInt = 1;
-            long id = idInt;
             User user = new User();
             if(authentication != null) {
         		String username = authentication.getName();
@@ -135,9 +138,6 @@ public class PetController {
             pet.setUser(user);
             pet.setStatus("pending");
             // End configuration
-
-
-            
 
             if(bindingResult.hasErrors()){
                 for(ObjectError error: bindingResult.getAllErrors()){
@@ -151,8 +151,8 @@ public class PetController {
 
             boolean saved = petServiceImpl.save(pet);
             if(saved){
-                redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
-    			return "redirect:/mascotas";
+                redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!, espere a que el admistrador acepte la publicacion de la mascota");
+    			return "redirect:/mascotas/" + location;
             }else{
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
                 model.addAttribute("colorsList", colorServiceImpl.listAll());
@@ -191,7 +191,7 @@ public class PetController {
     	Pet petEdited = petServiceImpl.editPet(pet.getId());
         if(petEdited != null){
             redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la actualización correctamente!");
-			return "redirect:/mascotas";
+			return "redirect:/mascotas/" + location;
         }else{
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualizacion!");
             model.addAttribute("colorsList", colorServiceImpl.listAll());
@@ -242,18 +242,14 @@ public class PetController {
     @Secured("ROLE_VOLUNTEER")
     public String endAdoption(@RequestParam(name = "petId", required = true)long petId,
     		@RequestParam(name = "adopterName", required = true) String adopterName,
-    		RedirectAttributes redirectAttributes) {
-    	
-    	System.out.println("it gets to the method end adoption in java");
-    	System.out.println("This is the first parameter " + petId);
-    	System.out.println("This is the second parameter " + adopterName);
-    	
+    		RedirectAttributes redirectAttributes) {    	
     	
     	requestServiceImpl.endAdoption(petId, adopterName);
+    	requestServiceImpl.cancelRequestsOfOtherUsers(petId);
+    	petServiceImpl.changePetStatusToAdopted(petId);
     	redirectAttributes.addFlashAttribute("msg_success", "Se ha confirmado la adopcion para el usuario " + adopterName);
     	
-    	
-    	return "redirect:/mascotas/misPublicaciones";
+    	return "redirect:/misPublicaciones";
     }
 
 }

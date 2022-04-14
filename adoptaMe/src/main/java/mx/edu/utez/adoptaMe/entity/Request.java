@@ -19,7 +19,7 @@ public class Request {
     private Long id;
 
     @Column(name = "is_accepted", nullable = false)
-    private Boolean isAccepted;
+    private String isAccepted;
 
     public Request() {
     }
@@ -27,12 +27,12 @@ public class Request {
     public Request(User user, Pet pet) {
     	this.user = user;
     	this.petRequest = pet;
-    	this.isAccepted = false;
+    	this.isAccepted = "pending";
     }
 
     public Request(Long id, Boolean isAccepted, User user, Pet petRequest) {
         this.id = id;
-        this.isAccepted = isAccepted;
+        this.isAccepted = "pending";
         this.user = user;
         this.petRequest = petRequest;
     }
@@ -45,11 +45,11 @@ public class Request {
         this.id = id;
     }
 
-    public Boolean getIsAccepted() {
+    public String getIsAccepted() {
         return isAccepted;
     }
 
-    public void setIsAccepted(Boolean isAccepted) {
+    public void setIsAccepted(String isAccepted) {
         this.isAccepted = isAccepted;
     }
 

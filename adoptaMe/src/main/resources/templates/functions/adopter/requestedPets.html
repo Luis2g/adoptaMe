@@ -7,7 +7,65 @@
 	
 	<div th:replace="fragments/navbar :: navbar" ></div>
 	
-	<h1>These are the requested Pets</h1>
+	<div class="container" style="margin-top: 75px" >
+		<div class="row" >
+			
+			<div class="col-12" >
+				<h1 class="text-center mb-4" style="color: #ccc" >Mascotas solicitadas</h1>
+			</div>
+			
+				
+				
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${adopterRequestedPets}">
+                <div class="card mb-2">
+                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <div class="card-body">
+                    	<div th:switch="${tmpPet.status}">
+						    <div th:case="'adoptedForYou'">
+						        <span class="badge badge-success">Adoptado</span>
+						    </div>
+						    <div th:case="'rejectedForYou'">
+						        <span class="badge badge-danger">Rechazado</span>
+						    </div>
+						    <div th:case="'pending'">
+						        <span class="badge badge-info">Pendiente</span>
+						    </div>
+						</div>                    
+                        <h4 class="card-title">[[${tmpPet.name}]]</h4>
+                        <p class="card-text">[[${tmpPet.description}]]</p>
+                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
+                                <a style="color:white"><span class="material-icons"
+                                    style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
+                            </button> -->
+                            <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
+                            <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > ¡Adoptar! </a>-->
+                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas informaci�n</button >
+                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:if="${tmpPet.user.username.equals(usernameFromModel)}" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                            	<div th:if="${tmpPet.status.equals('requestedByYou')}"  >
+                            		<form th:action="@{/mascotas/removeRequest}" method="POST" th:attr="id=${'removalForm' + tmpPet.id}" >
+                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+                            			<input type="hidden" name="location" th:value="${location}" >
+	                            		<button type="button" th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'" class="btn btn-warning" >Retirar solicitud</button>
+                            		</form>
+	                            	<h4 >Solicitada</h4>
+                            	</div>
+                            
+                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
+                                    <i class="feather-14" data-feather="heart"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+           </div>				
+		</div>
+	</div>
 
 	<div th:replace="fragments/footer :: footer" ></div>
 </body>

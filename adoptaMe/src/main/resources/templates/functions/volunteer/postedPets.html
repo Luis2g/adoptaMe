@@ -9,40 +9,123 @@
 	
 	<div style="margin-top: 75px" class="container" >
 	
-		<h1 class="text-center" style="color: #ccc" >Solicitudes de adopción</h1>
 		
+		<div th:if="${requestedPets.size() != 0}" >
+			<h1 class="text-center" style="color: #ccc" >Solicitudes de adopción</h1>
+			<div class="row mt-5" >
+			
+				<div class="col-12 col-sm-6 col-md-6 col-lg-6" th:each="requestedPet: ${requestedPets}">
+	                <div class="card mb-2">
+	                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+	                    <div class="card-body">
+	                    	<span class="badge badge-primary">Solicitada</span>
+	                        <h4 class="card-title mt-2" th:text="${requestedPet.pet.name}" ></h4>
+	                        <p class="card-text" th:text="${requestedPet.pet.description}" ></p>  
+	                        <button  
+	                        	type="button"
+	                        	class="btn btn-success btn-information"
+	                     	 	th:attr="data-info=${requestedPet.jsonForFront}, data-pet=${requestedPet.pet}, data-name=${requestedPet.pet.name}, data-description=${requestedPet.pet.description}"
+	                   	 	>
+	                     	 Detalles de los candidatos
+	                    	</button >
+	                    </div>
+	
+	                    <div class="card-footer text-muted">
+	                        <div class="row">
+	                        	<div class="col-12" >
+									<h4>Solicitado por:</h4>
+									<div th:each="user: ${requestedPet.users}" >
+										<div th:text="${user.person.name + ' ' +user.person.surname + ' ' + user.person.secondSurname }" ></div>
+									</div>                        	
+	                        	</div>
+	                        </div>
+	
+	                    </div>
+	                </div>
+	            </div>
+			
+			</div>
+			<hr>
+		</div>
 		
-		<div class="row mt-5" >
+		<div class="row" >
+			<div class="col-12" >
+				<h1 class="text-center" style="color: #ccc" >Publicaciones en espera</h1>
+				<div class="row mt-5" >			
+					<div class="col-4" th:each="pendingPet: ${pendingPets}">
+		                <div class="card mb-2">
+		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <div class="card-body">
+		                    	<span class="badge badge-warning" style="color: #fff" >En espera</span>
+		                        <h4 class="card-title mt-3" th:text="${pendingPet.name}" ></h4>
+		                        <p class="card-text" th:text="${pendingPet.description}" ></p>  
+		                        <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-information"
+		                   	 	>
+		                     	 Detalles
+		                    	</button >
+		                    </div>
 		
-			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="requestedPet: ${pets}">
-                <div class="card mb-2">
-                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title" th:text="${requestedPet.pet.name}" ></h4>
-                        <p class="card-text" th:text="${requestedPet.pet.description}" ></p>  
-                        <button  
-                        	type="button"
-                        	class="btn btn-success btn-information"
-                     	 	th:attr="data-info=${requestedPet.jsonForFront}, data-pet=${requestedPet.pet}, data-name=${requestedPet.pet.name}, data-description=${requestedPet.pet.description}"
-                   	 	>
-                     	 Detalles
-                    	</button >
-                    </div>
-
-                    <div class="card-footer text-muted">
-                        <div class="row">
-                        	<div class="col-12" >
-								<h4>Solicitado por:</h4>
-								<div th:each="user: ${requestedPet.users}" >
-									<div th:text="${user.person.name + ' ' +user.person.surname + ' ' + user.person.secondSurname }" ></div>
-								</div>                        	
-                        	</div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+		                    <div class="card-footer text-muted">
+		                        <div class="row">
+		                        	<div class="col-12" >                      	
+		                        	</div>
+		                        </div>
 		
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-4" th:each="acceptedPet: ${acceptedPets}">
+		                <div class="card mb-2">
+		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <div class="card-body">
+		                    <span class="badge badge-info">Aceptada</span>
+		                        <h4 class="card-title" th:text="${acceptedPet.name}" ></h4>
+		                        <p class="card-text" th:text="${acceptedPet.description}" ></p>  
+		                        <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-information"
+		                   	 	>
+		                     	 Detalles
+		                    	</button >
+		                    </div>
+		
+		                    <div class="card-footer text-muted">
+		                        <div class="row">
+		                        	<div class="col-12" >                      	
+		                        	</div>
+		                        </div>
+		
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-4" th:each="rejectedPet: ${rejectedPets}">
+		                <div class="card mb-2">
+		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <div class="card-body">
+		                    <span class="badge badge-danger">Rechazada</span>
+		                        <h4 class="card-title" th:text="${rejectedPet.name}" ></h4>
+		                        <p class="card-text" th:text="${rejectedPet.description}" ></p>  
+		                        <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-information"
+		                   	 	>
+		                     	 Detalles
+		                    	</button >
+		                    </div>
+		
+		                    <div class="card-footer text-muted">
+		                        <div class="row">
+		                        	<div class="col-12" >                      	
+		                        	</div>
+		                        </div>
+		
+		                    </div>
+		                </div>
+		            </div>
+				</div>
+			</div>
 		</div>
 		
 		
@@ -74,7 +157,7 @@
 				  		<p id="petColor" ></p>
 				  	</div>
 				  	<div class="col-12" >
-				  		<h5>Description:</h5>
+				  		<h5Description:></h5>
 				  		<p id="petDescription" ></p>
 				  	</div>
 				  </div>

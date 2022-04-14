@@ -54,6 +54,39 @@ public class MainController {
 
     // Remember to move this to the petController, it's just here to not create
     // github problems
+    
+    
+    @GetMapping("/misSolicitudes")
+    @Secured("ROLE_ADOPTER")
+    public String myRequests(Authentication authentication, HttpSession session, Model model) {
+    	
+    	String username = authentication.getName();
+        User user = userServiceImpl.findByUsername(username);
+        session.setAttribute("user", user);
+        
+        List<Pet> adopterRequestedPets = petServiceImpl.getAdopterRequests(username);
+        
+        for(Pet pet: adopterRequestedPets) {
+        	for(Request request: pet.getRequests()) {
+        		if(request.getUser().getUsername().equals(username)) {
+
+        			System.out.println("This is the request " + request);
+        			
+        			if(request.getIsAccepted().equals("accepted")) {
+        				pet.setStatus("adoptedForYou");
+        			}else if(request.getIsAccepted().equals("rejected")) {
+            			pet.setStatus("rejectedForYou");
+            		}else {
+            			pet.setStatus("pending");
+            		}
+        		}
+        	}
+        }
+        
+        model.addAttribute("adopterRequestedPets", adopterRequestedPets);
+    	
+    	return "/functions/adopter/requestedPets";
+    }
 
     @GetMapping("/misPublicaciones")
     @Secured("ROLE_VOLUNTEER")
@@ -66,6 +99,10 @@ public class MainController {
         List<Pet> pets = petServiceImpl.getRequestedPetsForVolunteer(username);
         List<Pet> filteredPets = pets.stream().distinct().collect(Collectors.toList());
         List<RequestedPet> requestedPets = new ArrayList<>();
+        List<Pet> pendingPets = petServiceImpl.findByUserAndStatus(user, "pending");
+        List<Pet> rejectedPets = petServiceImpl.findByUserAndStatus(user, "rejected");
+        List<Pet> acceptedPets = petServiceImpl.findByUserAndStatus(user, "accepted");
+        
 
         for (Pet pet : filteredPets) {
 
@@ -73,7 +110,6 @@ public class MainController {
             for (Request request : pet.getRequests()) {
                 User userRequesting = new User();
                 userRequesting = userServiceImpl.findByUsername(request.getUser().getUsername());
-                userRequesting.setPassword("");
                 usersRequesting.add(userRequesting);
             }
 
@@ -90,8 +126,10 @@ public class MainController {
                 e.printStackTrace();
             }
         }
-
-        model.addAttribute("pets", requestedPets);
+        model.addAttribute("pendingPets", pendingPets);
+        model.addAttribute("rejectedPets", rejectedPets);
+        model.addAttribute("acceptedPets", acceptedPets);
+        model.addAttribute("requestedPets", requestedPets);
         return "/functions/volunteer/postedPets";
     }
 

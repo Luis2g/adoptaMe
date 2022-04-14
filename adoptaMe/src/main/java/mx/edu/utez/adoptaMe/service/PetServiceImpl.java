@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.adoptaMe.entity.Pet;
+import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.repository.PetRepository;
 
 @Service
@@ -88,6 +89,21 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<Pet> getRequestedPetsForVolunteer(String username){
     	return petRepository.getRequestedPetsForVolunteer(username);
+    }
+    
+    @Override
+    public List<Pet> findByUserAndStatus(User user, String status){
+    	return petRepository.findByUserAndStatus(user, status);
+    }
+    
+    @Override
+    public void changePetStatusToAdopted(long petId) {
+    	petRepository.changePetStatusToAdopted(petId);
+    }
+
+    @Override
+    public List<Pet> getAdopterRequests(String username) {
+    	return petRepository.getAdopterRequests(username);
     }
 
 }

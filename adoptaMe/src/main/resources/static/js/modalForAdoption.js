@@ -22,6 +22,8 @@ $(document).ready(() => {
 		let forms = document.getElementById("innerLayout");
 		
 		for(let i = 0; json.users.length > i; i++){
+			json.users[i].password = "";
+			
 			var form = document.createElement("form");
 			form.setAttribute("id", "submitForm" + json.users[i].username);
 			
@@ -83,12 +85,12 @@ $(document).ready(() => {
 			//value for parameters
 			
 			let param1 = document.createElement("input");
-			param1.setAttribute("type", "text");
+			param1.setAttribute("type", "hidden");
 			param1.setAttribute("name", "petId");
 			param1.setAttribute("value", json.pet.id);
 
 			let param2 = document.createElement("input");
-			param2.setAttribute("type", "text");
+			param2.setAttribute("type", "hidden");
 			param2.setAttribute("name", "adopterName");
 			param2.setAttribute("value", json.users[i].username);
 			

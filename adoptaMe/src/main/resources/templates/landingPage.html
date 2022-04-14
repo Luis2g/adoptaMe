@@ -93,8 +93,15 @@
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${tmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${tmpPet.description}"></p>
-                                <a class="btn btn-primary" style="color:white"><span class="material-icons"
-                                        style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+                                <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-justInformationEveryone"
+		                        	th:attr="data-name=${tmpPet.name}, data-age=${tmpPet.age}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
+		                   	 	>
+		                   	 	<span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp;
+		                     	 Detalles
+		                    	</button >
                             </div>
                         </div>
                     </div>
@@ -109,8 +116,15 @@
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${secondTmpPet.description}"></p>
-                                <a class="btn btn-primary" style="color:white"><span class="material-icons"
-                                        style="vertical-align: middle;">add</span>&nbsp; Mas información</a></a>
+                                 <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-justInformationEveryone"
+		                        	th:attr="data-name=${tmpPet.name}, data-age=${tmpPet.age}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
+		                   	 	>
+		                   	 	<span class="material-icons"
+                                style="vertical-align: middle;">add</span>&nbsp;
+		                     	Detalles
+		                    	</button >
                             </div>
                         </div>
                     </div>
@@ -123,6 +137,7 @@
     </div>
     <!--End the cards-->
     <div th:insert="fragments/footer :: footer"></div>
+    <div th:replace="fragments/modalForInformation :: modalInformation" ></div>
 </body>
 
 <script>
@@ -131,5 +146,6 @@
         imagen.src = gray(img);
     }
 </script>
+<script th:src="@{/js/petFunctions.js}" ></script>
 
 </html>

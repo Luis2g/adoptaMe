@@ -26,8 +26,8 @@
     <div th:replace="fragments/navbar :: navbar"></div>
     <div class="container" style="margin-top:70px;">
         <div class="row">
-            <form name="modificarNoticia" th:action="@{/savePost}"
-            method="post" th:object="${post}" enctype="multipart/form-data">
+            <form name="modificarNoticia" id="modificarNoticia" th:action="@{/savePost}" method="post"
+                th:object="${post}" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="hidden" id="idEdit" th:field="*{id}">
                     <div class="form-row">
@@ -36,33 +36,50 @@
                                     style="color: red;">*</span></label>
                             <input required type="text" class="form-control" id="titleEdit" th:field="*{title}"
                                 placeholder="Ingresa un título corto">
+                            <div id="titleValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                <span>Por favor, verifique que el título sea válido
+                                    (El título puede tener palabras no válidas en el sistema)
+                                </span>
+                            </div>
+                            <div id="titleVoid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                <span>Por favor, verifique que el título no esté vacío
+                                </span>
+                            </div>
                         </div>
                         <div class="col-12 col-sm-4 col-md-4">
                             <div class="form-check">
-                                <label class="form-check-label" for="isPrincipalEdit"
-                                    style="color: #687281;"><b>¿Es
+                                <label class="form-check-label" for="isPrincipalEdit" style="color: #687281;"><b>¿Es
                                         principal? </b></label>
-                                <input type="checkbox" class="form-check-input" id="isPrincipal"
-                                    th:field="*{isMain}" style="display: block; margin-left: 0%;">
+                                <input type="checkbox" class="form-check-input" id="isPrincipal" th:field="*{isMain}"
+                                    style="display: block; margin-left: 0%;">
                             </div>
                         </div>
                         <div class="col-12 mt-3">
                             <label for="contenido" style="color: #687281;"><b>Contenido </b><span
                                     style="color: red;">*</span></label>
                             <textarea class="form-control form-control-lg col-12" rows="10" id="contentEdit"
-                                th:field="*{content}"
-                                placeholder="Ingresa el contenido de la noticia"></textarea>
+                                th:field="*{content}" placeholder="Ingresa el contenido de la noticia"></textarea>
+                            <div id="contentValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                <span>Por favor, verifique que el contenido de la noticia sea válido
+                                    (El contenido de la noticia puede tener palabras no válidas en el sistema)
+                                </span>
+                            </div>
+                            <div id="contentVoid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                <span>Por favor, verifique que el contenido no esté vacío
+                                </span>
+                            </div>
                         </div>
                         <div class="col-6 mt-3">
                             <label for="image" style="color: #687281;"><b>Imagen </b><span
                                     style="color: red;">*</span></label>
-                            <input class="form-control" type="file" name="imagenPost" id="imagenPostEdit" accept=".jpg, .jpeg, .png">
+                            <input class="form-control" type="file" name="imagenPost" id="imagenPostEdit"
+                                accept=".jpg, .jpeg, .png">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" th:action="@{/noticias}">Cancelar</button>
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a th:href="@{/noticias}" type="button" class="btn btn-danger" th:action="@{/noticias}">Cancelar</a>
+                    <button type="button" onclick="validarDatos()" class="btn btn-success">Guardar</button>
                 </div>
             </form>
         </div>
@@ -73,5 +90,70 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
+
+<script>
+
+    var blacklist = [",", ";", "/*", "*/", "@@", "@",
+        "SELECT", "select", "script", "<script", "UPDATE",
+        "update", "DELETE", "delete", "input", "button",
+        "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+        "int", "integer", "String", "sys", "sysobjects",
+        "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+        "estúpido", "estupideces", "idioteces", "pendejadas",
+        "encabronarse", "cabron", "cabrón", "chingada", "verga",
+        "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+        "culero", "panocha", "fuck", "dick", "asshole", "ass",
+        "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+        "deep throat", "bbc", "cock", "motherfucker", "fucker"];
+
+    var blacklist2 = ["@@", "SELECT", "select", "script", "<script", "UPDATE",
+        "update", "DELETE", "delete", "input", "button",
+        "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+        "int", "integer", "String", "sys", "sysobjects",
+        "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+        "estúpido", "estupideces", "idioteces", "pendejadas",
+        "encabronarse", "cabron", "cabrón", "chingada", "verga",
+        "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+        "culero", "panocha", "fuck", "dick", "asshole", "ass",
+        "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+        "deep throat", "bbc", "cock", "motherfucker", "fucker"];
+
+    const validarDatos = () => {
+        var title = document.getElementById("titleEdit").value.toLowerCase();
+        var content = tinymce.get('contentEdit').getContent({ format: 'raw' }).toLowerCase();
+        var flag = false;
+        var flag2 = false;
+        for (var i = 0; i < blacklist.length; i++) {
+            if (title.includes(blacklist[i].toLowerCase())) {
+                document.getElementById("titleValid").removeAttribute("hidden");
+                flag = true;
+            }
+        }
+
+        for (var i = 0; i < blacklist2.length; i++) {
+            if (content.includes(blacklist2[i].toLowerCase())) {
+                document.getElementById("contentValid").removeAttribute("hidden");
+                flag2 = true;
+            }
+        }
+
+        if (title == "") {
+            document.getElementById("titleVoid").removeAttribute("hidden");
+            flag = true;
+        }
+
+        if (content == '<p><br data-mce-bogus="1"></p>') {
+            document.getElementById("contentVoid").removeAttribute("hidden");
+            flag2 = true;
+        }
+
+        if (flag == false && flag2 == false) {
+            document.getElementById("modificarNoticia").submit();
+        } else {
+        }
+
+    }
+
+</script>
 
 </html>

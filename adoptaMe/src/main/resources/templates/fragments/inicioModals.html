@@ -344,8 +344,15 @@
                                             style="color: red;">*</span></label>
                                     <input required type="text" class="form-control" id="title" th:field="*{title}"
                                         placeholder="Ingresa un título corto">
-                                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
-                                        class="alert alert-danger mb-3 mt-3"></div>
+                                    <div id="titleValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el título sea válido
+                                            (El título puede tener palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
+                                    <div id="titleVoid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el título no esté vacío
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-sm-4 col-md-4">
                                     <div class="form-check">
@@ -355,25 +362,36 @@
                                             th:field="*{isMain}" style="display: block; margin-left: 0%;">
                                     </div>
                                 </div>
-                                <div class="col-12 mt-3">
+                                <div id="textArea" class="col-12 mt-3">
                                     <label for="contenido" style="color: #687281;"><b>Contenido </b><span
                                             style="color: red;">*</span></label>
                                     <textarea required class="form-control form-control-lg col-12" id="content"
                                         th:field="*{content}" placeholder="Ingresa el contenido de la noticia"
                                         rows="10"></textarea>
-                                    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
-                                        class="alert alert-danger mb-3 mt-3"></div>
+                                    <div id="contentValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el contenido de la noticia sea válido
+                                            (El contenido de la noticia puede tener palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
+                                    <div id="contentVoid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el contenido no esté vacío
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="col mt-3">
                                     <label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
-                                    <input class="form-control" type="file" name="imagenPost" id="image" accept=".jpg, .jpeg, .png">
+                                    <input class="form-control" type="file" name="imagenPost" id="image"
+                                        accept=".jpg, .jpeg, .png">
+                                </div>
+                                <div id="imageValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                    <span>Por favor, ingrese una imagen para realizar el registro</span>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="button" onclick="validarDatos()" class="btn btn-success">Guardar</button>
                         </div>
                     </form>
                 </div>

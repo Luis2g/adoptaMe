@@ -20,9 +20,10 @@ public class FavoriteOne {
 
     public FavoriteOne() {
     }
+    
+    
 
-    public FavoriteOne(Long id, User user, Pet pet) {
-        this.id = id;
+    public FavoriteOne(User user, Pet pet) {
         this.user = user;
         this.pet = pet;
     }
@@ -61,5 +62,10 @@ public class FavoriteOne {
     @ManyToOne
     @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
+
+	@Override
+	public String toString() {
+		return "FavoriteOne [id=" + id + ", user=" + user.getUsername() + ", pet=" + pet.getName() + "]";
+	}
 
 }

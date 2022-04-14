@@ -8,12 +8,8 @@ public interface FavoriteOneService {
     
     List<FavoriteOne> listAll();
 
-    FavoriteOne save();
-
-    FavoriteOne edit();
-
-    FavoriteOne update();
-
-    void delete();
+    FavoriteOne save(FavoriteOne favoriteOne);
+    
+    void removeFavoriteOne(long petId, String username);
 
 }

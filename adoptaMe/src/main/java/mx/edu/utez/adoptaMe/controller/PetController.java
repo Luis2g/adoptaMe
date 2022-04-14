@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mx.edu.utez.adoptaMe.entity.FavoriteOne;
 import mx.edu.utez.adoptaMe.entity.Pet;
 import mx.edu.utez.adoptaMe.entity.Request;
 import mx.edu.utez.adoptaMe.entity.User;
 import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
+import mx.edu.utez.adoptaMe.service.FavoriteOneServiceImpl;
 import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 import mx.edu.utez.adoptaMe.service.RequestServiceImpl;
@@ -48,6 +50,9 @@ public class PetController {
     
     @Autowired
     private RequestServiceImpl requestServiceImpl;
+    
+    @Autowired
+    private FavoriteOneServiceImpl favoriteOneServiceImpl;
 
     @GetMapping("/{type}")
 	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
@@ -72,7 +77,24 @@ public class PetController {
         			}
         		}
         	}
+    		
+			System.err.println("This is before the favoriteOne impresion");
+	     	for(Pet thisPet: filteredPets ) {
+	     		System.err.println("It gets to the pets");
+	        	for(FavoriteOne favoriteOne: thisPet.getFavoriteOnes()) {
+	        		if(thisPet.getStatus().equals("requestedByYou") && favoriteOne.getUser().getUsername().equals(username)) {
+	        			thisPet.setStatus("lovedIt");
+	        		}else if (favoriteOne.getUser().getUsername().equals(username)){
+	        			thisPet.setStatus("heart");
+	        		}
+//	        		System.err.println("it gets to its favorites");
+//	        		System.err.println(favoriteOne);
+	        	}  	
+		    }
     	}
+        
+       
+       
         
         pet.setUser(user);
     	model.addAttribute("user", user);
@@ -152,7 +174,7 @@ public class PetController {
             boolean saved = petServiceImpl.save(pet);
             if(saved){
                 redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!, espere a que el admistrador acepte la publicacion de la mascota");
-    			return "redirect:/mascotas/" + location;
+    			return "redirect:/misPublicaciones";
             }else{
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
                 model.addAttribute("colorsList", colorServiceImpl.listAll());
@@ -191,7 +213,7 @@ public class PetController {
     	Pet petEdited = petServiceImpl.editPet(pet.getId());
         if(petEdited != null){
             redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la actualización correctamente!");
-			return "redirect:/mascotas/" + location;
+			return "redirect:/misPublicaciones";
         }else{
             redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualizacion!");
             model.addAttribute("colorsList", colorServiceImpl.listAll());
@@ -251,5 +273,35 @@ public class PetController {
     	
     	return "redirect:/misPublicaciones";
     }
+    
+    @PostMapping("/heartOne")
+    @Secured("ROLE_ADOPTER")
+    public String heartOne(@RequestParam("petId") long petId, Authentication authentication,
+    		@RequestParam("location") String location) {
+    	
+    	
+    	System.err.println("Entra a heartOne");
+    	
+    	User user = userServiceImpl.findByUsername(authentication.getName());
+    	Pet pet = petServiceImpl.editPet(petId);
+    	
+    	FavoriteOne favoriteOne = new FavoriteOne(user, pet);
+    	
+    	favoriteOneServiceImpl.save(favoriteOne);
+    	
+    	return "redirect:/mascotas/" + location;
+    }
+    
+    @PostMapping("/removeHeart")
+    @Secured("ROLE_ADOPTER")
+    public String removeHeart(@RequestParam("petId") long petId, Authentication authentication,
+    		@RequestParam("location") String location) {  	
+    	
+    	
+    	favoriteOneServiceImpl.removeFavoriteOne(petId, authentication.getName());
+    	
+    	return "redirect:/mascotas/" + location;
+    }
+    
 
 }

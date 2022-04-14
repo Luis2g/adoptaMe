@@ -34,7 +34,7 @@
                             <form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForRejection' + tmpPet.id}" >
                             	<input name="id" th:value="${tmpPet.id}" type="hidden" >
                             	<input name="accepted" value="false" type="hidden" >
-	                            <button class="btn btn-warning" type="button" id="myModal" th:onclick="'javascript:postRejection(\''+${tmpPet.id}+'\');'" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
+	                            <button style="color: #fff"class="btn btn-warning" type="button" id="myModal" th:onclick="'javascript:postRejection(\''+${tmpPet.id}+'\');'" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
                             </form>
                     </div>
                 </div>

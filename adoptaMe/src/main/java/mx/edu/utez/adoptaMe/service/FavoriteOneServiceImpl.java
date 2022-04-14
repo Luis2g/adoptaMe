@@ -2,13 +2,17 @@ package mx.edu.utez.adoptaMe.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.adoptaMe.entity.FavoriteOne;
+import mx.edu.utez.adoptaMe.repository.FavoriteOneRepository;
 
 @Service
 public class FavoriteOneServiceImpl implements FavoriteOneService {
 
+	@Autowired
+	private FavoriteOneRepository favoriteOneRepository;
 
     @Override
     public List<FavoriteOne> listAll() {
@@ -16,23 +20,14 @@ public class FavoriteOneServiceImpl implements FavoriteOneService {
     }
 
     @Override
-    public FavoriteOne save() {
-        return null;
+    public FavoriteOne save(FavoriteOne favoriteOne) {
+        return favoriteOneRepository.save(favoriteOne);
     }
 
     @Override
-    public FavoriteOne edit() {
-        return null;
+    public void removeFavoriteOne(long petId, String username) {
+    	favoriteOneRepository.removeFavoriteOne(petId, username);
     }
-
-    @Override
-    public FavoriteOne update() {
-        return null;
-    }
-
-    @Override
-    public void delete() {
-        
-    }
+    
     
 }

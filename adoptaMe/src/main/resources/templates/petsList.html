@@ -138,7 +138,7 @@
                     <div class="card-footer text-muted">
                         <div class="row">
                             <div class="col-12 text-right">
-                            	<div th:if="${tmpPet.status.equals('requestedByYou')}"  >
+                            	<div th:if="${tmpPet.status.equals('requestedByYou') || tmpPet.status.equals('lovedIt')}"  >
                             		<form th:action="@{/mascotas/removeRequest}" method="POST" th:attr="id=${'removalForm' + tmpPet.id}" >
                             			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
                             			<input type="hidden" name="location" th:value="${location}" >
@@ -147,9 +147,36 @@
 	                            	<h4 >Solicitada</h4>
                             	</div>
                             
-                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
-                                    <i class="feather-14" data-feather="heart"></i>
-                                </button>
+                            	<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})" >
+                            		<form th:action="@{/mascotas/heartOne}" method="POST" >
+                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+                            			<input type="hidden" name="location" th:value="${location}" >
+                            			<button  
+                            				class="btn btn-outline-gray" 
+                            				style="border : none; right: 0px !important; " 
+                           				>
+	                                    <i class="feather-14" data-feather="heart"></i>
+		                                    Dar corazón
+		                                </button>
+                            		</form>
+                            	</div>
+                            	<div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}" >
+                            		<form th:action="@{/mascotas/removeHeart}" method="POST" >
+                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+                            			<input type="hidden" name="location" th:value="${location}" >
+                            			<button  
+                            				class="btn btn-outline-gray" 
+                            				style="border : none; right: 0px !important; " 
+                           				>
+		                                    <i class="feather-14" data-feather="heart"></i>
+		                                    Remover corazón
+		                                </button>
+                            		</form>
+                            	</div>
+                                
+                                
+                                
+                                
                             </div>
                         </div>
 
@@ -204,10 +231,10 @@
                                             <p style="text-align: justify;">[[${pet.description}]]</p>
                                         </div>
 	                                        <div class="col-12 d-flex justify-content-end" >
-		                                        <form th:if="${!pet.status.equals('requestedByYou')}" sec:authorize="hasAuthority('ROLE_ADOPTER')" th:action="@{/mascotas/requestAdoption}" method='POST' >
+		                                        <form th:id="'requestAPetForm' + ${pet.id}" th:if="${!pet.status.equals('requestedByYou')}" sec:authorize="hasAuthority('ROLE_ADOPTER')" th:action="@{/mascotas/requestAdoption}" method='POST' >
                 		                        	<input name="petId" type="hidden" th:value="${pet.id}" >
                 		                        	<input name="location" type="hidden" th:value="${location}" > 
-	                    	                    	<button class="btn btn-success" > Solicitar adopción </button>
+	                    	                    	<button type="button" th:onclick="javascript:confirmBeforeRequesting([[${pet.id}]], [[${pet.name}]]);"  class="btn btn-success" > Solicitar adopción </button>
         		                                </form>
 	                                        </div>                                        
                                     </div>

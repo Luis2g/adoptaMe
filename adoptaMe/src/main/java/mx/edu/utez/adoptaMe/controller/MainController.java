@@ -36,9 +36,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 public class MainController {
 
     @Autowired
-    private ColorServiceImpl colorServiceImpl;
-
-    @Autowired
     private UserServiceImpl userServiceImpl;
 
     @Autowired
@@ -46,11 +43,6 @@ public class MainController {
 
     @Autowired
     private PetServiceImpl petServiceImpl;
-
-    @Autowired
-    private RequestServiceImpl requestServiceImpl;
-
-    private User user;
 
     // Remember to move this to the petController, it's just here to not create
     // github problems

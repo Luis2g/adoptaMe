@@ -24,7 +24,8 @@
                 <input id="image" type="file" style="display: none;" accept=".jpg, .jpeg, .png">
             </div>
             <div class="col-12 col-sm-10">
-                <form th:action="@{/mascotas/save}" th:object="${pet}" method="POST">
+                <form id="formForPetCreation" th:action="@{/mascotas/save}" th:object="${pet}" method="POST">
+                	<input name="location" th:value="${location}" type="hidden" >
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-8 col-sm-8 col-md-5">
@@ -121,7 +122,7 @@
                         </div>
                     </div>
                     <div class="mt-4 d-flex justify-content-end">
-                        <button class="btn btn-success" type="submit">Guardar</button>
+                        <button class="btn btn-success" onClick="confirmationBeforeCreation()" type="button">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -151,6 +152,9 @@
             registrationDate.value = date;
         });
     </script>
+    <script th:src="@{/js/petFunctions.js}"></script>
+    
+    
 
 </body>
 

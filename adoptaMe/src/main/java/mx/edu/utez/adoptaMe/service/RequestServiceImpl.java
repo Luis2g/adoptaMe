@@ -15,8 +15,6 @@ public class RequestServiceImpl implements RequestService{
 	@Autowired
 	private RequestRepository requestRepository;
     
-    private List<Request> list = null;
-
     @Override
     public List<Request> listAll(){
         return requestRepository.findAll();
@@ -55,6 +53,11 @@ public class RequestServiceImpl implements RequestService{
     @Override
     public void endAdoption(long petId, String username) {
     	requestRepository.endAdoption(petId, username);
+    }
+    
+    @Override
+    public void cancelRequestsOfOtherUsers(long petId) {
+    	requestRepository.cancelRequestsOfOtherUsers(petId);
     }
     
 }

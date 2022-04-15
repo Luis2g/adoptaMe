@@ -89,14 +89,14 @@
                 <div class="carousel-item active">
                     <div class="col-md-3" th:each="tmpPet : ${petList}" style="float:left">
                         <div class="card mb-2">
-                            <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${tmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${tmpPet.description}"></p>
                                 <button  
 		                        	type="button"
 		                        	class="btn btn-success btn-justInformationEveryone"
-		                        	th:attr="data-name=${tmpPet.name}, data-age=${tmpPet.age}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
+		                        	th:attr="data-image=${tmpPet.image},data-name=${tmpPet.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
 		                   	 	>
 		                   	 	<span class="material-icons"
                                 style="vertical-align: middle;">add</span>&nbsp;
@@ -112,14 +112,14 @@
                 <div class="carousel-item" th:each="secondTmpPet : ${secondPetList}">
                     <div class="col-md-3" style="float:left">
                         <div class="card mb-2">
-                            <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${secondTmpPet.description}"></p>
                                  <button  
 		                        	type="button"
 		                        	class="btn btn-success btn-justInformationEveryone"
-		                        	th:attr="data-name=${secondTmpPet.name}, data-age=${secondTmpPet.age}, data-description=${secondTmpPet.description}, data-date=${secondTmpPet.registrationDate}, data-type=${secondTmpPet.type}, data-color=${secondTmpPet.color.name}, data-personality=${secondTmpPet.personality.name}, data-size=${secondTmpPet.size}, data-gender=${secondTmpPet.sex}"
+		                        	th:attr="data-image=${secondTmpPet.image},data-name=${secondTmpPet.name}, data-age=${secondTmpPet.age},data-unit-age=${secondTmpPet.unitAge}, data-description=${secondTmpPet.description}, data-date=${secondTmpPet.registrationDate}, data-type=${secondTmpPet.type}, data-color=${secondTmpPet.color.name}, data-personality=${secondTmpPet.personality.name}, data-size=${secondTmpPet.size}, data-gender=${secondTmpPet.sex}"
 		                   	 	>
 		                   	 	<span class="material-icons"
                                 style="vertical-align: middle;">add</span>&nbsp;

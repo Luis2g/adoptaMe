@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import mx.edu.utez.adoptaMe.entity.FavoriteOne;
@@ -31,6 +32,7 @@ import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 import mx.edu.utez.adoptaMe.service.RequestServiceImpl;
 import mx.edu.utez.adoptaMe.service.UserServiceImpl;
+import mx.edu.utez.adoptaMe.util.ImagenUtileria;
 
 @Controller
 @RequestMapping("/mascotas")
@@ -53,6 +55,18 @@ public class PetController {
     
     @Autowired
     private FavoriteOneServiceImpl favoriteOneServiceImpl;
+    
+    public String save() {
+        String token = "";
+
+        for (int i = 0; i < 16; i++) {
+            double numero = Math.random() * 10;
+            int parcear = (int) numero;
+            token += parcear;
+        }
+
+        return token;
+    }
 
     @GetMapping("/{type}")
 	public String pets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
@@ -106,8 +120,8 @@ public class PetController {
     
 
     @GetMapping("/registro")
-    public String createPet(Model model, Pet pet, @RequestParam("location") String location){
-    	model.addAttribute("location", location);
+    @Secured("ROLE_VOLUNTEER")
+    public String createPet(Model model, Pet pet){
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
         return "/createPet";
@@ -142,23 +156,19 @@ public class PetController {
     }
 
     @PostMapping("/save")
+    @Secured("ROLE_VOLUNTEER")
     public String savePet(Model model, @Valid @ModelAttribute("pet") Pet pet,
-    		@RequestParam("location") String location,
-    		BindingResult bindingResult, 
-    		RedirectAttributes redirectAttributes, 
-    		Authentication authentication, HttpSession session){
-        // All pet when is created, the available always is true
+    		BindingResult bindingResult, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
+    		@RequestParam(name = "imagenPet", required = false) MultipartFile multipartFile){
     	if(pet.getId() == null) {
     		System.out.println("Entro a registrar");
-         // Configuration for user before controller session is created
-            User user = new User();
+    		User user = new User();
             if(authentication != null) {
         		String username = authentication.getName();
         		user = userServiceImpl.findByUsername(username);
         		session.setAttribute("user", user);
         	}
             pet.setUser(user);
-            pet.setStatus("pending");
             // End configuration
 
             if(bindingResult.hasErrors()){
@@ -168,58 +178,85 @@ public class PetController {
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
                 model.addAttribute("colorsList", colorServiceImpl.listAll());
                 model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-    			return "createPet";
-            }
+    			return "/createPet";
+            }else {
+            	boolean response = false;
+            	String generatedToken = save();
+            	try {
+            		pet.setImage(generatedToken);
+            		pet.setStatus("pending");
+            		response = petServiceImpl.save(pet);
+            	}catch(Exception ex) {
+            		ex.printStackTrace();
+            	}
+            	
+            	String ruta = "C:/mascotas/img-pet";
+                ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
 
-            boolean saved = petServiceImpl.save(pet);
-            if(saved){
-                redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!, espere a que el admistrador acepte la publicacion de la mascota");
-    			return "redirect:/misPublicaciones";
-            }else{
-                redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
-                model.addAttribute("colorsList", colorServiceImpl.listAll());
-                model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-                return "createPet";
+
+                if(response){
+                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
+        			return "redirect:/misPublicaciones";
+                }else{
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    model.addAttribute("colorsList", colorServiceImpl.listAll());
+                    model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
+                    return "/createPet";
+                }
             }
     	}else {
-    		System.out.println("Entra en la actualizacion");
     		Pet petExist = petServiceImpl.editPet(pet.getId());
-    		pet.setName(petExist.getName());
-    		pet.setDescription(petExist.getDescription());
-    		pet.setSex(petExist.getSex());
-    		pet.setAge(petExist.getAge());
-    		pet.setSize(petExist.getSize());
-    		pet.setType(petExist.getType());
-    		pet.setPersonality(petExist.getPersonality());
-    		pet.setColor(petExist.getColor());
+    		petExist.setName(pet.getName());
+    		petExist.setDescription(pet.getDescription());
+    		petExist.setSex(pet.getSex());
+    		petExist.setAge(pet.getAge());
+    		petExist.setUnitAge(pet.getUnitAge());
+    		petExist.setSize(pet.getSize());
+    		petExist.setType(pet.getType());
+    		petExist.setPersonality(pet.getPersonality());
+    		petExist.setColor(pet.getColor());
     		User user = new User();
     		if(authentication != null) {
         		String username = authentication.getName();
         		user = userServiceImpl.findByUsername(username);
         		session.setAttribute("user", user);
         	}
-            pet.setUser(user);
-            pet.setStatus("pending");
+            petExist.setUser(user);
+            if(bindingResult.hasErrors()){
+                for(ObjectError error: bindingResult.getAllErrors()){
+    				System.out.println("Error: " + error.getDefaultMessage());
+    			}
+                redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                model.addAttribute("colorsList", colorServiceImpl.listAll());
+                model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
+    			return "redirect:/mascotas/mascota/"+pet.getId();
+            }else {
+            	boolean response = false;
+            	if(multipartFile != null && !multipartFile.isEmpty()) {
+            		String token = save();
+            		try {
+            			petExist.setImage(token);
+            			response = petServiceImpl.save(petExist);
+            		}catch (Exception e) {
+            			e.printStackTrace();
+    				}
+                    String ruta = "C:/mascotas/img-pet";
+                    ImagenUtileria.guardarImagen(multipartFile, ruta, token);
+            	}else {
+            		response = petServiceImpl.save(petExist);
+            	}
+            	
+                if(response){
+                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la actualización correctamente!");
+        			return "redirect:/misPublicaciones";
+                }else{
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualizacion!");
+                    model.addAttribute("colorsList", colorServiceImpl.listAll());
+                    model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
+                    return "redirect:/mascotas/mascota/"+pet.getId();
+                }
+            }
     	}
-    	if(bindingResult.hasErrors()){
-            for(ObjectError error: bindingResult.getAllErrors()){
-				System.out.println("Error: " + error.getDefaultMessage());
-			}
-            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
-            model.addAttribute("colorsList", colorServiceImpl.listAll());
-            model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-			return "createPet";
-        }
-    	Pet petEdited = petServiceImpl.editPet(pet.getId());
-        if(petEdited != null){
-            redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la actualización correctamente!");
-			return "redirect:/misPublicaciones";
-        }else{
-            redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualizacion!");
-            model.addAttribute("colorsList", colorServiceImpl.listAll());
-            model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-            return "createPet";
-        }
 
     }
     

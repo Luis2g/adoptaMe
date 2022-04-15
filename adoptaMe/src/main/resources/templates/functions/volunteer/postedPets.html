@@ -11,16 +11,16 @@
 	
 		
 		<div th:if="${requestedPets.size() != 0}" >
-			<h1 class="text-center" style="color: #ccc" >Solicitudes de adopción</h1>
+			<h1 class="text-center" style="color: #ccc" >Solicitudes de adopciï¿½n</h1>
 			<div class="row mt-5" >
 			
 				<div class="col-12 col-sm-6 col-md-6 col-lg-6" th:each="requestedPet: ${requestedPets}">
 	                <div class="card mb-2">
-	                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+	                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}" alt="Card image cap">
 	                    <div class="card-body">
 	                    	<span class="badge badge-primary">Solicitada</span>
 	                        <h4 class="card-title mt-2" th:text="${requestedPet.pet.name}" ></h4>
-	                        <p class="card-text" th:text="${requestedPet.pet.description}" ></p>  
+	                        <p class="card-text" th:utext="${requestedPet.pet.description}" ></p>  
 	                        <button  
 	                        	type="button"
 	                        	class="btn btn-success btn-information"
@@ -51,18 +51,25 @@
 		<div class="row" >
 			<div class="col-12" >
 				<h1 class="text-center" style="color: #ccc" >Publicaciones</h1>
-				<div class="row mt-5" >			
+				
+                    <div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" >
+	                    <form th:action="@{/mascotas/registro}" >
+		                    <input name="location" th:value="${location}" type="hidden" > 
+		                    <button class="btn btn-success">Registrar</button>                     
+	                    </form>
+                    </div>
+				<div class="row mt-3" >			
 					<div class="col-4" th:each="pendingPet: ${pendingPets}">
 		                <div class="card mb-2">
-		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
 		                    	<span class="badge badge-warning" style="color: #fff" >En espera</span>
 		                        <h4 class="card-title mt-3" th:text="${pendingPet.name}" ></h4>
-		                        <p class="card-text" th:text="${pendingPet.description}" ></p>  
+		                        <p class="card-text" th:utext="${pendingPet.description}" ></p>
 		                       <button  
 		                        	type="button"
 		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-name=${pendingPet.name}, data-age=${pendingPet.age}, data-description=${pendingPet.description}, data-date=${pendingPet.registrationDate}, data-type=${pendingPet.type}, data-color=${pendingPet.color.name}, data-personality=${pendingPet.personality.name}, data-size=${pendingPet.size}, data-gender=${pendingPet.sex}"
+		                        	th:attr="data-image=${pendingPet.image},data-name=${pendingPet.name}, data-age=${pendingPet.age},data-unit-age=${pendingPet.unitAge}, data-description=${pendingPet.description}, data-date=${pendingPet.registrationDate}, data-type=${pendingPet.type}, data-color=${pendingPet.color.name}, data-personality=${pendingPet.personality.name}, data-size=${pendingPet.size}, data-gender=${pendingPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -79,15 +86,15 @@
 		            </div>
 		            <div class="col-4" th:each="acceptedPet: ${acceptedPets}">
 		                <div class="card mb-2">
-		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
 		                    <span class="badge badge-info">Aceptada</span>
 		                        <h4 class="card-title" th:text="${acceptedPet.name}" ></h4>
-		                        <p class="card-text" th:text="${acceptedPet.description}" ></p>  
+		                        <p class="card-text" th:utext="${acceptedPet.description}" ></p>  
 		                        <button  
 		                        	type="button"
 		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-name=${acceptedPet.name}, data-age=${acceptedPet.age}, data-description=${acceptedPet.description}, data-date=${acceptedPet.registrationDate}, data-type=${acceptedPet.type}, data-color=${acceptedPet.color.name}, data-personality=${acceptedPet.personality.name}, data-size=${acceptedPet.size}, data-gender=${acceptedPet.sex}"
+		                        	th:attr="data-image=${acceptedPet.image},data-name=${acceptedPet.name}, data-age=${acceptedPet.age},data-unit-age=${acceptedPet.unitAge}, data-description=${acceptedPet.description}, data-date=${acceptedPet.registrationDate}, data-type=${acceptedPet.type}, data-color=${acceptedPet.color.name}, data-personality=${acceptedPet.personality.name}, data-size=${acceptedPet.size}, data-gender=${acceptedPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -104,15 +111,15 @@
 		            </div>
 		            <div class="col-4" th:each="rejectedPet: ${rejectedPets}">
 		                <div class="card mb-2">
-		                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
 		                    <span class="badge badge-danger">Rechazada</span>
 		                        <h4 class="card-title" th:text="${rejectedPet.name}" ></h4>
-		                        <p class="card-text" th:text="${rejectedPet.description}" ></p>  
+		                        <p class="card-text" th:utext="${rejectedPet.description}" ></p>  
 		                        <button  
 		                        	type="button"
 		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-name=${rejectedPet.name}, data-age=${rejectedPet.age}, data-description=${rejectedPet.description}, data-date=${rejectedPet.registrationDate}, data-type=${rejectedPet.type}, data-color=${rejectedPet.color.name}, data-personality=${rejectedPet.personality.name}, data-size=${rejectedPet.size}, data-gender=${rejectedPet.sex}"
+		                        	th:attr="data-image=${rejectedPet.image}, data-name=${rejectedPet.name}, data-age=${rejectedPet.age}, data-unit-age=${rejectedPet.unitAge}, data-description=${rejectedPet.description}, data-date=${rejectedPet.registrationDate}, data-type=${rejectedPet.type}, data-color=${rejectedPet.color.name}, data-personality=${rejectedPet.personality.name}, data-size=${rejectedPet.size}, data-gender=${rejectedPet.sex}"
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
@@ -136,7 +143,7 @@
 		  <div class=" modal-lg modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalCenterTitle">Información de la mascota</h5>
+		        <h5 class="modal-title" id="exampleModalCenterTitle">Informaciï¿½n de la mascota</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -160,7 +167,7 @@
 				  		<p id="petColor" ></p>
 				  	</div>
 				  	<div class="col-12" >
-				  		<h5Description:></h5>
+				  		<h5>Descripcion:</h5>
 				  		<p id="petDescription" ></p>
 				  	</div>
 				  </div>

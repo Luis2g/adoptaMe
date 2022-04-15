@@ -18,10 +18,10 @@
 		
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${petPostRequests}">
                 <div class="card mb-2">
-                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}"alt="Card image cap">
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
-                        <p class="card-text">[[${tmpPet.description}]]</p>
+                        <p class="card-text" th:utext="${tmpPet.description}"></p>
                             <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
                                 <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas información</a>

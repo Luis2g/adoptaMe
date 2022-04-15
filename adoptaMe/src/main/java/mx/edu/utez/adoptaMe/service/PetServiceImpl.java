@@ -106,4 +106,9 @@ public class PetServiceImpl implements PetService {
     	return petRepository.getAdopterRequests(username);
     }
 
+    @Override
+    public List<Pet> getAdoptedPets(String username) {
+    	return petRepository.getAdoptedPets(username);
+    }
+
 }

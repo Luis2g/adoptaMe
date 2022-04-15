@@ -92,19 +92,23 @@ public class PetController {
         		}
         	}
     		
-			System.err.println("This is before the favoriteOne impresion");
 	     	for(Pet thisPet: filteredPets ) {
-	     		System.err.println("It gets to the pets");
+	     		int hearts = 0;
+	     		thisPet.setType("nada");
 	        	for(FavoriteOne favoriteOne: thisPet.getFavoriteOnes()) {
+	        		hearts++;
 	        		if(thisPet.getStatus().equals("requestedByYou") && favoriteOne.getUser().getUsername().equals(username)) {
 	        			thisPet.setStatus("lovedIt");
 	        		}else if (favoriteOne.getUser().getUsername().equals(username)){
 	        			thisPet.setStatus("heart");
 	        		}
-//	        		System.err.println("it gets to its favorites");
-//	        		System.err.println(favoriteOne);
-	        	}  	
-		    }
+	        	}  		        	
+	        	thisPet.setType(hearts+"");
+	     	}
+    	}else {
+    		for(Pet thisPet: filteredPets ) {
+    			thisPet.setType(thisPet.getFavoriteOnes().size() + "");
+	     	}
     	}
         
        
@@ -195,7 +199,7 @@ public class PetController {
 
 
                 if(response){
-                    redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado el registro correctamente!");
+                    redirectAttributes.addFlashAttribute("msg_success", "¡La mascota se ha guardado correctamente y se le presentará a el administrador quien decidira si es apta para ser publicada, mientras tanto se encuentra en estado pendiente!");
         			return "redirect:/misPublicaciones";
                 }else{
                     redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
@@ -312,7 +316,6 @@ public class PetController {
     }
     
     @PostMapping("/heartOne")
-    @Secured("ROLE_ADOPTER")
     public String heartOne(@RequestParam("petId") long petId, Authentication authentication,
     		@RequestParam("location") String location) {
     	
@@ -330,7 +333,6 @@ public class PetController {
     }
     
     @PostMapping("/removeHeart")
-    @Secured("ROLE_ADOPTER")
     public String removeHeart(@RequestParam("petId") long petId, Authentication authentication,
     		@RequestParam("location") String location) {  	
     	

@@ -37,4 +37,6 @@ public interface PetService {
     
     List<Pet> getAdopterRequests(String username);
     
+    List<Pet> getAdoptedPets(String username);
+    
 }

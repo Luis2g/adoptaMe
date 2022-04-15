@@ -34,6 +34,11 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
 	@Transactional
 	@Query(value="SELECT * FROM pets P JOIN requests R ON P.id = R.pet_id WHERE R.user_id = :username", nativeQuery=true)
 	List<Pet> getAdopterRequests(String username);
+
+	@Modifying
+	@Transactional
+	@Query(value="SELECT * FROM pets WHERE status = 'adopted' AND user_id = :username", nativeQuery=true)
+	List<Pet> getAdoptedPets(String username);
 	
 	List<Pet> findByType(String type);
 	

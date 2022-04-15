@@ -93,7 +93,6 @@ public class UserController {
 			Model model, RedirectAttributes redirectAttributes,
 			@RequestParam(name = "confirmation", required = true) String confirmation) {
 
-		System.out.println("This is the user " + user);
 
 		System.out.println("This is the confirmation: " + confirmation);
 		if (!user.getPassword().equals(confirmation)) {
@@ -103,7 +102,6 @@ public class UserController {
 		}
 		user.setEnabled(true);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		System.out.println("This is the user" + user);
 		User saved = userServiceImpl.save(user);
 
 		if (saved != null) {

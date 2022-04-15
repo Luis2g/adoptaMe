@@ -109,10 +109,10 @@
                 <!--/.First slide-->
 
                 <!--Second slide-->
-                <div class="carousel-item" th:each="secondTmpPet : ${secondPetList}">
-                    <div class="col-md-3" style="float:left">
+                <div class="carousel-item">
+                    <div class="col-md-3" th:each="secondTmpPet : ${secondPetList}" style="float:left">
                         <div class="card mb-2">
-                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
+                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${secondTmpPet.image})}" alt="Card image cap">
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${secondTmpPet.description}"></p>

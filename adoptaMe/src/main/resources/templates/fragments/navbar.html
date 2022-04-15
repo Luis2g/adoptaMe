@@ -29,8 +29,11 @@
                     <a class="nav-link" th:href="@{/misSolicitudes}" >Mi solicitudes</a>
                 </li>
                 <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item active">
-                    <a class="nav-link" th:href="@{/usuarios/accesos}" >Monitoreo</a>
+                    <a class="nav-link " th:href="@{/usuarios/accesos}" >Monitoreo</a>
                 </li>
+                <li sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="nav-item active">
+	                <a class="nav-link" th:href="@{/mascotas/registro}">Registrar</a>
+                </li >
             </ul>
             <ul class="navbar-nav mr-automy-2 my-lg-0">
 				<li class="nav-item" sec:authorize="isAnonymous()">

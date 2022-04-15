@@ -51,12 +51,12 @@
                 		<h1 style="color: #ccc" class="text-center" >Mascotas publicadas</h1> 
                 	</div>
                 	<div sec:authorize="hasAuthority('ROLE_ADOPTER')" class="col-12 mt-4" >
-                		<h1 style="color: #ccc" class="text-center" >¡Adopta una mascota hoy!</h1>
+                		<h1 style="color: #ccc" class="text-center" >ï¿½Adopta una mascota hoy!</h1>
                 		<h3 style="color: #ccc" class="text-center" >y ayudales a conseguir un hogar</h3>
                		</div>
                 	<div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="col-12 mt-4" > 
                 		<h1 style="color: #ccc" class="text-center" >Publica una mascota</h1> 
-                		<h3 style="color: #ccc" class="text-center" >y asi podrá encontrar un hogar </h3>
+                		<h3 style="color: #ccc" class="text-center" >y asi podrï¿½ encontrar un hogar </h3>
                 	</div>
                     <div class="offset-md-8  col-12 col-md-4 " >
                         <label for="basic-url">Busqueda</label>
@@ -109,29 +109,23 @@
                         </span>
                         &nbsp;Filtrar
                     </button>
-                    <div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" >
-	                    <form th:action="@{/mascotas/registro}" >
-		                    <input name="location" th:value="${location}" type="hidden" > 
-		                    <button class="btn btn-success">Registrar</button>                     
-	                    </form>
-                    </div>
                 </div>
 
             </div>
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${listPets}">
                 <div class="card mb-2">
-                    <img class="card-img-top" src="/images/perrosygatos.webp" alt="Card image cap">
+                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}">
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
-                        <p class="card-text">[[${tmpPet.description}]]</p>
+                        <p class="card-text" th:utext="${tmpPet.description}"></p>
                             <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
                                 <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas informaciÃ³n</a>
                             </button> -->
                             <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Â¡Adoptar!</button> 
                             <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > Â¡Adoptar! </a>-->
-                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas información</button >
+                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas informaciÃ³n</button >
                             <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:if="${tmpPet.user.username.equals(usernameFromModel)}" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
                     </div>
 
@@ -147,7 +141,9 @@
 	                            	<h4 >Solicitada</h4>
                             	</div>
                             
-                            	<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})" >
+                            
+                    			<div sec:authorize="hasAuthority('ROLE_ADOPTER')" >
+                        			<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})" >
                             		<form th:action="@{/mascotas/heartOne}" method="POST" >
                             			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
                             			<input type="hidden" name="location" th:value="${location}" >
@@ -155,24 +151,28 @@
                             				class="btn btn-outline-gray" 
                             				style="border : none; right: 0px !important; " 
                            				>
+                           				
+                    
 	                                    <i class="feather-14" data-feather="heart"></i>
-		                                    Dar corazón
+		                                    Dar corazï¿½n
 		                                </button>
                             		</form>
                             	</div>
-                            	<div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}" >
-                            		<form th:action="@{/mascotas/removeHeart}" method="POST" >
-                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-                            			<input type="hidden" name="location" th:value="${location}" >
-                            			<button  
-                            				class="btn btn-outline-gray" 
-                            				style="border : none; right: 0px !important; " 
-                           				>
-		                                    <i class="feather-14" data-feather="heart"></i>
-		                                    Remover corazón
-		                                </button>
-                            		</form>
-                            	</div>
+	                            	<div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}" >
+	                            		<form th:action="@{/mascotas/removeHeart}" method="POST" >
+	                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+	                            			<input type="hidden" name="location" th:value="${location}" >
+	                            			<button  
+	                            				class="btn btn-outline-gray" 
+	                            				style="border : none; right: 0px !important; " 
+	                           				>
+			                                    <i class="feather-14" data-feather="heart"></i>
+			                                    Remover corazï¿½n
+			                                </button>
+	                            		</form>
+	                            	</div>
+            					</div>
+                            	
                                 
                                 
                                 
@@ -196,7 +196,7 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-4">
                                             <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
-                                                src="http://www.kennelclubargentino.org.ar/wp-content/uploads/2020/01/corgi3.jpg">
+                                                th:src="@{/imagenesPet/{i} (i = ${pet.image})}">
                                             <div class="row">
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
                                             </div>
                                             <div class="col-6 col-sm-3">
                                                 <label for="name" style="color: #687281;"><b>Edad</b></label>
-                                                <p>[[${pet.age}]]</p>
+                                                <p>[[${pet.age + " " + pet.unitAge}]]</p>
                                             </div>
                                             <div class="col-6 col-sm-3">
                                                 <label for="name" style="color: #687281;"><b>TamaÃ±o</b></label>
@@ -228,13 +228,13 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="description" style="color: #687281;"><b>DescripciÃ³n de la mascota </b></label>
-                                            <p style="text-align: justify;">[[${pet.description}]]</p>
+                                            <p style="text-align: justify;" th:utext="${pet.description}"></p>
                                         </div>
 	                                        <div class="col-12 d-flex justify-content-end" >
 		                                        <form th:id="'requestAPetForm' + ${pet.id}" th:if="${!pet.status.equals('requestedByYou')}" sec:authorize="hasAuthority('ROLE_ADOPTER')" th:action="@{/mascotas/requestAdoption}" method='POST' >
                 		                        	<input name="petId" type="hidden" th:value="${pet.id}" >
                 		                        	<input name="location" type="hidden" th:value="${location}" > 
-	                    	                    	<button type="button" th:onclick="javascript:confirmBeforeRequesting([[${pet.id}]], [[${pet.name}]]);"  class="btn btn-success" > Solicitar adopción </button>
+	                    	                    	<button type="button" th:onclick="javascript:confirmBeforeRequesting([[${pet.id}]], [[${pet.name}]]);"  class="btn btn-success" > Solicitar adopciï¿½n </button>
         		                                </form>
 	                                        </div>                                        
                                     </div>
@@ -250,34 +250,6 @@
 		</div>
 	  </div>
 	</div>
-
-            <!-- Start modal info pet -->
-            <!-- <div th:replace="fragments/requestPetModal :: modal('modalInformacionMascota')">modal</div> -->
-            <!-- End modal info pet 
-            
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"aria-hidden="true">
-			    <div class="modal-dialog" role="document">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                                 <h5 class = "modal-title" id = "exampleModalLabel"> Revisar </h5>
-			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			                    <span aria-hidden="true">Ã—</span>
-			                </button>
-			            </div>
-			            <div class="modal-body">
-			                <form class="table" th:action="@{/order/evaluate}" method="post">
-			                    <p>[[${tmpPet}]]</p>
-                				<p>Hola aqui arriba va el nombre</p>
-			                </form>
-			            </div>
-			 			<div class="modal-footer">
-			                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			                <button type="button" class="btn btn-primary">Save changes</button>
-			            </div>
-			        </div>
-			    </div>
-			</div>-->
-            
 
         </div>
 

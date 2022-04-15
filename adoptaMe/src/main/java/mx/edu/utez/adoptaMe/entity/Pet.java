@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -44,9 +46,14 @@ public class Pet {
     @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)")
     private String sex;
 
-    @Column(name = "age", nullable = false, length = 50)
+    @Column(name = "age", nullable = false)
+    @Min(1)
+    @NotNull(message = "Este campo es requerido")
+    private int age;
+    
+    @Column(name = "unitAge", nullable = false, length = 50)
     @NotEmpty(message = "Este campo es requerido")
-    private String age;
+    private String unitAge;
 
     @Column(name = "size", nullable = false, length = 45)
     @NotEmpty(message = "Este campo es requerido")
@@ -64,38 +71,45 @@ public class Pet {
     
     @Column(name = "status", nullable = false, length = 50)
     private String status;
+    
+    @Column(nullable = true, length = 45, unique = true)
+	private String image;
 
     public Pet() {
     }
 
-    public Pet(Long id,
+
+	public Pet(Long id,
 			@Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50, message = "El nombre de la mascota debe contener al menos 2 caracteres") String name,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 15, max = 500, message = "La descripción debe tener al menos 15 caracteres") String description,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 1, max = 1, message = "La mascota solo puede ser H (Hembra) ó M (Macho)") String sex,
-			@NotEmpty(message = "Este campo es requerido") String age,
+			@NotEmpty(message = "Este campo es requerido") int age,
+			@NotEmpty(message = "Este campo es requerido") String unitAge,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String size,
 			@NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 45) String type,
-			@NotEmpty(message = "Este campo es requerido") String registrationDate, String status,
+			@NotEmpty(message = "Este campo es requerido") String registrationDate, String status, String image,
 			Personality personality, Color color, User user, List<Request> requests, List<Image> images,
-			List<FavoriteOne> favoriteOnes) {
+			List<FavoriteOne> favoriteOnes, List<Commentary> commentaries) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.sex = sex;
 		this.age = age;
+		this.unitAge = unitAge;
 		this.size = size;
 		this.type = type;
 		this.registrationDate = registrationDate;
 		this.status = status;
+		this.image = image;
 		this.personality = personality;
 		this.color = color;
 		this.user = user;
 		this.requests = requests;
 		this.images = images;
 		this.favoriteOnes = favoriteOnes;
+		this.commentaries = commentaries;
 	}
-
 
 
 	public Long getId() {
@@ -122,15 +136,26 @@ public class Pet {
         this.sex = sex;
     }
 
-    public String getAge() {
-        return age;
-    }
+    public int getAge() {
+		return age;
+	}
 
-    public void setAge(String age) {
-        this.age = age;
-    }
+	public void setAge(int age) {
+		this.age = age;
+	}
 
-    public String getSize() {
+
+	public String getUnitAge() {
+		return unitAge;
+	}
+
+
+	public void setUnitAge(String unitAge) {
+		this.unitAge = unitAge;
+	}
+
+
+	public String getSize() {
         return size;
     }
 
@@ -210,16 +235,27 @@ public class Pet {
         this.description = description;
     }
 
-    
-    
     public String getStatus() {
 		return status;
 	}
-
-
-
+    
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public List<Commentary> getCommentaries() {
+		return commentaries;
+	}
+
+	public void setCommentaries(List<Commentary> commentaries) {
+		this.commentaries = commentaries;
 	}
 
 

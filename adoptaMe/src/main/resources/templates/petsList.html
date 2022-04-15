@@ -142,22 +142,21 @@
                             	</div>
                             
                             
-                    			<div sec:authorize="hasAuthority('ROLE_ADOPTER')" >
                         			<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})" >
-                            		<form th:action="@{/mascotas/heartOne}" method="POST" >
-                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-                            			<input type="hidden" name="location" th:value="${location}" >
-                            			<button  
-                            				class="btn btn-outline-gray" 
-                            				style="border : none; right: 0px !important; " 
-                           				>
-                           				
-                    
-	                                    <i class="feather-14" data-feather="heart"></i>
-		                                    Dar coraz�n
-		                                </button>
-                            		</form>
-                            	</div>
+	                            		<form th:action="@{/mascotas/heartOne}" method="POST" >
+		                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
+		                            			<input type="hidden" name="location" th:value="${location}" >
+		                            			<button  
+		                            				class="btn btn-outline-gray" 
+		                            				style="border : none; right: 0px !important; " 
+		                           				>
+		                           				
+		                    
+			                                    <i class="feather-14" data-feather="heart"></i>
+				                                    [[${tmpPet.type}]] Dar coraz�n
+				                                </button>
+		                            		</form>
+		                            	</div>
 	                            	<div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}" >
 	                            		<form th:action="@{/mascotas/removeHeart}" method="POST" >
 	                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
@@ -167,11 +166,10 @@
 	                            				style="border : none; right: 0px !important; " 
 	                           				>
 			                                    <i class="feather-14" data-feather="heart"></i>
-			                                    Remover coraz�n
+			                                    [[${tmpPet.type}]] Remover coraz�n
 			                                </button>
 	                            		</form>
 	                            	</div>
-            					</div>
                             	
                                 
                                 

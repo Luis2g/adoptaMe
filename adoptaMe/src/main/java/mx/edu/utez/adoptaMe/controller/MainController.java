@@ -94,6 +94,8 @@ public class MainController {
         List<Pet> pendingPets = petServiceImpl.findByUserAndStatus(user, "pending");
         List<Pet> rejectedPets = petServiceImpl.findByUserAndStatus(user, "rejected");
         List<Pet> acceptedPets = petServiceImpl.findByUserAndStatus(user, "accepted");
+        List<Pet> adoptedPets = petServiceImpl.findByUserAndStatus(user, "adopted");
+        
         
 
         for (Pet pet : filteredPets) {
@@ -118,6 +120,18 @@ public class MainController {
                 e.printStackTrace();
             }
         }
+        
+        List<RequestedPet> adoptedPetsWithOwner = new ArrayList<>();
+        for(Pet pet: adoptedPets) {
+        	for(Request request: pet.getRequests()) {
+        		if(request.getIsAccepted().equals("accepted")) {
+        			RequestedPet adoptedPet = new RequestedPet(pet, request.getUser());
+        			adoptedPetsWithOwner.add(adoptedPet);
+        		}
+        	}
+        }
+        
+        model.addAttribute("adoptedPets", adoptedPetsWithOwner);
         model.addAttribute("pendingPets", pendingPets);
         model.addAttribute("rejectedPets", rejectedPets);
         model.addAttribute("acceptedPets", acceptedPets);

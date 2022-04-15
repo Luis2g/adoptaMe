@@ -6,6 +6,7 @@ public class RequestedPet {
 
 	private Pet pet;
 	private List<User> users;
+	private User adopter;
 	private String jsonForFront;
 	
 	
@@ -16,6 +17,11 @@ public class RequestedPet {
 	public RequestedPet(Pet pet, List<User> users) {
 		this.pet = pet;
 		this.users = users;
+	}
+	
+	public RequestedPet(Pet pet, User adopter) {
+		this.pet = pet;
+		this.adopter = adopter;
 	}
 
 	public Pet getPet() {
@@ -40,6 +46,14 @@ public class RequestedPet {
 
 	public void setJsonForFront(String jsonForFront) {
 		this.jsonForFront = jsonForFront;
+	}
+
+	public User getAdopter() {
+		return adopter;
+	}
+
+	public void setAdopter(User adopter) {
+		this.adopter = adopter;
 	}
 	
 }

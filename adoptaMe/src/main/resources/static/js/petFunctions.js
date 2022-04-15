@@ -102,16 +102,44 @@ const confirmationBeforeCreation = () => {
 //This function is just to show information in the volunteer view
 $(document).ready(() => {
 	$(".btn-justInformationVolunteer").on("click", function () {
-		document.getElementById("petImageJustInfo").setAttribute("src","/imagenesPet/"+$(this).data("image"));
-		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
-		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender") === 'M' ? 'Macho' : 'Hembra';
-		document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
-		document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
-		document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
-		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
-		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
 		
-		$('#modalForJustForInformation').modal('show');
+		if($(this).data("username") != undefined){
+			
+			document.getElementById("adoptedPetImageJustInfo").setAttribute("src","/imagenesPet/"+$(this).data("image"));
+			document.getElementById("adoptedPetNameJustInfo").innerHTML = $(this).data("name");
+			document.getElementById("adoptedPetGenderJustInfo").innerHTML = $(this).data("gender") === 'M' ? 'Macho' : 'Hembra';
+			document.getElementById("adoptedPetDescriptionJustInfo").innerHTML = $(this).data("description");
+			document.getElementById("adoptedPetSizeJustInfo").innerHTML = $(this).data("size");
+			document.getElementById("adoptedPetColorJustInfo").innerHTML = $(this).data("color");
+			document.getElementById("adoptedPetPersonalityJustInfo").innerHTML = $(this).data("personality");
+			document.getElementById("adoptedPetAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
+			document.getElementById("petAdopterUsernameJustInfo").innerHTML = $(this).data("username");
+			document.getElementById("petAdopterNameJustInfo").innerHTML = $(this).data("adoptername");
+			document.getElementById("petAdopterSurnameJustInfo").innerHTML = $(this).data("adoptersurname");
+			document.getElementById("petAdopterSecondSurnameJustInfo").innerHTML = $(this).data("adoptersecondsurname");
+			document.getElementById("petAdopterEmailJustInfo").innerHTML = $(this).data("adopteremail");
+			document.getElementById("petAdopterPhoneNumberJustInfo").innerHTML = $(this).data("adopterphonenumber");
+			
+			
+			$('#modalForAdoptedPetJustForInformation').modal('show');
+		}else{
+			
+			document.getElementById("petImageJustInfo").setAttribute("src","/imagenesPet/"+$(this).data("image"));
+			document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
+			document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender") === 'M' ? 'Macho' : 'Hembra';
+			document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
+			document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
+			document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
+			document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
+			document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
+			
+			$('#modalForJustForInformation').modal('show');
+		}
+		
+		
+		
+		
+		
 	
 	});
 
@@ -142,6 +170,21 @@ $(document).ready(() => {
 		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
 		
 		$('#modalForJustForInformation').modal('show');
+	
+	});
+	
+	
+	$(".btn-justInformationAdmin").on("click", function () {
+		document.getElementById("petImageJustInfo").setAttribute("src","/imagenesPet/"+$(this).data("image"));
+		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
+		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender") === 'M' ? 'Macho' : 'Hembra';
+		document.getElementById("petDescriptionJustInfo").innerHTML = $(this).data("description");
+		document.getElementById("petSizeJustInfo").innerHTML = $(this).data("size");
+		document.getElementById("petColorJustInfo").innerHTML = $(this).data("color");
+		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
+		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
+		
+		$('#modalAdoptedPetInformation').modal('show');
 	
 	});
 	

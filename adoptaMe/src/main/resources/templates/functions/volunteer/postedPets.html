@@ -16,9 +16,9 @@
 			
 				<div class="col-12 col-sm-6 col-md-6 col-lg-6" th:each="requestedPet: ${requestedPets}">
 	                <div class="card mb-2">
-	                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}" alt="Card image cap">
+	                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${requestedPet.pet.image})}" alt="Card image cap">
 	                    <div class="card-body">
-	                    	<span class="badge badge-primary">Solicitada</span>
+	                    	<span class="badge badge-primary shadow">Solicitada</span>
 	                        <h4 class="card-title mt-2" th:text="${requestedPet.pet.name}" ></h4>
 	                        <p class="card-text" th:utext="${requestedPet.pet.description}" ></p>  
 	                        <button  
@@ -63,7 +63,7 @@
 		                <div class="card mb-2">
 		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
-		                    	<span class="badge badge-warning" style="color: #fff" >En espera</span>
+		                    	<span class="badge badge-warning shadow" style="color: #fff" >En espera</span>
 		                        <h4 class="card-title mt-3" th:text="${pendingPet.name}" ></h4>
 		                        <p class="card-text" th:utext="${pendingPet.description}" ></p>
 		                       <button  
@@ -88,7 +88,7 @@
 		                <div class="card mb-2">
 		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
-		                    <span class="badge badge-info">Aceptada</span>
+		                    <span class="badge badge-info shadow">Aceptada</span>
 		                        <h4 class="card-title" th:text="${acceptedPet.name}" ></h4>
 		                        <p class="card-text" th:utext="${acceptedPet.description}" ></p>  
 		                        <button  
@@ -113,7 +113,7 @@
 		                <div class="card mb-2">
 		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}" alt="Card image cap">
 		                    <div class="card-body">
-		                    <span class="badge badge-danger">Rechazada</span>
+		                    <span class="badge badge-danger shadow">Rechazada</span>
 		                        <h4 class="card-title" th:text="${rejectedPet.name}" ></h4>
 		                        <p class="card-text" th:utext="${rejectedPet.description}" ></p>  
 		                        <button  
@@ -128,6 +128,32 @@
 		                    <div class="card-footer text-muted">
 		                        <div class="row">
 		                        	<div class="col-12" >                      	
+		                        	</div>
+		                        </div>
+		
+		                    </div>
+		                </div>
+		            </div>
+		          
+		            <div class="col-4" th:each="adoptedPet: ${adoptedPets}">
+		                <div class="card mb-2">
+		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${adoptedPet.pet.image})}" alt="Card image cap">
+		                    <div class="card-body">
+		                    <span style="font-size: 10px" class="badge badge-pill badge-light shadow"> Adoptado </span>
+		                        <h4 class="card-title" th:text="${adoptedPet.pet.name}" ></h4>
+		                        <p class="card-text" th:utext="${adoptedPet.pet.description}" ></p>  
+		                        <button  
+		                        	type="button"
+		                        	class="btn btn-success btn-justInformationVolunteer"
+		                        	th:attr="data-image=${adoptedPet.pet.image}, data-name=${adoptedPet.pet.name}, data-age=${adoptedPet.pet.age}, data-unit-age=${adoptedPet.pet.unitAge}, data-description=${adoptedPet.pet.description}, data-date=${adoptedPet.pet.registrationDate}, data-type=${adoptedPet.pet.type}, data-color=${adoptedPet.pet.color.name}, data-personality=${adoptedPet.pet.personality.name}, data-size=${adoptedPet.pet.size}, data-gender=${adoptedPet.pet.sex}, data-username=${adoptedPet.adopter.username}, data-adopterName=${adoptedPet.adopter.person.name}, data-adopterSurname=${adoptedPet.adopter.person.surname}, data-adopterSecondSurname=${adoptedPet.adopter.person.secondSurname}, data-adopterPhoneNumber=${adoptedPet.adopter.person.phoneNumber}, data-adopterEmail=${adoptedPet.adopter.email}"
+		                   	 	>
+		                     	 Detalles
+		                    	</button >
+		                    </div>
+		                    <div class="card-footer text-muted">
+		                        <div class="row">
+		                        	<div class="col-12" > 
+		                        		<h4><strong>Adoptado por: </strong>[[${adoptedPet.adopter.username}]]</h4>
 		                        	</div>
 		                        </div>
 		
@@ -185,6 +211,7 @@
 		</div>
 		
 		<div th:replace="fragments/modalForInformation :: modalInformation" ></div>	
+		<div th:replace="fragments/modalForInformation :: modalAdoptedPetInformation" ></div>	
 	
 	</div>
 	

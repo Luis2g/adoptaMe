@@ -22,10 +22,18 @@
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
                         <p class="card-text" th:utext="${tmpPet.description}"></p>
-                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
-                                <a style="color:white"><span class="material-icons"
-                                    style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
-                            </button> -->
+	                     	<button 
+	                       		class="btn btn-primary btn-justInformationAdmin" 
+	                       		th:attr="data-gender=${tmpPet.sex}, data-gender=${tmpPet.size}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-name=${tmpPet.name}, data-description=${tmpPet.description}, data-image=${tmpPet.image}"
+	                        >
+                               <a style="color:white">
+	                               <span 
+	                               		class="material-icons" 
+	                                  	style="vertical-align: middle;"
+	                               	>add</span>&nbsp; 
+	                               	Mas información
+                              	</a> 
+                           </button>  
                             <form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForPosting' + tmpPet.id}" >
                             	<input name="id" th:value="${tmpPet.id}" type="hidden" >
                             	<input name="accepted" value="true" type="hidden" >
@@ -36,12 +44,16 @@
                             	<input name="accepted" value="false" type="hidden" >
 	                            <button style="color: #fff"class="btn btn-warning" type="button" id="myModal" th:onclick="'javascript:postRejection(\''+${tmpPet.id}+'\');'" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
                             </form>
+                            
                     </div>
                 </div>
             </div>
 		
 		
 		</div>
+		
+		<div th:replace="fragments/modalForInformation :: modalInformation" ></div>	
+		
 	</div>
     <script th:replace="fragments/footer :: footer"></script>
     <script th:src="@{/js/petFunctions.js}" ></script>

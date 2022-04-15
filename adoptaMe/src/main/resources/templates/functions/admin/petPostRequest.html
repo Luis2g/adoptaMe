@@ -24,7 +24,7 @@
                         <p class="card-text" th:utext="${tmpPet.description}"></p>
 	                     	<button 
 	                       		class="btn btn-primary btn-justInformationAdmin" 
-	                       		th:attr="data-gender=${tmpPet.sex}, data-gender=${tmpPet.size}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-name=${tmpPet.name}, data-description=${tmpPet.description}, data-image=${tmpPet.image}"
+	                       		th:attr="data-gender=${tmpPet.sex}, data-gender=${tmpPet.size}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-name=${tmpPet.name}, data-description=${tmpPet.description}, data-image=${tmpPet.image}, data-username=${tmpPet.user.username}, data-adopterName=${tmpPet.user.person.name}, data-adopterSurname=${tmpPet.user.person.surname}, data-adopterSecondSurname=${tmpPet.user.person.secondSurname}, data-adopterPhoneNumber=${tmpPet.user.person.phoneNumber}, data-adopterEmail=${tmpPet.user.email}"
 	                        >
                                <a style="color:white">
 	                               <span 
@@ -52,7 +52,7 @@
 		
 		</div>
 		
-		<div th:replace="fragments/modalForInformation :: modalInformation" ></div>	
+		<div th:replace="fragments/modalForInformation :: fragmentModalAdoptedPetWithOwnerInformation" ></div>	
 		
 	</div>
     <script th:replace="fragments/footer :: footer"></script>

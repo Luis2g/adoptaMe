@@ -144,8 +144,9 @@ public class PetController {
     }
     
     // Method to show specific pet to administrator, this method include update the pet
-    @GetMapping("/mascota/{id}")
-    public String showPetAdministrator(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+    @PostMapping("/editar")
+    @Secured("ROLE_VOLUNTEER")
+    public String showPetAdministrator(@RequestParam("petId") long id, Model model, RedirectAttributes redirectAttributes) {
     	Pet pet = petServiceImpl.editPet(id);
     	if(pet != null) {
     		model.addAttribute("pet", pet);

@@ -59,5 +59,26 @@ public class RequestServiceImpl implements RequestService{
     public void cancelRequestsOfOtherUsers(long petId) {
     	requestRepository.cancelRequestsOfOtherUsers(petId);
     }
+
+    @Override
+    public Request saveRequest(Request request, String username) {
+        try{
+            return requestRepository.saveRequest(request.getIsAccepted(), request.getPetRequest().getId(), request.getUser().getUsername(), username).get();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+        
+    }
+
+    @Override
+    public Request modifyRequest(Request request, String username) {
+        try{
+            return requestRepository.modifyRequest(request.getId(),request.getIsAccepted(), request.getPetRequest().getId(), request.getUser().getUsername(), username).get();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
     
 }

@@ -60,4 +60,23 @@ public class PostServiceImpl implements PostService{
         return postRepository.findByStatusAndIsMain("enabled", true);
     }
 
+    @Override
+    public Post savePost(Post post, String user) {
+        try{
+            return postRepository.savePost(post.getContent(), post.getImage(), post.getIsMain(), post.getPostDate(), post.getTitle(), post.getUser().getUsername(), post.getStatus(), user).get();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Post modifyPost(Post post, String user) {
+        try{
+            return postRepository.modifyPost(post.getId(),post.getContent(), post.getImage(), post.getIsMain(), post.getPostDate(), post.getTitle(), post.getUser().getUsername(), post.getStatus(), user).get();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

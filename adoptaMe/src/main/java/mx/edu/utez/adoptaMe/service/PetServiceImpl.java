@@ -111,4 +111,17 @@ public class PetServiceImpl implements PetService {
     	return petRepository.getAdoptedPets(username);
     }
 
+    public Pet savePet(Pet pet, String username) {
+        return petRepository.savePet(pet.getAge(), pet.getDescription(),pet.getName(), pet.getImage(), pet.getSex(), pet.getSize(), pet.getStatus(), pet.getType(), pet.getColor().getId(), pet.getPersonality().getId(), pet.getUser().getUsername(), username, pet.getUnitAge()).get();       
+    }
+
+    @Override
+    public Pet modifyPet(Pet pet, String username) {
+        return petRepository.modifyPet(pet.getId(),pet.getAge(), pet.getDescription(),pet.getName(),pet.getImage(), pet.getSex(), pet.getSize(), pet.getStatus(), pet.getType(), pet.getColor().getId(), pet.getPersonality().getId(), pet.getUser().getUsername(), username, pet.getUnitAge()).get();
+    }
+
+    @Override
+    public List<Pet> scopePet(String text) {
+        return petRepository.scopePet(text);
+    }
 }

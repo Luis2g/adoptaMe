@@ -20,4 +20,8 @@ public interface PostService {
 
     List<Post> findByIsMain();
     
+    Post savePost(Post post, String username);
+
+    Post modifyPost(Post post, String username);
+    
 }

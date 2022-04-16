@@ -60,12 +60,10 @@
                 	</div>
                     <div class="offset-md-8  col-12 col-md-4 " >
                         <label for="basic-url">Busqueda</label>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
-                            <div class="input-group-append">
-                                <span class="input-group-text">Buscar</span>
-                            </div>
-                        </div>
+                        <form class="input-group mb-3" th:action="@{/mascotas/filtro}">
+                            <input type="text" name="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                            <input type="submit" class="input-group-append" value="Buscar"> 
+                        </form>
                     </div>
                 </div>
 

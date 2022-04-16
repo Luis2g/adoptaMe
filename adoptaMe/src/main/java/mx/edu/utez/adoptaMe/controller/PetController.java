@@ -25,7 +25,6 @@ import mx.edu.utez.adoptaMe.entity.FavoriteOne;
 import mx.edu.utez.adoptaMe.entity.Pet;
 import mx.edu.utez.adoptaMe.entity.Request;
 import mx.edu.utez.adoptaMe.entity.User;
-import mx.edu.utez.adoptaMe.helpers.Session;
 import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 import mx.edu.utez.adoptaMe.service.FavoriteOneServiceImpl;
 import mx.edu.utez.adoptaMe.service.PersonalityServiceImpl;
@@ -55,6 +54,7 @@ public class PetController {
     
     @Autowired
     private FavoriteOneServiceImpl favoriteOneServiceImpl;
+	
     
     public String save() {
         String token = "";
@@ -121,6 +121,28 @@ public class PetController {
         model.addAttribute("listPets",  filteredPets);
 		return "petsList";
 	}
+
+    @GetMapping("/filtro")
+	public String scopePets(@ModelAttribute("pet") Pet pet, Model model, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
+			@RequestParam String text) {
+                
+    	List<Pet> filteredPets = petServiceImpl.scopePet(text);
+    	
+    	User user = new User();
+        if(authentication != null) {
+    		String username = authentication.getName();
+    		model.addAttribute("usernameFromModel", username);
+    		user = userServiceImpl.findByUsername(username);
+    		session.setAttribute("user", user);
+    	}
+        
+        pet.setUser(user);
+    	model.addAttribute("user", user);
+        model.addAttribute("colorsList", colorServiceImpl.listAll());
+        model.addAttribute("personalityList", personalityServiceImpl.listAll());
+        model.addAttribute("listPets",  filteredPets);
+		return "petsList";
+	}
     
 
     @GetMapping("/registro")
@@ -163,13 +185,17 @@ public class PetController {
     @PostMapping("/save")
     @Secured("ROLE_VOLUNTEER")
     public String savePet(Model model, @Valid @ModelAttribute("pet") Pet pet,
-    		BindingResult bindingResult, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
-    		@RequestParam(name = "imagenPet", required = false) MultipartFile multipartFile){
-    	if(pet.getId() == null) {
+	BindingResult bindingResult, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
+	@RequestParam(name = "imagenPet", required = false) MultipartFile multipartFile){
+        // All pet when is created, the available always is true
+        User user = null;
+        if(pet.getId() == null) {
     		System.out.println("Entro a registrar");
-    		User user = new User();
+         // Configuration for user before controller session is created
+            user = new User();
+            String username = "";
             if(authentication != null) {
-        		String username = authentication.getName();
+        		username = authentication.getName();
         		user = userServiceImpl.findByUsername(username);
         		session.setAttribute("user", user);
         	}
@@ -190,7 +216,7 @@ public class PetController {
             	try {
             		pet.setImage(generatedToken);
             		pet.setStatus("pending");
-            		response = petServiceImpl.save(pet);
+            		response = petServiceImpl.savePet(pet, user.getUsername())!=null?true:false;
             	}catch(Exception ex) {
             		ex.printStackTrace();
             	}
@@ -220,7 +246,7 @@ public class PetController {
     		petExist.setType(pet.getType());
     		petExist.setPersonality(pet.getPersonality());
     		petExist.setColor(pet.getColor());
-    		User user = new User();
+    		user = new User();
     		if(authentication != null) {
         		String username = authentication.getName();
         		user = userServiceImpl.findByUsername(username);
@@ -241,14 +267,14 @@ public class PetController {
             		String token = save();
             		try {
             			petExist.setImage(token);
-            			response = petServiceImpl.save(petExist);
+            			response = petServiceImpl.modifyPet(petExist, user.getUsername()) != null ? true:false;
             		}catch (Exception e) {
             			e.printStackTrace();
     				}
                     String ruta = "C:/mascotas/img-pet";
                     ImagenUtileria.guardarImagen(multipartFile, ruta, token);
             	}else {
-            		response = petServiceImpl.save(petExist);
+            		response = petServiceImpl.modifyPet(petExist, user.getUsername()) != null ? true:false;
             	}
             	
                 if(response){
@@ -262,8 +288,7 @@ public class PetController {
                 }
             }
     	}
-
-    }
+	}
     
     @PostMapping("/removeRequest")
     @Secured("ROLE_ADOPTER")
@@ -292,7 +317,7 @@ public class PetController {
     	Pet pet = petServiceImpl.editPet(id);
     	
     	Request request = new Request(user, pet);
-    	Request response = requestServiceImpl.save(request);
+    	Request response = requestServiceImpl.saveRequest(request,authentication.getName());
     	
     	if(response.getId() > 0) {
     		redirectAttributes.addFlashAttribute("msg_success", "Solicitud realizada con éxito");    		
@@ -306,9 +331,9 @@ public class PetController {
     @Secured("ROLE_VOLUNTEER")
     public String endAdoption(@RequestParam(name = "petId", required = true)long petId,
     		@RequestParam(name = "adopterName", required = true) String adopterName,
-    		RedirectAttributes redirectAttributes) {    	
+    		RedirectAttributes redirectAttributes, Authentication authentication) {    	
     	
-    	requestServiceImpl.endAdoption(petId, adopterName);
+        requestServiceImpl.endAdoption(petId, adopterName);
     	requestServiceImpl.cancelRequestsOfOtherUsers(petId);
     	petServiceImpl.changePetStatusToAdopted(petId);
     	redirectAttributes.addFlashAttribute("msg_success", "Se ha confirmado la adopcion para el usuario " + adopterName);

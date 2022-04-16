@@ -25,4 +25,8 @@ public interface RequestService {
     
     void cancelRequestsOfOtherUsers(long petId);
 
+    Request saveRequest(Request request, String username);
+
+    Request modifyRequest(Request request, String username);
+
 }

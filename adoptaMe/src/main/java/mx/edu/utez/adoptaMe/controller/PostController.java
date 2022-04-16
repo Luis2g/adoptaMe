@@ -124,7 +124,7 @@ public class PostController {
                 try {
                     post.setImage(generatedToken);
                     post.setStatus("enabled");
-                    response = postServiceImpl.save(post);
+                    response = postServiceImpl.savePost(post, username)!=null?true:false;
                 } catch (Exception e) {
                     return "redirect:/savePost";
                 }
@@ -178,7 +178,7 @@ public class PostController {
                     String generatedToken = save();
                     try {
                         postFromDB.setImage(generatedToken);
-                        response = postServiceImpl.save(postFromDB);
+                        response = postServiceImpl.modifyPost(postFromDB, authentication.getName()) != null ? true:false;
                     } catch (Exception e) {
                         return "redirect:/savePost";
                     }
@@ -187,7 +187,7 @@ public class PostController {
                     ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
                 } else {
 
-                    response = postServiceImpl.save(postFromDB);
+                    response = postServiceImpl.modifyPost(postFromDB, authentication.getName())!=null?true:false;
                 }
 
                 if (response) {
@@ -222,10 +222,10 @@ public class PostController {
 
     @GetMapping("/noticias/deshabilitar/{id}")
     @Secured("ROLE_ADMIN")
-    public String disableNew(@PathVariable long id, RedirectAttributes redirectAttributes) {
+    public String disableNew(@PathVariable long id, RedirectAttributes redirectAttributes, Authentication authentication) {
         Post post = postServiceImpl.edit(id);
         post.setStatus("disabled");
-        boolean response = postServiceImpl.save(post);
+        boolean response = postServiceImpl.modifyPost(post, authentication.getName()) != null?true:false;
         if (response) {
             redirectAttributes.addFlashAttribute("msg_success", "¡Se deshabilitó correctamente la noticia!");
         } else {
@@ -236,10 +236,10 @@ public class PostController {
 
     @GetMapping("/noticias/habilitar/{id}")
     @Secured("ROLE_ADMIN")
-    public String enableNew(@PathVariable long id, RedirectAttributes redirectAttributes) {
+    public String enableNew(@PathVariable long id, RedirectAttributes redirectAttributes, Authentication authentication) {
         Post post = postServiceImpl.edit(id);
         post.setStatus("enabled");
-        boolean response = postServiceImpl.save(post);
+        boolean response = postServiceImpl.modifyPost(post, authentication.getName()) != null ? true : false;
         if (response) {
             redirectAttributes.addFlashAttribute("msg_success", "¡Se habilitó correctamente la noticia!");
         } else {

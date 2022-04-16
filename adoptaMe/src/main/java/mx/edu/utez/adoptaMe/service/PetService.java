@@ -36,7 +36,12 @@ public interface PetService {
     void changePetStatusToAdopted(long petId);
     
     List<Pet> getAdopterRequests(String username);
+
+    Pet savePet(Pet pet, String username);
+
+    Pet modifyPet(Pet pet, String username);
     
     List<Pet> getAdoptedPets(String username);
     
+    List<Pet> scopePet(String text);
 }

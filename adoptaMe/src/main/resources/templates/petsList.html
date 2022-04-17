@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header"></div>
 <style>
     .petsContainer {
-        margin-inline: 10%;
+        margin-inline: 5%;
     }
 
     .btn-heart {
@@ -41,24 +41,22 @@
 </style>
 
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>	
+    <div th:replace="fragments/navbar :: navbar"></div>
     <div class="petsContainer" style="margin-top:70px">
         <div class="row">
 
             <div class="col-12">
-                <div class="row" >	
-                	<div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-12 mt-4" > 
-                		<h1 style="color: #ccc" class="text-center" >Mascotas publicadas</h1> 
-                	</div>
-                	<div sec:authorize="hasAuthority('ROLE_ADOPTER')" class="col-12 mt-4" >
-                		<h1 style="color: #ccc" class="text-center" >�Adopta una mascota hoy!</h1>
-                		<h3 style="color: #ccc" class="text-center" >y ayudales a conseguir un hogar</h3>
-               		</div>
-                	<div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="col-12 mt-4" > 
-                		<h1 style="color: #ccc" class="text-center" >Publica una mascota</h1> 
-                		<h3 style="color: #ccc" class="text-center" >y asi podr� encontrar un hogar </h3>
-                	</div>
-                    <div class="offset-md-8  col-12 col-md-4 " >
+                <div class="row">
+                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-12 mt-3">
+                        <h2 style="color: #ccc" class="text-center">Mascotas publicadas</h2>
+                    </div>
+                    <div sec:authorize="hasAuthority('ROLE_ADOPTER')" class="col-12 mt-3">
+                        <h2 style="color: #ccc" class="text-center">Adopta una mascota hoy!</h2>
+                    </div>
+                    <div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="col-12 mt-3">
+                        <h2 style="color: #ccc" class="text-center">Publica una mascota</h2>
+                    </div>
+                    <div class="offset-md-8  col-12 col-md-4 ">
                         <label for="basic-url">Busqueda</label>
                         <form class="input-group mb-3" th:action="@{/mascotas/filtro}">
                             <input type="text" name="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
@@ -66,8 +64,6 @@
                         </form>
                     </div>
                 </div>
-
-
             </div>
 
         </div>
@@ -96,7 +92,8 @@
                 <label for="color">Color</label>
                 <div class="input-group">
                     <select class="custom-select" id="color">
-                        <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}" ></option>
+                        <option th:each="tmpColor: ${colorsList}" th:text="${tmpColor.name}" th:value="${tmpColor.id}">
+                        </option>
                     </select>
                 </div>
 
@@ -108,7 +105,6 @@
                         &nbsp;Filtrar
                     </button>
                 </div>
-
             </div>
 
             <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${listPets}">
@@ -117,152 +113,165 @@
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
                         <p class="card-text" th:utext="${tmpPet.description}"></p>
-                            <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
+                        <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
                                 <a style="color:white"><span class="material-icons"
                                     style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
                             </button> -->
-                            <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
+                        <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
                             <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > ¡Adoptar! </a>-->
-                            <button class="btn btn-success" data-toggle="modal" th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Mas información</button >
-                            <a sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:if="${tmpPet.user.username.equals(usernameFromModel)}" th:href="@{/mascotas/mascota/{id} (id=${tmpPet.id})}" class="btn btn-info">Editar</a>
+                        <div class="row">
+                            <button class="btn btn-success mr-2 ml-2" data-toggle="modal"
+                                th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Detalles</button>
+                            <form th:action="@{/mascotas/editar}" method="POST">
+                                <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                <button class="btn btn-info">Editar</button>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="card-footer text-muted">
                         <div class="row">
-                            <div class="col-12 text-right">
-                            	<div th:if="${tmpPet.status.equals('requestedByYou') || tmpPet.status.equals('lovedIt')}"  >
-                            		<form th:action="@{/mascotas/removeRequest}" method="POST" th:attr="id=${'removalForm' + tmpPet.id}" >
-                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-                            			<input type="hidden" name="location" th:value="${location}" >
-	                            		<button type="button" th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'" class="btn btn-warning" >Retirar solicitud</button>
-                            		</form>
-	                            	<h4 >Solicitada</h4>
-                            	</div>
-                            
-                            
-                        			<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})" >
-	                            		<form th:action="@{/mascotas/heartOne}" method="POST" >
-		                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-		                            			<input type="hidden" name="location" th:value="${location}" >
-		                            			<button  
-		                            				class="btn btn-outline-gray" 
-		                            				style="border : none; right: 0px !important; " 
-		                           				>
-		                           				
-		                    
-			                                    <i class="feather-14" data-feather="heart"></i>
-				                                    [[${tmpPet.type}]] Dar coraz�n
-				                                </button>
-		                            		</form>
-		                            	</div>
-	                            	<div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}" >
-	                            		<form th:action="@{/mascotas/removeHeart}" method="POST" >
-	                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-	                            			<input type="hidden" name="location" th:value="${location}" >
-	                            			<button  
-	                            				class="btn btn-outline-gray" 
-	                            				style="border : none; right: 0px !important; " 
-	                           				>
-			                                    <i class="feather-14" data-feather="heart"></i>
-			                                    [[${tmpPet.type}]] Remover coraz�n
-			                                </button>
-	                            		</form>
-	                            	</div>
-                            	
-                                
-                                
-                                
-                                
+                            <div class="col-8">
+                                <div
+                                    th:if="${tmpPet.status.equals('requestedByYou') || tmpPet.status.equals('lovedIt')}">
+                                    <form th:action="@{/mascotas/removeRequest}" method="POST"
+                                        th:attr="id=${'removalForm' + tmpPet.id}">
+                                        <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button type="button"
+                                            th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'"
+                                            class="btn btn-warning">Retirar solicitud</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})">
+                                    <form th:action="@{/mascotas/heartOne}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons">
+                                                favorite_border
+                                            </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}">
+                                    <form th:action="@{/mascotas/removeHeart}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons" style="color: red;">
+                                                favorite
+                                            </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
-     aria-hidden="true" th:each="pet : ${listPets}" th:attr="id=${'editModal' + pet.id}">
-    <div class="modal-dialog  modal-lg">
-        <div class="modal-content">
-            <div >
-			  <div class="modal-body">
-			    	<div class="row" >
-                        <div class="container">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-4">
-                                            <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
-                                                th:src="@{/imagenesPet/{i} (i = ${pet.image})}">
-                                            <div class="row">
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                th:each="pet : ${listPets}" th:attr="id=${'editModal' + pet.id}">
+                <div class="modal-dialog  modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Detalles de la mascota</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="container">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-4">
+                                                <img class="img-fluid img-thumbnail mx-auto d-block mb-3" height="80rem"
+                                                    th:src="@{/imagenesPet/{i} (i = ${pet.image})}">
+                                                <div class="row">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row col-12 col-sm-8">
+                                            <div class="row col-12 col-sm-8">
+                                                <div class="col-12">
+                                                    <label for="name" style="color: #687281;"><b>Nombre de la
+                                                            mascota </b></label>
+                                                    <p>[[${pet.name}]]</p>
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <label for="name" style="color: #687281;"><b>Sexo</b></label>
+                                                    <p th:text="${pet.sex == 'M'}  ? 'Macho' : 'Hembra'"></p>
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <label for="name" style="color: #687281;"><b>Edad</b></label>
+                                                    <p>[[${pet.age + " " + pet.unitAge}]]</p>
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <label for="name" style="color: #687281;"><b>Tamaño</b></label>
+                                                    <p>[[${pet.size}]]</p>
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <label for="name" style="color: #687281;"><b>Color</b></label>
+                                                    <p>[[${pet.color.name}]]</p>
+                                                </div>
+                                                <div class="col-6 col-sm-3">
+                                                    <label for="name" style="color: #687281;"><b>Carácter</b></label>
+                                                    <p>[[${pet.personality.name}]]</p>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
-                                                <label for="name" style="color: #687281;"><b>Nombre de la mascota </b></label>
-                                                <p>[[${pet.name}]]</p>
-                                            </div>
-                                            <div class="col-6 col-sm-3">
-                                                <label for="name" style="color: #687281;"><b>Sexo</b></label>
-                                                <p th:text="${pet.sex == 'M'}  ? 'Macho' : 'Hembra'"></p  >
-                                            </div>
-                                            <div class="col-6 col-sm-3">
-                                                <label for="name" style="color: #687281;"><b>Edad</b></label>
-                                                <p>[[${pet.age + " " + pet.unitAge}]]</p>
-                                            </div>
-                                            <div class="col-6 col-sm-3">
-                                                <label for="name" style="color: #687281;"><b>Tamaño</b></label>
-                                                <p>[[${pet.size}]]</p>
-                                            </div>
-                                            <div class="col-6 col-sm-3">
-                                                <label for="name" style="color: #687281;"><b>Color</b></label>
-                                                <p>[[${pet.color.name}]]</p>
-                                            </div>
-                                            <div class="col-6 col-sm-3">
-                                                <label for="name" style="color: #687281;"><b>Carácter</b></label>
-                                                <p>[[${pet.personality.name}]]</p>
+                                                <label for="description" style="color: #687281;"><b>Descripción de
+                                                        la mascota </b></label>
+                                                <p style="text-align: justify;" th:utext="${pet.description}"></p>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <label for="description" style="color: #687281;"><b>Descripción de la mascota </b></label>
-                                            <p style="text-align: justify;" th:utext="${pet.description}"></p>
-                                        </div>
-	                                        <div class="col-12 d-flex justify-content-end" >
-		                                        <form th:id="'requestAPetForm' + ${pet.id}" th:if="${!pet.status.equals('requestedByYou')}" sec:authorize="hasAuthority('ROLE_ADOPTER')" th:action="@{/mascotas/requestAdoption}" method='POST' >
-                		                        	<input name="petId" type="hidden" th:value="${pet.id}" >
-                		                        	<input name="location" type="hidden" th:value="${location}" > 
-	                    	                    	<button type="button" th:onclick="javascript:confirmBeforeRequesting([[${pet.id}]], [[${pet.name}]]);"  class="btn btn-success" > Solicitar adopci�n </button>
-        		                                </form>
-	                                        </div>                                        
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-12 d-flex justify-content-end">
+                                <form th:id="'requestAPetForm' + ${pet.id}"
+                                    th:if="${!pet.status.equals('requestedByYou')}"
+                                    sec:authorize="hasAuthority('ROLE_ADOPTER')"
+                                    th:action="@{/mascotas/requestAdoption}" method='POST'>
+                                    <input name="petId" type="hidden" th:value="${pet.id}">
+                                    <input name="location" type="hidden" th:value="${location}">
+                                    <button type="button"
+                                        th:onclick="javascript:confirmBeforeRequesting([[${pet.id}]], [[${pet.name}]]);"
+                                        class="btn btn-success"> Solicitar adopción </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-			    </div>
-			
-			    <div class="modal-footer">
-			    </div>
-			  </div>
-			</div>
-		</div>
-	  </div>
-	</div>
-
+                </div>
+            </div>
         </div>
-
     </div>
+
 
 
 
 
     <script th:replace="fragments/footer :: footer"></script>
     <script>
-	$("#exampleModal").modal("hide");
- 
-    function showPet(ID) {
-        $("#id").val(ID);
-    }
+        $("#exampleModal").modal("hide");
+
+        function showPet(ID) {
+            $("#id").val(ID);
+        }
     </script>
-    <script th:src="@{/js/petFunctions.js}" ></script>
+    <script th:src="@{/js/petFunctions.js}"></script>
 </body>
 
 </html>

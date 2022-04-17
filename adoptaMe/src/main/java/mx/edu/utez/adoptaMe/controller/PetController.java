@@ -188,9 +188,107 @@ public class PetController {
 	BindingResult bindingResult, RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session,
 	@RequestParam(name = "imagenPet", required = false) MultipartFile multipartFile){
         // All pet when is created, the available always is true
+    	
+    	 String[] blacklist = { ",", ";", "/*", "*/", "@@", "@",
+                 "SELECT", "select", "script", "<script", "UPDATE",
+                 "update", "DELETE", "delete", "input", "button",
+                 "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+                 "int", "integer", "String", "sys", "sysobjects",
+                 "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+                 "estúpido", "estupideces", "idioteces", "pendejadas",
+                 "encabronarse", "cabron", "cabrón", "chingada", "verga",
+                 "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+                 "culero", "panocha", "fuck", "dick", "asshole", "ass",
+                 "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+                 "deep throat", "bbc", "cock", "motherfucker", "fucker" };
+
+         String[] blacklist2 = { "@@", "SELECT", "select", "script", "<script", "UPDATE",
+                 "update", "DELETE", "delete", "input", "button",
+                 "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+                 "int", "integer", "String", "sys", "sysobjects",
+                 "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+                 "estúpido", "estupideces", "idioteces", "pendejadas",
+                 "encabronarse", "cabron", "cabrón", "chingada", "verga",
+                 "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+                 "culero", "panocha", "fuck", "dick", "asshole", "ass",
+                 "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+                 "deep throat", "bbc", "cock", "motherfucker", "fucker" };
+    	
         User user = null;
         if(pet.getId() == null) {
     		System.out.println("Entro a registrar");
+    		
+    		for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getName().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (pet.getDescription().toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (String.valueOf(pet.getAge()).toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getUnitAge().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getSex().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getSize().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getType().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getUnitAge().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (String.valueOf(pet.getColor().getId()).toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (String.valueOf(pet.getPersonality().getId()).toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+    		
+    		
          // Configuration for user before controller session is created
             user = new User();
             String username = "";
@@ -212,17 +310,28 @@ public class PetController {
     			return "/createPet";
             }else {
             	boolean response = false;
-            	String generatedToken = save();
-            	try {
-            		pet.setImage(generatedToken);
-            		pet.setStatus("pending");
-            		response = petServiceImpl.savePet(pet, user.getUsername())!=null?true:false;
-            	}catch(Exception ex) {
-            		ex.printStackTrace();
+            	if(multipartFile != null && !multipartFile.isEmpty()) {
+            		String generatedToken = save();
+                	try {
+                		pet.setImage(generatedToken);
+                		pet.setStatus("pending");
+                		response = petServiceImpl.savePet(pet, user.getUsername())!=null?true:false;
+                	}catch(Exception ex) {
+                		ex.printStackTrace();
+                	}
+                	
+                	String ruta = "C:/mascotas/img-pet";
+                    ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
+            	}else {
+                	try {
+                		pet.setImage("logo.png");
+                		pet.setStatus("pending");
+                		response = petServiceImpl.savePet(pet, user.getUsername())!=null?true:false;
+                	}catch(Exception ex) {
+                		ex.printStackTrace();
+                	}
             	}
             	
-            	String ruta = "C:/mascotas/img-pet";
-                ImagenUtileria.guardarImagen(multipartFile, ruta, generatedToken);
 
 
                 if(response){
@@ -236,6 +345,78 @@ public class PetController {
                 }
             }
     	}else {
+    		
+    		for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getName().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (pet.getDescription().toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (String.valueOf(pet.getAge()).toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getUnitAge().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getSex().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getSize().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getType().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist.length; i++) {
+                if (pet.getUnitAge().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (String.valueOf(pet.getColor().getId()).toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+            
+            for (int i = 0; i < blacklist2.length; i++) {
+                if (String.valueOf(pet.getPersonality().getId()).toLowerCase().contains(blacklist2[i].toLowerCase())) {
+                    redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
+                    return "redirect:/misPublicaciones";
+                }
+            }
+    		
+    		
     		Pet petExist = petServiceImpl.editPet(pet.getId());
     		petExist.setName(pet.getName());
     		petExist.setDescription(pet.getDescription());
@@ -253,30 +434,37 @@ public class PetController {
         		session.setAttribute("user", user);
         	}
             petExist.setUser(user);
+            
             if(bindingResult.hasErrors()){
                 for(ObjectError error: bindingResult.getAllErrors()){
     				System.out.println("Error: " + error.getDefaultMessage());
     			}
                 redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualización!");
-                model.addAttribute("colorsList", colorServiceImpl.listAll());
-                model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-    			return "redirect:/mascotas/mascota/"+pet.getId();
+    			return "redirect:/misPublicaciones";
             }else {
             	boolean response = false;
             	if(multipartFile != null && !multipartFile.isEmpty()) {
             		String token = save();
             		try {
             			petExist.setImage(token);
-            			response = petServiceImpl.modifyPet(petExist, user.getUsername()) != null ? true:false;
+                		//response = petServiceImpl.updatePet(petExist, petExist.getId(), petExist.getUser().getUsername());
+            			if(petExist.getStatus().equals("rejected")) {
+            				petExist.setStatus("pending");
+            			}
+                		response = petServiceImpl.modifyPet(petExist, user.getUsername()) != null ? true:false;
             		}catch (Exception e) {
             			e.printStackTrace();
     				}
                     String ruta = "C:/mascotas/img-pet";
                     ImagenUtileria.guardarImagen(multipartFile, ruta, token);
             	}else {
+            		if(petExist.getStatus().equals("rejected")) {
+        				petExist.setStatus("pending");
+        			}
+            		//response = petServiceImpl.updatePet(petExist, petExist.getId(), petExist.getUser().getUsername());
             		response = petServiceImpl.modifyPet(petExist, user.getUsername()) != null ? true:false;
             	}
-            	
+            	System.out.println(response);
                 if(response){
                     redirectAttributes.addFlashAttribute("msg_success", "¡Se ha realizado la actualización correctamente!");
         			return "redirect:/misPublicaciones";
@@ -284,7 +472,7 @@ public class PetController {
                     redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en la actualizacion!");
                     model.addAttribute("colorsList", colorServiceImpl.listAll());
                     model.addAttribute("personalitiesList", personalityServiceImpl.listAll());
-                    return "redirect:/mascotas/mascota/"+pet.getId();
+                    return "redirect:/misPublicaciones";
                 }
             }
     	}
@@ -303,7 +491,11 @@ public class PetController {
     	requestServiceImpl.removeRequest(petId, authentication.getName());
     	redirectAttributes.addFlashAttribute("msg_success", "Se ha removido la solicitud con exito");
     	
-    	return "redirect:/mascotas/" + location;
+    	if(location.equals("")){
+            return "redirect:/misSolicitudes";
+        } else {
+            return "redirect:/mascotas/" + location;
+        }
     }
 
     @PostMapping("/requestAdoption")

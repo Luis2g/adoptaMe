@@ -31,7 +31,7 @@ public class Pet {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
-    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
+    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales y la primer letra en mayúscula")
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 50, message = "El nombre de la mascota debe contener al menos 2 caracteres")
     private String name;
@@ -47,7 +47,7 @@ public class Pet {
     private String sex;
 
     @Column(name = "age", nullable = false)
-    @Min(1)
+    @Min(value = 1, message="Al menos debe tener 1 mes o 1 año")
     @NotNull(message = "Este campo es requerido")
     private int age;
     

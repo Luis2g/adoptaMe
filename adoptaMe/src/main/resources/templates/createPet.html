@@ -18,9 +18,20 @@
             	<h3   style="color: #ccc" class="text-left" >Registrar mascota</h3>
             	<hr>
         	</div >
-        	<div th:if="${pet.id != null}">
+        	<div th:if="${pet.status == 'pending' && pet.id != null}">
             	<h3 style="color: #ccc" class="text-left" >Actualizar mascota</h3>
             	<hr>
+            	<input type="hidden" id="updatePet" value="true" />
+        	</div >
+        	<div th:if="${pet.status == 'rejected' && pet.id != null}">
+            	<h3 style="color: #ccc" class="text-left" >Revalidación</h3>
+            	<hr>
+            	<input type="hidden" id="updatePetRejected" value="true" />
+        	</div >
+        	<div th:if="${pet.status == 'accepted' && pet.id != null}">
+            	<h3 style="color: #ccc" class="text-left" >Actualizar mascota accepted</h3>
+            	<hr>
+            	<input type="hidden" id="updatePetAccepted" value="true" />
         	</div >
         </div>
         <div class="row mt-4">
@@ -35,9 +46,13 @@
                             <input type="hidden" th:field="*{status}" />
                                 <label for="name" style="color: #687281;"><b>Nombre de la mascota </b><span
                                         style="color: red;">*</span></label>
-                                <input type="text" class="form-control" id="name"
-                                    placeholder="Ingresa el nombre de la mascota" th:field="*{name}">
+                                <input type="text" class="form-control" placeholder="Ingresa el nombre de la mascota" th:field="*{name}" id="name" />
                                     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger mb-3 mt-3"></div>
+                                    <div id="nameValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el nombre sea válido
+                                            (El nombre puede tener palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             <div class="col-4 col-sm-4 col-md-2">
                                 <label for="sex" style="color: #687281;"><b>Sexo </b><span
@@ -64,6 +79,11 @@
                                     <!-- th:value="*{#strings.substring(age,0,2)}"  th:value="*{#strings.substring(age,2,7)}" -->
                                         <input type="number" class="form-control" th:field="*{age}" id="age" max="30" min="1">
                                 		<div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="alert alert-danger mb-3 mt-3"></div>
+                                		<div id="ageValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que la edad sea válida
+                                            (La edad debe ser numérica)
+                                        </span>
+                                    </div>
                                     </div>
                                     <div class="col-6">
                                         <select class="custom-select" id="unitAge" th:field="*{unitAge}">
@@ -71,6 +91,11 @@
                                             <option value="años">Años</option>
                                         </select>
                                 		<div th:if="${#fields.hasErrors('unitAge')}" th:errors="*{unitAge}" class="alert alert-danger mb-3 mt-3"></div>
+                                		<div id="unitAgeValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que sean meses o años
+                                            (Estás intentando de ingresar palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -82,6 +107,11 @@
                                     <option value="Gato">Gato</option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="alert alert-danger mb-3 mt-3"></div>
+                                <div id="typeValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el tipo de mascota sea perro o gato
+                                            (Estás intentando de ingresar palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-2">
                                 <label for="size" style="color: #687281;"><b>Tamaño </b><span
@@ -92,6 +122,11 @@
                                     <option value="Grande">Grande</option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('size')}" th:errors="*{size}" class="alert alert-danger mb-3 mt-3"></div>
+                                <div id="sizeValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el tamaño sea pequeño, mediano o grande
+                                            (Estás intentando de ingresar palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-2">
                                 <label for="color" style="color: #687281;"><b>Color </b><span
@@ -101,6 +136,11 @@
                                         th:value="${tmpColor.id}"></option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('color')}" th:errors="*{color}" class="alert alert-danger mb-3 mt-3"></div>
+                                <div id="colorValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el color sea de la lista que le proporcionamos
+                                            (Estás intentando de ingresar palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3">
                                 <label for="caracter" style="color: #687281;"><b>Caracter </b><span
@@ -110,19 +150,22 @@
                                         th:value="${tmpCaracter.id}"></option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('personality')}" th:errors="*{personality}" class="alert alert-danger mb-3 mt-3"></div>
+                                <div id="sizeValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que el caracter sea de la lista que le proporcionamos
+                                            (Estás intentando de ingresar palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             
                             
                             <div class="col-6 col-sm-4 col-md-3">
-                                <!--<label for="image" style="color: #687281;"><b>Imagen </b><span
-                                            style="color: red;">*</span></label>
-                            	<div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="imagenPost" id="image" accept=".jpg, .jpeg, .png" placeholder="Buscar">
-                                    <label class="custom-file-label" for="image">Seleccionar</label>
-                            	</div>-->
                             	<label for="image" style="color: #687281;"><b>Imagen </b><span
                                             style="color: red;">*</span></label>
-                                    <input class="form-control" type="file" name="imagenPet" id="imagenPet" accept=".jpg, .jpeg, .png">
+                                    <input class="form-control" type="file" name="imagenPet" id="imagenPet" accept=".jpg, .jpeg, .png" >
+                                    <div id="imagenValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Seleccione una imagen
+                                        </span>
+                                    </div>
                             </div>
                             
                             
@@ -131,16 +174,27 @@
                                         style="color: red;">*</span></label>
                                 <textarea class="form-control" id="description" th:field="*{description}" rows="10"></textarea>
                                 <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger mb-3 mt-3"></div>
+                                <div id="descriptionValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                                        <span>Por favor, verifique que la descripción sea válida
+                                            (La descripción puede tener palabras no válidas en el sistema)
+                                        </span>
+                                    </div>
                             </div>
                             <input id="registrationDate" th:field="*{registrationDate}" type="hidden">
                             <!-- <input type="text" name="user" th:field="*{user}" value="1" > -->
                         </div>
                     </div>
-                    <div class="mt-4 d-flex justify-content-end mb-2">
-                    	<a th:href="@{/misPublicaciones}" class="btn btn-danger  mr-2">Cancelar</a >
-                        <button class="btn btn-success" onClick="confirmationBeforeCreation()" type="button">Guardar</button>
-                    </div>
                 </form >
+                    <div class="mt-4 d-flex justify-content-end mb-2">
+	                    <div th:if="${pet.id == null}">
+	                    	<a th:href="@{/misPublicaciones}" class="btn btn-danger  mr-1">Cancelar</a >
+	                        <button class="btn btn-success" onClick="confirmationBeforeCreation()" type="button">Guardar</button>
+	                    </div >
+	                    <div th:if="${pet.id != null}">
+	                    	<a th:href="@{/misPublicaciones}" class="btn btn-danger  mr-1">Cancelar</a >
+                    		<button class="btn btn-warning" style="color: white;" onClick="confirmationBeforeCreation()" type="button">Editar</button>
+	                    </div >
+                    </div>
             </div>
         </div>
     </div>

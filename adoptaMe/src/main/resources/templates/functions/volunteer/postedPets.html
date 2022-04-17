@@ -140,9 +140,9 @@
 		                   	 	>
 		                     	 Detalles
 		                    	</button >
-		                    	<form th:action="@{/mascotas/editar}" method="POST" >
+		                    	<form th:action="@{/mascotas/editar}" method="POST" id="formPetUpdateRejected">
 		                    		<input type="hidden" name="petId" th:value="${rejectedPet.id}" >
-		                    		<button class="btn btn-info" >Editar</button>
+		                    		<button class="btn btn-info" type="button" onClick="confirmationUpdateRejected()" >Revalidar</button>
 		                    	</form>
 		                    </div>
 		

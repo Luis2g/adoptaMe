@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="es" xml:th="http://thymeleaf.org"  >
+<html lang="es" xml:th="http://thymeleaf.org">
 
-<div th:replace="fragments/header :: header" ></div>
+<div th:replace="fragments/header :: header"></div>
 
 <body>
-	
-	<div th:replace="fragments/navbar :: navbar" ></div>
-	
-	<div class="container" style="margin-top: 75px" >
-		<div class="row" >
-			
-			<div class="col-12" >
-				<h1 class="text-center mb-4" style="color: #ccc" >Mascotas solicitadas</h1>
+
+	<div th:replace="fragments/navbar :: navbar"></div>
+
+	<div class="container" style="margin-top: 75px">
+		<div class="row">
+
+			<div class="col-12">
+				<h2 class="text-center mb-4" style="color: #ccc">Mascotas solicitadas</h2>
 			</div>
-				
+
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${adopterRequestedPets}">
                 <div class="card mb-2">
                     <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
@@ -36,36 +36,34 @@
                         	class="btn btn-success btn-justInformationAdopter"
                         	th:attr="data-name=${tmpPet.name}, data-age=${tmpPet.age},data-unit-age=${tmpPet.unitAge},data-image=${tmpPet.image}, data-description=${tmpPet.description}, data-date=${tmpPet.registrationDate}, data-type=${tmpPet.type}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-size=${tmpPet.size}, data-gender=${tmpPet.sex}"
                    	 	>
-                     	 Detalles
+                     	Detalles
                     	</button >
                     </div>
+					<div class="card-footer text-muted">
+						<div class="row">
+							<div class="col-12 text-right">
+								<div th:if="${tmpPet.status.equals('pending')}">
+									<form th:action="@{/mascotas/removeRequest}" method="POST"
+										th:attr="id=${'removalForm' + tmpPet.id}">
+										<input type="hidden" name="petId" th:value="${tmpPet.id}">
+										<input type="hidden" name="location" th:value="${location}">
+										<button type="button"
+											th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'"
+											class="btn btn-warning">Retirar solicitud</button>
+									</form>
+								</div>
+							</div>
+						</div>
 
-                    <div class="card-footer text-muted">
-                        <div class="row">
-                            <div class="col-12 text-right">
-                            	<div th:if="${tmpPet.status.equals('requestedByYou')}"  >
-                            		<form th:action="@{/mascotas/removeRequest}" method="POST" th:attr="id=${'removalForm' + tmpPet.id}" >
-                            			<input type="hidden" name="petId" th:value="${tmpPet.id}" >
-                            			<input type="hidden" name="location" th:value="${location}" >
-	                            		<button type="button" th:onclick="'javascript:removeRequest(\''+${tmpPet.id}+'\');'" class="btn btn-warning" >Retirar solicitud</button>
-                            		</form>
-	                            	<h4 >Solicitada</h4>
-                            	</div>
-                            
-                                <button  class="btn btn-outline-gray" style="border : none; right: 0px !important; " onclick="myFunction()">
-                                    <i class="feather-14" data-feather="heart"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-           </div>				
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-	<div th:replace="fragments/modalForInformation :: modalInformation" ></div>
-	<div th:replace="fragments/footer :: footer" ></div>
-	<script th:src="@{/js/petFunctions.js}" ></script>
+
+	<div th:replace="fragments/modalForInformation :: modalInformation"></div>
+	<div th:replace="fragments/footer :: footer"></div>
+	<script th:src="@{/js/petFunctions.js}"></script>
 </body>
+
 </html>

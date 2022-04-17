@@ -1,243 +1,256 @@
 <!DOCTYPE html>
-<html lang="es"  >
+<html lang="es">
 
-<div th:replace="fragments/header :: header" ></div>
+<div th:replace="fragments/header :: header"></div>
 
 <body>
-	
-	<div th:replace="fragments/navbar :: navbar" ></div>
-	
-	<div style="margin-top: 75px" class="container" >
-	
-		  <div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" >
-   		  	<form th:action="@{/mascotas/registro}" >
-	           	<input name="location" th:value="${location}" type="hidden" > 
-	            <button class="btn btn-success">Registrar</button>                     
-         	</form>
-		  </div>
-	
-	
-		<h1 class="text-center" style="color: #ccc" >Solicitudes</h1>
-		
-		<div class="animate__animated animate__fadeInLeft" th:if="${requestedPets.size() == 0 && pendingPets.size() == 0 && acceptedPets.size() == 0 && rejectedPets.size() == 0 && adoptedPets.size() == 0}" >
-			<h2 style="color: #727b88" >No hay solicitudes de publicaciones</h2>
+
+	<div th:replace="fragments/navbar :: navbar"></div>
+
+	<div style="margin-top: 75px" class="container">
+
+		<h2 class="text-center" style="color: #ccc">Solicitudes</h2>
+
+		<div sec:authorize="hasAuthority('ROLE_VOLUNTEER')">
+			<form th:action="@{/mascotas/registro}">
+				<input name="location" th:value="${location}" type="hidden">
+				<button class="btn btn-success">
+					<span class="material-icons">
+						add
+					</span>
+					<span class="align-top">
+						Registrar
+					</span>
+				</button>
+			</form>
 		</div>
-	
-		
-		<div th:if="${requestedPets.size() != 0}" >
-			<div class="row mt-5" >		
-			
+
+		<div class="animate__animated animate__fadeInLeft"
+			th:if="${requestedPets.size() == 0 && pendingPets.size() == 0 && acceptedPets.size() == 0 && rejectedPets.size() == 0 && adoptedPets.size() == 0}">
+			<h3 style="color: #727b88">No hay solicitudes de publicaciones</h3>
+		</div>
+
+
+		<div th:if="${requestedPets.size() != 0}">
+			<div class="row mt-5">
+
 				<div class="col-12 col-sm-6 col-md-6 col-lg-6" th:each="requestedPet: ${requestedPets}">
-	                <div class="card mb-2">
-	                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${requestedPet.pet.image})}" alt="Card image cap">
-	                    <div class="card-body">
-	                    	<span class="badge badge-primary shadow">Solicitada</span>
-	                        <h4 class="card-title mt-2" th:text="${requestedPet.pet.name}" ></h4>
-	                        <p class="card-text" th:utext="${requestedPet.pet.description}" ></p>  
-	                        <button  
-	                        	type="button"
-	                        	class="btn btn-success btn-information"
-	                     	 	th:attr="data-info=${requestedPet.jsonForFront}, data-pet=${requestedPet.pet}, data-name=${requestedPet.pet.name}, data-description=${requestedPet.pet.description}"
-	                   	 	>
-	                     	 Detalles de los candidatos
-	                    	</button >
-	                    	<form th:action="@{/mascotas/editar}" method="POST" >
-	                    		<input type="hidden" name="petId" th:value="${requestedPet.pet.id}" >
-	                    		<button class="btn btn-info" >Editar</button>
-	                    	</form>	                    	
-	                    </div>
-	
-	                    <div class="card-footer text-muted">
-	                        <div class="row">
-	                        	<div class="col-12" >
+					<div class="card mb-2">
+						<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${requestedPet.pet.image})}"
+							alt="Card image cap">
+						<div class="card-body">
+							<span class="badge badge-primary shadow">Solicitada</span>
+							<h4 class="card-title mt-2" th:text="${requestedPet.pet.name}"></h4>
+							<p class="card-text" th:utext="${requestedPet.pet.description}"></p>
+							<form th:action="@{/mascotas/editar}" method="POST">
+								<input type="hidden" name="petId" th:value="${requestedPet.pet.id}">
+								<button class="btn btn-info">Editar</button>
+							</form>
+						</div>
+
+						<div class="card-footer text-muted">
+							<div class="row">
+								<div class="col-6">
 									<h4>Solicitado por:</h4>
-									<div th:each="user: ${requestedPet.users}" >
-										<div th:text="${user.person.name + ' ' +user.person.surname + ' ' + user.person.secondSurname }" ></div>
-									</div>                        	
-	                        	</div>
-	                        </div>
-	
-	                    </div>
-	                </div>
-	            </div>
-			
+									<div th:each="user: ${requestedPet.users}">
+										<div
+											th:text="${user.person.name + ' ' +user.person.surname + ' ' + user.person.secondSurname }">
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<button type="button" class="btn btn-success btn-information"
+										th:attr="data-info=${requestedPet.jsonForFront}, data-pet=${requestedPet.pet}, data-name=${requestedPet.pet.name}, data-description=${requestedPet.pet.description}">
+										Detalles de los candidatos
+									</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
 			</div>
 			<hr>
 		</div>
-		
-		<div class="row" >
-			<div class="col-12" >	
-				<div class="row mt-3" >			
+
+		<div class="row">
+			<div class="col-12">
+				<div class="row mt-3">
 					<div class="col-4" th:each="pendingPet: ${pendingPets}">
-		                <div class="card mb-2">
-		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}" alt="Card image cap">
-		                    <div class="card-body">
-		                    	<span class="badge badge-warning shadow" style="color: #fff" >En espera</span>
-		                        <h4 class="card-title mt-3" th:text="${pendingPet.name}" ></h4>
-		                        <p class="card-text" th:utext="${pendingPet.description}" ></p>
-		                       <button  
-		                        	type="button"
-		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-image=${pendingPet.image},data-name=${pendingPet.name}, data-age=${pendingPet.age},data-unit-age=${pendingPet.unitAge}, data-description=${pendingPet.description}, data-date=${pendingPet.registrationDate}, data-type=${pendingPet.type}, data-color=${pendingPet.color.name}, data-personality=${pendingPet.personality.name}, data-size=${pendingPet.size}, data-gender=${pendingPet.sex}"
-		                   	 	>
-		                     	 Detalles
-		                    	</button >
-		                    	<form th:action="@{/mascotas/editar}" method="POST" >
-		                    		<input type="hidden" name="petId" th:value="${pendingPet.id}" >
-		                    		<button class="btn btn-info" >Editar</button>
-		                    	</form>
-		                    </div>
-		
-		                    <div class="card-footer text-muted">
-		                        <div class="row">
-		                        	<div class="col-12" >                      	
-		                        	</div>
-		                        </div>
-		
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="col-4" th:each="acceptedPet: ${acceptedPets}">
-		                <div class="card mb-2">
-		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}" alt="Card image cap">
-		                    <div class="card-body">
-		                    <span class="badge badge-info shadow">Aceptada</span>
-		                        <h4 class="card-title" th:text="${acceptedPet.name}" ></h4>
-		                        <p class="card-text" th:utext="${acceptedPet.description}" ></p>  
-		                        <button  
-		                        	type="button"
-		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-image=${acceptedPet.image},data-name=${acceptedPet.name}, data-age=${acceptedPet.age},data-unit-age=${acceptedPet.unitAge}, data-description=${acceptedPet.description}, data-date=${acceptedPet.registrationDate}, data-type=${acceptedPet.type}, data-color=${acceptedPet.color.name}, data-personality=${acceptedPet.personality.name}, data-size=${acceptedPet.size}, data-gender=${acceptedPet.sex}"
-		                   	 	>
-		                     	 Detalles
-		                    	</button >
-		                    	<form th:action="@{/mascotas/editar}" method="POST" >
-		                    		<input type="hidden" name="petId" th:value="${acceptedPet.id}" >
-		                    		<button class="btn btn-info" >Editar</button>
-		                    	</form>
-		                    </div>
-		
-		                    <div class="card-footer text-muted">
-		                        <div class="row">
-		                        	<div class="col-12" >                      	
-		                        	</div>
-		                        </div>
-		
-		                    </div>
-		                </div>
-		            </div>
-		            <div class="col-4" th:each="rejectedPet: ${rejectedPets}">
-		                <div class="card mb-2">
-		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}" alt="Card image cap">
-		                    <div class="card-body">
-		                    <span class="badge badge-danger shadow">Rechazada</span>
-		                        <h4 class="card-title" th:text="${rejectedPet.name}" ></h4>
-		                        <p class="card-text" th:utext="${rejectedPet.description}" ></p>  
-		                        <button  
-		                        	type="button"
-		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-image=${rejectedPet.image}, data-name=${rejectedPet.name}, data-age=${rejectedPet.age}, data-unit-age=${rejectedPet.unitAge}, data-description=${rejectedPet.description}, data-date=${rejectedPet.registrationDate}, data-type=${rejectedPet.type}, data-color=${rejectedPet.color.name}, data-personality=${rejectedPet.personality.name}, data-size=${rejectedPet.size}, data-gender=${rejectedPet.sex}"
-		                   	 	>
-		                     	 Detalles
-		                    	</button >
-		                    	<form th:action="@{/mascotas/editar}" method="POST" id="formPetUpdateRejected">
-		                    		<input type="hidden" name="petId" th:value="${rejectedPet.id}" >
-		                    		<button class="btn btn-info" type="button" onClick="confirmationUpdateRejected()" >Revalidar</button>
-		                    	</form>
-		                    </div>
-		
-		                    <div class="card-footer text-muted">
-		                        <div class="row">
-		                        	<div class="col-12" >                      	
-		                        	</div>
-		                        </div>
-		
-		                    </div>
-		                </div>
-		            </div>
-		          
-		            <div class="col-4" th:each="adoptedPet: ${adoptedPets}">
-		                <div class="card mb-2">
-		                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${adoptedPet.pet.image})}" alt="Card image cap">
-		                    <div class="card-body">
-		                    <span style="font-size: 10px" class="badge badge-pill badge-light shadow"> Adoptado </span>
-		                        <h4 class="card-title" th:text="${adoptedPet.pet.name}" ></h4>
-		                        <p class="card-text" th:utext="${adoptedPet.pet.description}" ></p>  
-		                        <button  
-		                        	type="button"
-		                        	class="btn btn-success btn-justInformationVolunteer"
-		                        	th:attr="data-image=${adoptedPet.pet.image}, data-name=${adoptedPet.pet.name}, data-age=${adoptedPet.pet.age}, data-unit-age=${adoptedPet.pet.unitAge}, data-description=${adoptedPet.pet.description}, data-date=${adoptedPet.pet.registrationDate}, data-type=${adoptedPet.pet.type}, data-color=${adoptedPet.pet.color.name}, data-personality=${adoptedPet.pet.personality.name}, data-size=${adoptedPet.pet.size}, data-gender=${adoptedPet.pet.sex}, data-username=${adoptedPet.adopter.username}, data-adopterName=${adoptedPet.adopter.person.name}, data-adopterSurname=${adoptedPet.adopter.person.surname}, data-adopterSecondSurname=${adoptedPet.adopter.person.secondSurname}, data-adopterPhoneNumber=${adoptedPet.adopter.person.phoneNumber}, data-adopterEmail=${adoptedPet.adopter.email}"
-		                   	 	>
-		                     	 Detalles
-		                    	</button >
-		                    </div>
-		                    <div class="card-footer text-muted">
-		                        <div class="row">
-		                        	<div class="col-12" > 
-		                        		<h4><strong>Adoptado por: </strong>[[${adoptedPet.adopter.username}]]</h4>
-		                        	</div>
-		                        </div>
-		
-		                    </div>
-		                </div>
-		            </div>
+						<div class="card mb-2">
+							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}"
+								alt="Card image cap">
+							<div class="card-body">
+								<span class="badge badge-warning shadow" style="color: #fff">En espera</span>
+								<h4 class="card-title mt-3" th:text="${pendingPet.name}"></h4>
+								<p class="card-text" th:utext="${pendingPet.description}"></p>
+							</div>
+
+							<div class="card-footer text-muted">
+								<div class="row">
+									<div class="col-12">
+										<div class="row justify-content-end">
+											<button type="button"
+												class="btn btn-success btn-justInformationVolunteer mr-2"
+												th:attr="data-image=${pendingPet.image},data-name=${pendingPet.name}, data-age=${pendingPet.age},data-unit-age=${pendingPet.unitAge}, data-description=${pendingPet.description}, data-date=${pendingPet.registrationDate}, data-type=${pendingPet.type}, data-color=${pendingPet.color.name}, data-personality=${pendingPet.personality.name}, data-size=${pendingPet.size}, data-gender=${pendingPet.sex}">
+												Detalles
+											</button>
+											<form th:action="@{/mascotas/editar}" method="POST">
+												<input type="hidden" name="petId" th:value="${pendingPet.id}">
+												<button class="btn btn-info mr-2">Editar</button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-4" th:each="acceptedPet: ${acceptedPets}">
+						<div class="card mb-2">
+							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}"
+								alt="Card image cap">
+							<div class="card-body">
+								<span class="badge badge-info shadow">Aceptada</span>
+								<h4 class="card-title" th:text="${acceptedPet.name}"></h4>
+								<p class="card-text" th:utext="${acceptedPet.description}"></p>
+							</div>
+
+							<div class="card-footer text-muted">
+								<div class="row">
+									<div class="col-12">
+										<div class="row justify-content-end">
+											<button type="button"
+												class="btn btn-success btn-justInformationVolunteer mr-2"
+												th:attr="data-image=${acceptedPet.image},data-name=${acceptedPet.name}, data-age=${acceptedPet.age},data-unit-age=${acceptedPet.unitAge}, data-description=${acceptedPet.description}, data-date=${acceptedPet.registrationDate}, data-type=${acceptedPet.type}, data-color=${acceptedPet.color.name}, data-personality=${acceptedPet.personality.name}, data-size=${acceptedPet.size}, data-gender=${acceptedPet.sex}">
+												Detalles
+											</button>
+											<form th:action="@{/mascotas/editar}" method="POST">
+												<input type="hidden" name="petId" th:value="${acceptedPet.id}">
+												<button class="btn btn-info mr-2">Editar</button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-4" th:each="rejectedPet: ${rejectedPets}">
+						<div class="card mb-2">
+							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}"
+								alt="Card image cap">
+							<div class="card-body">
+								<span class="badge badge-danger shadow">Rechazada</span>
+								<h4 class="card-title" th:text="${rejectedPet.name}"></h4>
+								<p class="card-text" th:utext="${rejectedPet.description}"></p>
+							</div>
+
+							<div class="card-footer text-muted">
+								<div class="row">
+									<div class="col-12">
+										<div class="row justify-content-end">
+											<button type="button"
+												class="btn btn-success btn-justInformationVolunteer mr-2"
+												th:attr="data-image=${rejectedPet.image}, data-name=${rejectedPet.name}, data-age=${rejectedPet.age}, data-unit-age=${rejectedPet.unitAge}, data-description=${rejectedPet.description}, data-date=${rejectedPet.registrationDate}, data-type=${rejectedPet.type}, data-color=${rejectedPet.color.name}, data-personality=${rejectedPet.personality.name}, data-size=${rejectedPet.size}, data-gender=${rejectedPet.sex}">
+												Detalles
+											</button>
+											<form th:action="@{/mascotas/editar}" method="POST" id="formPetUpdateRejected">
+												<input type="hidden" name="petId" th:value="${rejectedPet.id}">
+												<button class="btn btn-info mr-2" type="button" onClick="confirmationUpdateRejected()">Revalidar</button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="col-4" th:each="adoptedPet: ${adoptedPets}">
+						<div class="card mb-2">
+							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${adoptedPet.pet.image})}"
+								alt="Card image cap">
+							<div class="card-body">
+								<span style="font-size: 10px" class="badge badge-pill badge-light shadow"> Adoptado
+								</span>
+								<h4 class="card-title" th:text="${adoptedPet.pet.name}"></h4>
+								<p class="card-text" th:utext="${adoptedPet.pet.description}"></p>
+								<button type="button" class="btn btn-success btn-justInformationVolunteer"
+									th:attr="data-image=${adoptedPet.pet.image}, data-name=${adoptedPet.pet.name}, data-age=${adoptedPet.pet.age}, data-unit-age=${adoptedPet.pet.unitAge}, data-description=${adoptedPet.pet.description}, data-date=${adoptedPet.pet.registrationDate}, data-type=${adoptedPet.pet.type}, data-color=${adoptedPet.pet.color.name}, data-personality=${adoptedPet.pet.personality.name}, data-size=${adoptedPet.pet.size}, data-gender=${adoptedPet.pet.sex}, data-username=${adoptedPet.adopter.username}, data-adopterName=${adoptedPet.adopter.person.name}, data-adopterSurname=${adoptedPet.adopter.person.surname}, data-adopterSecondSurname=${adoptedPet.adopter.person.secondSurname}, data-adopterPhoneNumber=${adoptedPet.adopter.person.phoneNumber}, data-adopterEmail=${adoptedPet.adopter.email}">
+									Detalles
+								</button>
+							</div>
+							<div class="card-footer text-muted">
+								<div class="row">
+									<div class="col-12">
+										<h4><strong>Adoptado por: </strong>[[${adoptedPet.adopter.username}]]</h4>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-<!-- 	This modal is to show who are interested in the adoption of a pet -->
-		<div class="modal fade" id="requesters" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		  <div class=" modal-lg modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalCenterTitle">Informaci�n de la mascota</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-				  <div class="row" >
-				  	<div class="col-3" >
-				  		<h5>Nombre:</h5>
-				  		<p id="petName" ></p>
-				  	</div>
-				  	<div class="col-3" >
-				  		<h5>Tipo:</h5>
-				  		<p id="petType" ></p>
-				  	</div>
-				  	<div class="col-3" >
-				  		<h5>Edad:</h5>
-				  		<p id="petAge" ></p>
-				  	</div>
-				  	<div class="col-3" >
-				  		<h5>Color:</h5>
-				  		<p id="petColor" ></p>
-				  	</div>
-				  	<div class="col-12" >
-				  		<h5>Descripcion:</h5>
-				  		<p id="petDescription" ></p>
-				  	</div>
-				  </div>
-				  <hr>
-				  <div id="forms" >
-				  	<div id="innerLayout" >
-				  	</div>
-				  </div>
-			  </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		      </div>
-		    </div>
-		  </div>
+
+		<!-- 	This modal is to show who are interested in the adoption of a pet -->
+		<div class="modal fade" id="requesters" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+			aria-hidden="true">
+			<div class=" modal-lg modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Informaci�n de la mascota</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-3">
+								<h5>Nombre:</h5>
+								<p id="petName"></p>
+							</div>
+							<div class="col-3">
+								<h5>Tipo:</h5>
+								<p id="petType"></p>
+							</div>
+							<div class="col-3">
+								<h5>Edad:</h5>
+								<p id="petAge"></p>
+							</div>
+							<div class="col-3">
+								<h5>Color:</h5>
+								<p id="petColor"></p>
+							</div>
+							<div class="col-12">
+								<h5>Descripcion:</h5>
+								<p id="petDescription"></p>
+							</div>
+						</div>
+						<hr>
+						<div id="forms">
+							<div id="innerLayout">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		
-		<div th:replace="fragments/modalForInformation :: modalInformation" ></div>	
-		<div th:replace="fragments/modalForInformation :: modalAdoptedPetInformation" ></div>	
-	
+
+		<div th:replace="fragments/modalForInformation :: modalInformation"></div>
+		<div th:replace="fragments/modalForInformation :: modalAdoptedPetInformation"></div>
+
 	</div>
-	
-	<div th:replace="fragments/footer :: footer" ></div>
-	<script th:src="@{/js/modalForAdoption.js}" ></script>
-	<script th:src="@{/js/petFunctions.js}" ></script>
+
+	<div th:replace="fragments/footer :: footer"></div>
+	<script th:src="@{/js/modalForAdoption.js}"></script>
+	<script th:src="@{/js/petFunctions.js}"></script>
 </body>
+
 </html>

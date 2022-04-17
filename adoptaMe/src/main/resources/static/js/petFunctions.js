@@ -9,7 +9,7 @@ const removeRequest = (id) => {
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
+	  confirmButtonText: 'Aceptar'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 	    removalForm.submit();
@@ -29,7 +29,7 @@ const postConfirmation = (id) => {
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
+	  confirmButtonText: 'Aceptar'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 	    	formForPosting.submit();
@@ -49,7 +49,7 @@ const postRejection = (id) => {
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
+	  confirmButtonText: 'Aceptar'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 	    	formForRejection.submit();
@@ -70,7 +70,7 @@ const confirmBeforeRequesting = (id, petName) => {
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
+	  confirmButtonText: 'Aceptar'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 	    	confirmBeforeRequestingForm.submit();
@@ -79,24 +79,247 @@ const confirmBeforeRequesting = (id, petName) => {
 	
 }
 
+const confirmationUpdateRejected = () => {
+	let formPetUpdateRejected = document.getElementById("formPetUpdateRejected");
+	
+	Swal.fire({
+		  title: 'Esta a punto de solicitar una revalidación para publicar su mascota',
+		  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> Será dirigido a un formulario para actualizar la información de su mascota, porteriormente será presentada al administrador para su revalidación</div>",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Aceptar'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+		    	formPetUpdateRejected.submit();
+		  }
+		});
+	
+}
+
 
 const confirmationBeforeCreation = () => {
 	
-	let formForPetCreation = document.getElementById("formForPetCreation");
+            
+            let flagName = false;
+            let flagAge = false;
+            let flagUnitAge = false;
+            let flagType = false;
+            let flagSize = false;
+            let flagColor = false;
+            let flagCaracter = false;
+            let flagImage = false;
+            let flagDescription = false;
 	
-	Swal.fire({
-	  title: 'Esta a punto de registrar una mascota',
-	  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera presentada a el administrador quien decidira si es apta para se publicada, mientras tanto se mantedra en espera tu publicación</div>",
-	  icon: 'warning',
-	  showCancelButton: true,
-	  confirmButtonColor: '#3085d6',
-	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
-	}).then((result) => {
-	  if (result.isConfirmed) {
-	    	formForPetCreation.submit();
-	  }
-	});
+	let formForPetCreation = document.getElementById("formForPetCreation");
+	let formForPetErrorUpdate = document.getElementById("formForPetErrorUpdate");
+	
+	
+        var blacklist = [",", ";", "/*", "*/", "@@", "@", "SELECT", "select", "script", "<script","Script","UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker"];
+            
+             var blacklist2 = ["@@", "SELECT", "select", "script", "<script","UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker"];
+
+            let name = document.getElementById('name').value.toLowerCase();
+            let age = document.getElementById('age').value.toLowerCase();
+            let unitAge = document.getElementById('unitAge').value.toLowerCase();
+            let type = document.getElementById('type').value.toLowerCase();
+            let size = document.getElementById('size').value.toLowerCase();
+            let color = document.getElementById('color').value.toLowerCase();
+            let caracter = document.getElementById('caracter').value.toLowerCase();
+            let description = tinymce.get('description').getContent({format : 'raw'}).toLowerCase();
+            let image = document.getElementById('imagenPet').value;
+            
+            let updatePet = document.getElementById('updatePet');
+            if (updatePet != null){
+				updatePet = updatePet.value;
+			}else{
+				updatePet = null;
+			}
+			
+            let updatePetRejected = document.getElementById('updatePetRejected');
+            if (updatePetRejected != null){
+				updatePetRejected = updatePetRejected.value;
+			}else{
+				updatePetRejected = null;
+			}
+			
+            
+            let updatePetAccepted = document.getElementById('updatePetAccepted');
+            if (updatePetAccepted != null){
+				updatePetAccepted = updatePetAccepted.value;
+			}else{
+				updatePetAccepted = null;
+			}
+
+            for (var i = 0; i < blacklist.length; i++) {
+                if (name.includes((blacklist[i]).toLowerCase())) {                    
+                    document.getElementById("nameValid").removeAttribute("hidden");
+                    flagName = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (age.includes(blacklist[i].toLowerCase())) {                    
+                    document.getElementById("ageValid").removeAttribute("hidden");
+                    flagAge = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (unitAge.includes(blacklist[i].toLowerCase())) {                    
+                    document.getElementById("unitAgeValid").removeAttribute("hidden");
+                    flagUnitAge = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (type.includes(blacklist[i].toLowerCase), 0) {                    
+                    document.getElementById("typeValid").removeAttribute("hidden");
+                    flagType = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (size.includes(blacklist[i].toLowerCase())) {                    
+                    document.getElementById("sizeValid").removeAttribute("hidden");
+                    flagSize = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (color.includes(blacklist[i].toLowerCase())) {                    
+                    document.getElementById("colorValid").removeAttribute("hidden");
+                    flagColor = true;
+                }
+            }
+            
+            for (var i = 0; i < blacklist.length; i++) {
+                if (caracter.includes(blacklist[i].toLowerCase())) {                    
+                    document.getElementById("caracterValid").removeAttribute("hidden");
+                    flagCaracter = true;
+                }
+            }
+
+            for (var i = 0; i < blacklist2.length; i++) {
+                if (description.includes(blacklist2[i])) {
+                    document.getElementById("descriptionValid").removeAttribute("hidden");
+                    flagDescription = true;
+                }
+            }
+
+            /*if(title == ""){
+                document.getElementById("titleVoid").removeAttribute("hidden");
+                flag = true;
+            }
+
+            if(content == '<p><br data-mce-bogus="1"></p>'){
+                document.getElementById("contentVoid").removeAttribute("hidden");
+                flag2 = true;
+            }*/
+
+			if(updatePet || updatePetAccepted || updatePetRejected){
+				flagImage = false;
+			}else{
+	            if(image == ""){
+	                document.getElementById("imagenValid").removeAttribute("hidden");
+	                flagImage = true;
+	            }
+			}
+			
+			if(flagName || flagAge || flagUnitAge || flagType || flagSize || flagColor || flagCaracter || flagDescription || flagImage){
+				
+			}else{
+				if(flagName == false && flagAge == false && flagUnitAge == false, flagType == false && flagSize== false && flagColor == false, flagCaracter == false && flagDescription == false && flagImage == false){
+				if(updatePet){
+					Swal.fire({
+					  title: 'Esta a punto de actualizar una mascota',
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada), el administrador decidira si es apta para publicarla, mientras tanto se mantedra en espera tu publicación</div>",
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'Aceptar'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+					    	formForPetCreation.submit();
+					    	formForPetErrorUpdate.submit();
+					  }
+					});
+				}else if(updatePetRejected){
+					Swal.fire({
+					  title: 'Esta a punto de actualizar una mascota para su revalidación',
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera presentada a el administrador para que la mascota sea revalidada, él decidira si es apta para se publicada, mientras tanto se mantedra en espera tu publicación</div>",
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'Aceptar'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+					    	formForPetCreation.submit();
+					    	formForPetErrorUpdate.submit();
+					  }
+					});
+				}else if(updatePetAccepted){
+					Swal.fire({
+					  title: 'Esta a punto de actualizar una mascota',
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada).</div>",
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'Aceptar'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+					    	formForPetCreation.submit();
+					    	formForPetErrorUpdate.submit();
+					  }
+					});
+				}else{
+					Swal.fire({
+						  title: 'Esta a punto de registrar una mascota',
+						  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera presentada a el administrador quien decidira si es apta para se publicada, mientras tanto se mantedra en espera tu publicación</div>",
+						  icon: 'warning',
+						  showCancelButton: true,
+						  confirmButtonColor: '#3085d6',
+						  cancelButtonColor: '#d33',
+						  confirmButtonText: 'Aceptar'
+						}).then((result) => {
+						  if (result.isConfirmed) {
+						    	formForPetCreation.submit();
+						    	formForPetErrorUpdate.submit();
+						  }
+						});	
+					
+				}
+                
+            }else{
+            }
+			}
+            
+	
+	
 }
 
 //This function is just to show information in the volunteer view

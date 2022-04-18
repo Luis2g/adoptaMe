@@ -87,8 +87,8 @@
 
                 <!--First slide-->
                 <div class="carousel-item active">
-                    <div class="col-md-3" th:each="tmpPet : ${petList}" style="float:left">
-                        <div class="card mb-2" style="width: 18rem;">
+                    <div class="col-md-3 mb-2" th:each="tmpPet : ${petList}" style="float:left">
+                        <div class="card h-100">
                             <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}"
                                 alt="Card image cap">
                             <div class="card-body">
@@ -136,8 +136,8 @@
 
                 <!--Second slide-->
                 <div class="carousel-item">
-                    <div class="col-md-3" th:each="secondTmpPet : ${secondPetList}" style="float:left">
-                        <div class="card mb-2">
+                    <div class="col-md-3  mb-2" th:each="secondTmpPet : ${secondPetList}" style="float:left">
+                        <div class="card h-100">
                             <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${secondTmpPet.image})}"
                                 alt="Card image cap">
                             <div class="card-body">

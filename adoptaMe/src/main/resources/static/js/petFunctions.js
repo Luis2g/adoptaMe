@@ -84,7 +84,7 @@ const confirmationUpdateRejected = () => {
 	
 	Swal.fire({
 		  title: 'Esta a punto de solicitar una revalidación para publicar su mascota',
-		  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> Será dirigido a un formulario para actualizar la información de su mascota, porteriormente será presentada al administrador para su revalidación</div>",
+		  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> Será dirigido a un formulario para actualizar la información de su mascota, posteriormente será presentada al administrador para su revalidación.</div>",
 		  icon: 'warning',
 		  showCancelButton: true,
 		  confirmButtonColor: '#3085d6',
@@ -254,7 +254,7 @@ const confirmationBeforeCreation = () => {
 				if(updatePet){
 					Swal.fire({
 					  title: 'Esta a punto de actualizar una mascota',
-					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada), el administrador decidira si es apta para publicarla, mientras tanto se mantedra en espera tu publicación</div>",
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota será actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada), el administrador decidirá si es apta para publicarla, mientras tanto se mantedrá en espera tu publicación.</div>",
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
@@ -269,7 +269,7 @@ const confirmationBeforeCreation = () => {
 				}else if(updatePetRejected){
 					Swal.fire({
 					  title: 'Esta a punto de actualizar una mascota para su revalidación',
-					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera presentada a el administrador para que la mascota sea revalidada, él decidira si es apta para se publicada, mientras tanto se mantedra en espera tu publicación</div>",
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota será presentada al administrador para que la mascota sea revalidada, él decidirá si es apta para ser publicada, mientras tanto se mantedrá en espera tu publicación.</div>",
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
@@ -284,7 +284,7 @@ const confirmationBeforeCreation = () => {
 				}else if(updatePetAccepted){
 					Swal.fire({
 					  title: 'Esta a punto de actualizar una mascota',
-					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada).</div>",
+					  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota será actualizada con los nuevos datos que has ingresado, (si no seleccionaste una imagen se quedará la imagen anteriormente registrada).</div>",
 					  icon: 'warning',
 					  showCancelButton: true,
 					  confirmButtonColor: '#3085d6',
@@ -299,7 +299,7 @@ const confirmationBeforeCreation = () => {
 				}else{
 					Swal.fire({
 						  title: 'Esta a punto de registrar una mascota',
-						  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota sera presentada a el administrador quien decidira si es apta para se publicada, mientras tanto se mantedra en espera tu publicación</div>",
+						  html: "<div class='alert alert-primary' role='alert'><strong>Atención: </strong> La mascota será presentada al administrador quien decidirá si es apta para ser publicada, mientras tanto se mantedrá en espera tu publicación.</div>",
 						  icon: 'warning',
 						  showCancelButton: true,
 						  confirmButtonColor: '#3085d6',

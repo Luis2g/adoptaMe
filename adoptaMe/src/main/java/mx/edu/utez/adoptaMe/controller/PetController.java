@@ -546,8 +546,14 @@ public class PetController {
     	FavoriteOne favoriteOne = new FavoriteOne(user, pet);
     	
     	favoriteOneServiceImpl.save(favoriteOne);
-    	
-    	return "redirect:/mascotas/" + location;
+    	System.err.println(location);
+        if(location.equals("")){
+            System.err.println("Entra a inicio");
+            return "redirect:/inicio";
+        } else {
+            System.err.println("Entra a location");
+            return "redirect:/mascotas/" + location;
+        }
     }
     
     @PostMapping("/removeHeart")
@@ -556,8 +562,12 @@ public class PetController {
     	
     	
     	favoriteOneServiceImpl.removeFavoriteOne(petId, authentication.getName());
-    	
-    	return "redirect:/mascotas/" + location;
+
+        if(location.equals("")){
+            return "redirect:/inicio";
+        } else {
+            return "redirect:/mascotas/" + location;
+        }
     }
     
 

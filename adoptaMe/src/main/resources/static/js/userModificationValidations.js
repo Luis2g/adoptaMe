@@ -2,7 +2,7 @@
 let spans = {person: {}}
 let user = {person: {}}
 let permitRegister = [false, false, false, false, false];
-let regexNames = /^[a-z ,.'-]+$/i;
+let regexNames = /^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$/g;
 
 
 

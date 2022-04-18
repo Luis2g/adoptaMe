@@ -56,13 +56,13 @@
                     <div sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="col-12 mt-3">
                         <h2 style="color: #ccc" class="text-center">Publica una mascota</h2>
                     </div>
-                    <div class="offset-md-8  col-12 col-md-4 ">
+                    <!-- <div class="offset-md-8  col-12 col-md-4 ">
                         <form class="input-group mb-3" th:action="@{/mascotas/filtro}">
                             <input type="text" name="text" class="form-control" id="basic-url"
                                 aria-describedby="basic-addon3">
                             <input type="submit" class="input-group-append btn btn-light" value="Buscar">
                         </form>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -147,6 +147,9 @@
                                             <span class="material-icons">
                                                 favorite_border
                                             </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
+                                            </span>
                                         </button>
                                     </form>
                                 </div>
@@ -158,6 +161,9 @@
                                             style="border : none; right: 0px !important; padding-right: 0px;">
                                             <span class="material-icons" style="color: red;">
                                                 favorite
+                                            </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
                                             </span>
                                         </button>
                                     </form>

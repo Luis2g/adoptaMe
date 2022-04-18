@@ -158,9 +158,11 @@ public class MainController {
     @Secured("ROLE_ADMIN")
     public String acceptPet(@RequestParam(name = "accepted", required = true) boolean accepted,
             @RequestParam(name = "id", required = true) long id,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes, Authentication authentication) {
 
-        petServiceImpl.updateStatus(accepted ? "accepted" : "rejected", id);
+                Pet petEdit=petServiceImpl.editPet(id);
+                petEdit.setStatus(accepted ? "accepted" : "rejected");
+                petServiceImpl.modifyPet(petEdit, authentication.getName());        
 
         redirectAttributes.addFlashAttribute("msg_success",
                 accepted ? "La mascota se ha publicado" : "Se ha rechazado la mascota");

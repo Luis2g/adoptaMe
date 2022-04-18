@@ -86,7 +86,7 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
 
 	@Modifying
 	@Transactional
-	@Query(value="Select * from pets where id in(SELECT pets.id from pets INNER JOIN  colors ON pets.color_id = colors.id INNER JOIN  personalities ON pets.personality_id = personalities.id where CONCAT(description,pets.name,size, colors.name, personalities.name) LIKE (%:text%)) ;", nativeQuery=true)
+	@Query(value="SELECT * FROM pets WHERE id in(SELECT pets.id from pets INNER JOIN  colors ON pets.color_id = colors.id INNER JOIN  personalities ON pets.personality_id = personalities.id WHERE CONCAT(description,pets.name,size, colors.name, personalities.name) LIKE (%:text%) AND pets.status = 'accepted');", nativeQuery=true)
 	List<Pet> scopePet(String text);
 
 	

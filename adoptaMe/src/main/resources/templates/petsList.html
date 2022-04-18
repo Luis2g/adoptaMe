@@ -57,11 +57,10 @@
                         <h2 style="color: #ccc" class="text-center">Publica una mascota</h2>
                     </div>
                     <div class="offset-md-8  col-12 col-md-4 ">
-                        <label for="basic-url">Busqueda</label>
                         <form class="input-group mb-3" th:action="@{/mascotas/filtro}">
                             <input type="text" name="text" class="form-control" id="basic-url"
                                 aria-describedby="basic-addon3">
-                            <input type="submit" class="input-group-append" value="Buscar">
+                            <input type="submit" class="input-group-append btn btn-light" value="Buscar">
                         </form>
                     </div>
                 </div>
@@ -109,25 +108,17 @@
                 </form>
             </div>
 
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${listPets}">
-                <div class="card mb-2">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 " th:each="tmpPet: ${listPets}">
+                <div class="card h-100">
                     <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}">
                     <div class="card-body">
                         <h4 class="card-title">[[${tmpPet.name}]]</h4>
+                    	<span style="font-size: 12px" class="badge badge-pill badge-light shadow" th:text="${tmpPet.sex == 'H'? 'Hembra' : 'Macho' }"></span>
                         <p class="card-text" th:utext="${tmpPet.description}"></p>
-                        <!-- <button class="btn btn-primary" id="myModal" data-toggle="modal" data-target="#modalInformacionMascota" th:onclick="'javascript:showPet('+${tmpPet.id}+')'">
-                                <a style="color:white"><span class="material-icons"
-                                    style="vertical-align: middle;">add</span>&nbsp; Mas información</a>
-                            </button> -->
-                        <!-- <button class="btn btn-success" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">¡Adoptar!</button> 
-                            <a id="myModal" data-toggle="modal" data-target="#exampleModal" th:onclick="'javascript:showPet('+${tmpPet.id}+')'" > ¡Adoptar! </a>-->
+                        
                         <div class="row">
                             <button class="btn btn-success mr-2 ml-2" data-toggle="modal"
                                 th:attr="data-target=${'#editModal'+tmpPet.id}" data-row="${tmpPet}">Detalles</button>
-                            <form th:action="@{/mascotas/editar}" method="POST">
-                                <input type="hidden" name="petId" th:value="${tmpPet.id}">
-                                <button class="btn btn-info">Editar</button>
-                            </form>
                         </div>
                     </div>
 

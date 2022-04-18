@@ -92,7 +92,7 @@ public interface PetRepository extends JpaRepository<Pet, Long>{
 	
 @Modifying
 @Transactional
-@Query(value = "SELECT * FROM pets p INNER JOIN colors c ON p.color_id = c.id WHERE (c.id = :idColor OR p.sex = :petSex OR p.size = :petSize) AND p.status = 'accepted' AND p.type = :petType ", nativeQuery=true)
+@Query(value = "SELECT * FROM pets p LEFT JOIN colors c ON p.color_id = c.id WHERE (c.id = :idColor OR p.sex = :petSex OR p.size = :petSize) AND p.status = 'accepted' AND p.type = :petType ", nativeQuery=true)
 List<Pet> getFilterPetList(long idColor, String petSex, String petSize, String petType);
 	
 }

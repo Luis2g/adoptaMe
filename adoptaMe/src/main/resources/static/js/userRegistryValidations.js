@@ -3,7 +3,7 @@ console.log('imported correctly');
 //person data
 let user = { person : {gender: {}}}
 let spans = { person: {} };
-let regexNames = /^[a-z ,.'-]+$/i;
+let regexNames = /^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$/g;
 let permitRegister = [false, false, false, false, false, false, false, false, false];
 
 $(document).ready(function() {
@@ -47,9 +47,11 @@ const validations = {
 	name : () => {	
 		user.person.name = document.getElementById("name").value;	
 		if(user.person.name.length < 2 || !regexNames.test(user.person.name) ){
+			console.log("name if ", !regexNames.test(user.person.name));
 			permitRegister[0] = false;
 			spans.person.name.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
 		}else{
+			console.log("name else ", !regexNames.test(user.person.name));
 			permitRegister[0] = true;
 			spans.person.name.innerHTML = "";
 		}
@@ -58,9 +60,11 @@ const validations = {
 	surname : () => {
 		user.person.surname = document.getElementById("surname").value;
 		if(user.person.surname.length < 2 || !regexNames.test(user.person.surname) ){
+			console.log("surname if ", !regexNames.test(user.person.surname));
 			permitRegister[1] = false;
 			spans.person.surname.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
 		}else{
+			console.log("surname else ", !regexNames.test(user.person.surname));
 			permitRegister[1] = true;
 			spans.person.surname.innerHTML = "";
 		}
@@ -68,9 +72,11 @@ const validations = {
 	secondSurname : () => {
 		user.person.secondSurname = document.getElementById("secondSurname").value;
 		if(user.person.secondSurname.length < 2 || !regexNames.test(user.person.secondSurname) ){
+			console.log("secondSurname if ", !regexNames.test(user.person.secondSurname));
 			permitRegister[2] = false;
 			spans.person.secondSurname.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
 		}else{
+			console.log("secondSurname else ", !regexNames.test(user.person.secondSurname));
 			permitRegister[2] = true;
 			spans.person.secondSurname.innerHTML = "";
 		}

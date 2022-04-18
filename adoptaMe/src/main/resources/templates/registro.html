@@ -1,208 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
-<div th:replace="fragments/header :: header" ></div>
-<body  >
-    <div class=" m-5 row border  rounded p-5">
-        <div class=" col-12 col-lg-8 order-last" >
-            
+<div th:replace="fragments/header :: header"></div>
 
-            <div class="text-center" >
+<body>
+    <div class="m-5 row border rounded p-1">
+        <div class=" col-12 col-lg-8 order-last">
+
+
+            <div class="text-center">
                 <h2 class="col-12 mb-2">Crea una cuenta</h2>
                 <h5 class="col-12 mb-3">Información personal</h5>
+                <hr>
             </div>
 
 
-            <form  th:action="@{/usuarios/guardar}" id="registerForm" class="row" th:object="${user}" method="POST" >
-            	<input type="hidden" th:field="*{enabled}" th:value="true" >
-            	<div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
-                    <label for="name" >Nombre <span style="color:red" >*</span> </label>
-                    <input 
-                        id="name"
-                        onChange="validations.name()"
-                        class="form-control" 
-                        type="text" 
-                        th:field="*{person.name}" 
-                        placeholder="Nombre"
-                    >
-                    <span style="color: red" id="nameSpan" > </span>
-                    <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}" class="alert alert-danger mb-3 mt-3"></div>
+            <form th:action="@{/usuarios/guardar}" id="registerForm" class="row" th:object="${user}" method="POST">
+                <input type="hidden" th:field="*{enabled}" th:value="true">
+                <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
+                    <label for="name">Nombre <span style="color:red">*</span></label>
+                    <input id="name" onChange="validations.name()" class="form-control" type="text"
+                        th:field="*{person.name}" placeholder="Nombre">
+                    <span style="color: red" id="nameSpan"></span>
+                    <div th:if="${#fields.hasErrors('person.name')}" th:errors="*{person.name}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
                 <div class=" mb-3 col-12 col-sm-6 col-md-6 col-lg-4">
-                    <label for="surname" >Apellido paterno <span style="color:red" >*</span></label>
-                    <input 
-                        id="surname"
-                        onChange="validations.surname()"
-                        class="form-control" 
-                        type="text" 
-                        th:field="*{person.surname}" 
-                        placeholder="Apellido Paterno"
-                    >
-    				<span style="color: red" id="surnameSpan" > </span>
-                    <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}" class="alert alert-danger mb-3 mt-3"></div>
+                    <label for="surname">Apellido paterno <span style="color:red">*</span></label>
+                    <input id="surname" onChange="validations.surname()" class="form-control" type="text"
+                        th:field="*{person.surname}" placeholder="Apellido Paterno">
+                    <span style="color: red" id="surnameSpan"></span>
+                    <div th:if="${#fields.hasErrors('person.surname')}" th:errors="*{person.surname}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
                 <div class=" pr-sm-1 mb-3 col-12 col-sm-6 col-lg-4">
-                    <label for="secondSurname" >Apellido materno <span style="color:red" >*</span> </label>
-                    <input 
-                        id="secondSurname"
-                        onChange="validations.secondSurname()"
-                        class="form-control " 
-                        type="text" 
-                        th:field="*{person.secondSurname}" 
-                        placeholder="Apellido Materno"
-                    >
-					<span style="color: red" id="secondSurnameSpan" > </span>
-                    <div th:if="${#fields.hasErrors('person.secondSurname')}" th:errors="*{person.secondSurname}" class="alert alert-danger mb-3 mt-3"></div>
+                    <label for="secondSurname">Apellido materno <span style="color:red">*</span> </label>
+                    <input id="secondSurname" onChange="validations.secondSurname()" class="form-control " type="text"
+                        th:field="*{person.secondSurname}" placeholder="Apellido Materno">
+                    <span style="color: red" id="secondSurnameSpan"> </span>
+                    <div th:if="${#fields.hasErrors('person.secondSurname')}" th:errors="*{person.secondSurname}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
                 <div class="col-12 col-sm-6">
-                    <label for="phoneNumber" >Número telefonico <span style="color:red" >*</span> </label>                    
-                    <input 
-                    	id="phoneNumber"
-                    	onChange="validations.phoneNumber()"
-                    	th:field="*{person.phoneNumber}" 
-                    	type="text" 
-                    	class="form-control form-control-lg phone-mask" 
-                    	maxlength="10"
-						minlength="14" 
-						placeholder="( ___ ) - ___ - __ - __" 
-						required
-					>
-                    <span style="color: red" id="phoneNumberSpan" > </span>
-                    <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}" class="alert alert-danger mb-3 mt-3"></div>
+                    <label for="phoneNumber">Número telefonico <span style="color:red">*</span> </label>
+                    <input id="phoneNumber" onChange="validations.phoneNumber()" th:field="*{person.phoneNumber}"
+                        type="text" class="form-control form-control-lg phone-mask" maxlength="10" minlength="14"
+                        placeholder="( ___ ) - ___ - __ - __" required>
+                    <span style="color: red" id="phoneNumberSpan"> </span>
+                    <div th:if="${#fields.hasErrors('person.phoneNumber')}" th:errors="*{person.phoneNumber}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
-                <div class="col-12 col-sm-6" >
-                    <label style="margin-block: 0px;" >Sexo</label>
-                    <div  style="display: block">
-                        <input
-                            id="man"
-                            onChange="validations.gender()"
-                        	name="gender"
-                            type="radio" 
-                            th:field="*{person.gender}" 
-                            value="H" 
-                        >
-                        <label style="margin-block: 0px;" for="man" >Hombre</label>
+                <div class="col-12 col-sm-6">
+                    <label style="margin-block: 0px;">Sexo</label>
+                    <div style="display: block">
+                        <input id="man" onChange="validations.gender()" name="gender" type="radio"
+                            th:field="*{person.gender}" value="H">
+                        <label style="margin-block: 0px;" for="man">Hombre</label>
                     </div>
-                    <div  style="display: block">
-                        <input 
-                            id="woman"
-                            onChange="validations.gender()"
-                            name="gender"
-                            type="radio" 
-                            th:field="*{person.gender}" 
-                            value="M" 
-                        >
-                        <label style="margin-block: 0px;" for="woman" >Mujer</label>
+                    <div style="display: block">
+                        <input id="woman" onChange="validations.gender()" name="gender" type="radio"
+                            th:field="*{person.gender}" value="M">
+                        <label style="margin-block: 0px;" for="woman">Mujer</label>
                     </div>
-                    <div th:if="${#fields.hasErrors('person.gender')}" th:errors="*{person.gender}" class="alert alert-danger mb-3 mt-3"></div>
-                	<span style="color: red" id="genderSpan" ></span>
-                </div>
-                    
-                
-                <h4 class="col-12 mb-3 text-center mt-3">Información de usuario</h4>
-
-                <div class="mb-3 col-12 col-sm-4">
-                    <label for="username" >Nombre de usuario<span style="color:red" >*</span> </label>
-                	<input 
-                        id="username"
-                        onChange="validations.username()"
-                        class="form-control" 
-                        th:field="*{username}" 
-                        type="text" 
-                        placeholder="Nombre de usuario"
-                    >
-                    <span style="color: red" id="usernameSpan" ></span>
-                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
+                    <div th:if="${#fields.hasErrors('person.gender')}" th:errors="*{person.gender}"
+                        class="alert alert-danger mb-3 mt-3"></div>
+                    <span style="color: red" id="genderSpan"></span>
                 </div>
 
 
-                <div class="mb-3 col-12 col-sm-4">
-                    <label for="password" >Contraseña<span style="color:red" >*</span> </label>
-                	<input 
-                        id="password"
-                        onChange="validations.password()"
-                        class="form-control" 
-                        th:field="*{password}" 
-                        type="password" 
-                        placeholder="********"
-                    >
-                    <span style="color: red" id="passwordSpan" ></span>
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger mb-3 mt-3"></div>
+                <div class="col-12 mb-3 text-center mt-3">
+                    <h5>Información de usuario</h5>
+                    <hr>
                 </div>
 
                 <div class="mb-3 col-12 col-sm-4">
-                    <label for="confirmacion" >Confirmación<span style="color:red" >*</span> </label>
-                	<input 
-                        id="passwordConfirmation"
-                        onChange="validations.passwordConfirmation()"
-                        class="form-control" 
-                        name="confirmation"
-                        type="password" 
-                        placeholder="********"
-                    >
-                    <span style="color: red" id="passwordConfirmationSpan" ></span> 
-                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger mb-3 mt-3"></div>
+                    <label for="username">Nombre de usuario<span style="color:red">*</span> </label>
+                    <input id="username" onChange="validations.username()" class="form-control" th:field="*{username}"
+                        type="text" placeholder="Nombre de usuario">
+                    <span style="color: red" id="usernameSpan"></span>
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
-                <input
-                    id="registrationDate"
-                    th:field="*{person.registrationDate}" 
-                    type="hidden"
-                >
 
                 <div class="mb-3 col-12 col-sm-4">
-                    <label for="email" >Correo electrónico<span style="color:red" >*</span> </label>
-                	<input 
-                        id="email"
-                        onChange="validations.email()"
-                        class="form-control" 
-                        th:field="*{email}" 
-                        type="email" 
-                        placeholder="ejemplo@gmail.com"
-                    >
-					<span style="color: red" id="emailSpan" ></span>
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
+                    <label for="password">Contraseña<span style="color:red">*</span> </label>
+                    <input id="password" onChange="validations.password()" class="form-control" th:field="*{password}"
+                        type="password" placeholder="********">
+                    <span style="color: red" id="passwordSpan"></span>
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                        class="alert alert-danger mb-3 mt-3"></div>
                 </div>
 
                 <div class="mb-3 col-12 col-sm-4">
-                    <label for="rol" >Tipo de rol<span style="color:red" >*</span> </label>
-                	<select 
-                        id="rol"
-                        class="form-control" 
-                        th:field="*{authorities}" 
-                        type="email" 
-                        placeholder="ejemplo@gmail.com"
-                    >
- 						<option  th:each="role: ${rolesList} " th:value="${role.authority}" th:text="${role.authority}" ></option>
+                    <label for="confirmacion">Confirmación<span style="color:red">*</span> </label>
+                    <input id="passwordConfirmation" onChange="validations.passwordConfirmation()" class="form-control"
+                        name="confirmation" type="password" placeholder="********">
+                    <span style="color: red" id="passwordConfirmationSpan"></span>
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                        class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <input id="registrationDate" th:field="*{person.registrationDate}" type="hidden">
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="email">Correo electrónico<span style="color:red">*</span> </label>
+                    <input id="email" onChange="validations.email()" class="form-control" th:field="*{email}"
+                        type="email" placeholder="ejemplo@gmail.com">
+                    <span style="color: red" id="emailSpan"></span>
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                        class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+
+                <div class="mb-3 col-12 col-sm-4">
+                    <label for="rol">Tipo de rol<span style="color:red">*</span> </label>
+                    <select id="rol" class="form-control" th:field="*{authorities}" type="email"
+                        placeholder="ejemplo@gmail.com">
+                        <!-- <option th:each="role: ${rolesList} " th:value="${role.authority}" th:text="${role.authority}">
+                        </option> -->
+                        <option value="ROLE_VOLUNTEER">Voluntario</option>
+                        <option value="ROLE_ADOPTER">Adoptador</option>
                     </select>
-                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger mb-3 mt-3"></div>
-                </div>                             
-
-                <div class="col-12" >
-                    <div class="row text-center" >
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                        class="alert alert-danger mb-3 mt-3"></div>
+                </div>
+                <div class="col-12">
+                    
+                </div>
+                <div class="col-12">
+                    <div class="row text-center">
                         <div class="col-12 sm-ml-4 mt-2">
-                            <strong class="text-primary col-12 mb-3"><a href="" >Prefiero iniciar sesión</a></strong>
                             <div class="col-12">
-                                <input type="button" onClick="registerUser()" value="Registrar cuenta" class="btn btn-success col-8 col-sm-5">
+                                <input type="button" onClick="registerUser()" value="Registrar cuenta"
+                                    class="btn btn-success col-8 col-sm-5">
                             </div>
                         </div>
                     </div>
+                    <div class="form-group d-flex justify-content-center mt-3">
+                        <strong class="text-primary" style="font-size: 14px;"><a th:href="@{/login}">Iniciar
+                                sesión</a></strong>
+                    </div>
                 </div>
-                
+
             </form>
         </div>
-        
-    	<div class="col text-center" >
+
+        <div class="col text-center">
             <img class="img-fluid mw-25" th:src="@{/images/logo.png}" style="width: 350px;" alt="not found">
             <h4>Adoptame</h4>
         </div>
     </div>
-    <div th:replace="fragments/footer :: footer" ></div>
+    <div th:replace="fragments/footer :: footer"></div>
     <script>
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             let registrationDate = document.getElementById("registrationDate");
             let date = new Date();
             date.setDate(date.getDate() - 1);
@@ -212,13 +165,14 @@
         });
 
     </script>
-    <script th:src="@{/js/userRegistryValidations.js}" ></script>
-    <script th:src="@{/js/jquery.mask.min.js}" ></script>
+    <script th:src="@{/js/userRegistryValidations.js}"></script>
+    <script th:src="@{/js/jquery.mask.min.js}"></script>
     <script>
-		$(document).ready(function () {
-			$('.phone-mask').mask('(000)000-00-00');
-		});
-	</script>
-    
+        $(document).ready(function () {
+            $('.phone-mask').mask('(000)000-00-00');
+        });
+    </script>
+
 </body>
+
 </html>

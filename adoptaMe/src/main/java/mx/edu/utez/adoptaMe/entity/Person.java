@@ -23,19 +23,20 @@ public class Person {
     private Long personId;
 
     @Column(name = "name", nullable = false, length = 50)
-    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales")
+    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El nombre debe contener solo caracteres normales y empezar con mayúscula")
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 50)
     private String name;
 
     @Column(name = "surname", nullable = false, length = 50)
-    @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
+    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El apellido solo debe contener caracteres normales")
     @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 50)
     private String surname;
 
     @Column(name = "second_surname", nullable = true, length = 50)
-    @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales")
+    @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El apellido solo debe contener caracteres normales")
+    @NotEmpty(message = "Este campo es requerido")
     @Size(min = 2, max = 50)
     private String secondSurname;
 
@@ -59,9 +60,9 @@ public class Person {
     }
 
     public Person(Long personId,
-            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*)+))*$", message = "El nombre debe contener solo caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
-            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String surname,
-            @Pattern(regexp = "[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*", message = "El apellido solo debe contener caracteres normales") @Size(min = 2, max = 50) String secondSurname,
+            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El nombre debe contener solo caracteres normales y empezar con mayúscula") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String name,
+            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El apellido solo debe contener caracteres normales") @NotEmpty(message = "Este campo es requerido") @Size(min = 2, max = 50) String surname,
+            @Pattern(regexp = "^[A-ZÁÉÍÓÚ]{1}[a-zñáéíóú ]*((\\s)?((\\'|\\-|\\.)?([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]*)+))*$", message = "El apellido solo debe contener caracteres normales") @Size(min = 2, max = 50) String secondSurname,
             @Size(min = 1, max = 1, message = "Esta campo solo puede contener un caracter") @NotEmpty(message = "Este campo es requerido") String gender,
             @Size(min = 7, max = 10, message = "El numero telefónico debe contener al menos 7 numeros") @Pattern(regexp = "[0-9]+", message = "Este campo solo debe contener numeros") @NotEmpty(message = "Este campo es requerido") String phoneNumber,
             String registrationDate, User user) {

@@ -1,61 +1,66 @@
 <!DOCTYPE html>
-<html xml:th="http://www.thymeleaf.org" >
+<html xml:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Adoptame</title>
-<div th:replace="fragments/header :: header"></div>
+	<meta charset="ISO-8859-1">
+	<title>Adoptame</title>
+	<div th:replace="fragments/header :: header"></div>
 </head>
+
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
-	
-	<div class="container" style="margin-top: 75px"  >
-		<h1 class="text-center mt-5" style="color: #ccc;" >Solicitudes para publicar</h1>
-		<div class="row mt-5" >
-		
-			<div class="animate__animated animate__fadeInLeft" th:if="${petPostRequests.size()} == 0" >
-				<h2 style="color: #727b88" >No hay solicitudes de publicaciones</h2>
+	<div th:replace="fragments/navbar :: navbar"></div>
+
+	<div class="container" style="margin-top: 75px">
+		<h1 class="text-center mt-5" style="color: #ccc;">Solicitudes para publicar</h1>
+		<div class="row mt-5">
+
+			<div class="animate__animated animate__fadeInLeft" th:if="${petPostRequests.size()} == 0">
+				<h2 style="color: #727b88">No hay solicitudes de publicaciones</h2>
 			</div>
-		
+
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${petPostRequests}">
-                <div class="card mb-2">
-                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}"alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">[[${tmpPet.name}]]</h4>
-                        <p class="card-text" th:utext="${tmpPet.description}"></p>
-	                     	<button 
-	                       		class="btn btn-primary btn-justInformationAdmin" 
-	                       		th:attr="data-gender=${tmpPet.sex}, data-gender=${tmpPet.size}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-name=${tmpPet.name}, data-description=${tmpPet.description}, data-image=${tmpPet.image}, data-username=${tmpPet.user.username}, data-adopterName=${tmpPet.user.person.name}, data-adopterSurname=${tmpPet.user.person.surname}, data-adopterSecondSurname=${tmpPet.user.person.secondSurname}, data-adopterPhoneNumber=${tmpPet.user.person.phoneNumber}, data-adopterEmail=${tmpPet.user.email}"
-	                        >
-                               <a style="color:white">
-	                               <span 
-	                               		class="material-icons" 
-	                                  	style="vertical-align: middle;"
-	                               	>add</span>&nbsp; 
-	                               	Mas información
-                              	</a> 
-                           </button>  
-                            <form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForPosting' + tmpPet.id}" >
-                            	<input name="id" th:value="${tmpPet.id}" type="hidden" >
-                            	<input name="accepted" value="true" type="hidden" >
-	                            <button class="btn btn-success" type="button" th:onclick="'javascript:postConfirmation(\''+${tmpPet.id}+'\');'" id="myModal" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Publicar </button>
-                            </form>
-                            <form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForRejection' + tmpPet.id}" >
-                            	<input name="id" th:value="${tmpPet.id}" type="hidden" >
-                            	<input name="accepted" value="false" type="hidden" >
-	                            <button style="color: #fff"class="btn btn-warning" type="button" id="myModal" th:onclick="'javascript:postRejection(\''+${tmpPet.id}+'\');'" data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
-                            </form>
-                            
-                    </div>
-                </div>
-            </div>
-		
-		
+				<div class="card mb-2">
+					<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
+					<div class="card-body">
+						<h4 class="card-title">[[${tmpPet.name}]]</h4>
+						<p class="card-text" th:utext="${tmpPet.description}"></p>
+						<button class="btn btn-primary btn-justInformationAdmin"
+							th:attr="data-gender=${tmpPet.sex}, data-size=${tmpPet.size}, data-color=${tmpPet.color.name}, data-personality=${tmpPet.personality.name}, data-age=${tmpPet.age}, data-unit-age=${tmpPet.unitAge}, data-name=${tmpPet.name}, data-description=${tmpPet.description}, data-image=${tmpPet.image}, data-username=${tmpPet.user.username}, data-adopterName=${tmpPet.user.person.name}, data-adopterSurname=${tmpPet.user.person.surname}, data-adopterSecondSurname=${tmpPet.user.person.secondSurname}, data-adopterPhoneNumber=${tmpPet.user.person.phoneNumber}, data-adopterEmail=${tmpPet.user.email}">
+							<a style="color:white">
+								<span class="material-icons" style="vertical-align: middle;">add</span>&nbsp;
+								Detalles
+							</a>
+						</button>
+					</div>
+					<div class="card-footer text-muted">
+						<div class="row justify-content-end">
+							<form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForPosting' + tmpPet.id}">
+								<input name="id" th:value="${tmpPet.id}" type="hidden">
+								<input name="accepted" value="true" type="hidden">
+								<button class="btn btn-success" type="button"
+									th:onclick="'javascript:postConfirmation(\''+${tmpPet.id}+'\');'" id="myModal"
+									data-toggle="modal" th:attr="data-target=${'#petModal'+tmpPet.id}">Publicar </button>
+							</form>
+							<form th:action="@{/acceptPet}" method="post" th:attr="id=${'formForRejection' + tmpPet.id}">
+								<input name="id" th:value="${tmpPet.id}" type="hidden">
+								<input name="accepted" value="false" type="hidden">
+								<button style="color: #fff" class="btn btn-danger ml-2" type="button" id="myModal"
+									th:onclick="'javascript:postRejection(\''+${tmpPet.id}+'\');'" data-toggle="modal"
+									th:attr="data-target=${'#petModal'+tmpPet.id}">Rechazar </button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</div>
-		
-		<div th:replace="fragments/modalForInformation :: fragmentModalAdoptedPetWithOwnerInformation" ></div>	
-		
+
+		<div th:replace="fragments/modalForInformation :: fragmentModalAdoptedPetWithOwnerInformation"></div>
+
 	</div>
-    <script th:replace="fragments/footer :: footer"></script>
-    <script th:src="@{/js/petFunctions.js}" ></script>
+	<script th:replace="fragments/footer :: footer"></script>
+	<script th:src="@{/js/petFunctions.js}"></script>
 </body>
+
 </html>

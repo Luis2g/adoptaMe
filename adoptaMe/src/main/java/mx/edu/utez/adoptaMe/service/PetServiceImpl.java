@@ -124,4 +124,10 @@ public class PetServiceImpl implements PetService {
     public List<Pet> scopePet(String text) {
         return petRepository.scopePet(text);
     }
+
+    @Override
+    public List<Pet> getFilterPetList(long idColor, String petSex, String petSize, String petType){
+        System.out.println(petType);
+        return  petRepository.getFilterPetList(idColor, petSex, petSize, petType);
+    }
 }

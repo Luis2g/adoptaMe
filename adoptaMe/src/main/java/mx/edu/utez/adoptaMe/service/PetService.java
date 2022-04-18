@@ -44,4 +44,6 @@ public interface PetService {
     List<Pet> getAdoptedPets(String username);
     
     List<Pet> scopePet(String text);
+
+    List<Pet> getFilterPetList(long idColor, String petSex, String petSize, String petType);
 }

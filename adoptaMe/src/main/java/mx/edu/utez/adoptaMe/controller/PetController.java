@@ -119,6 +119,7 @@ public class PetController {
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalityList", personalityServiceImpl.listAll());
         model.addAttribute("listPets",  filteredPets);
+		model.addAttribute("type", type);
 		return "petsList";
 	}
 
@@ -141,6 +142,59 @@ public class PetController {
         model.addAttribute("colorsList", colorServiceImpl.listAll());
         model.addAttribute("personalityList", personalityServiceImpl.listAll());
         model.addAttribute("listPets",  filteredPets);
+		return "petsList";
+	}
+
+	@PostMapping("/{type}/getFilterPet")
+	public String getFilterPet(@ModelAttribute("pet") Pet pet, Model model,
+			RedirectAttributes redirectAttributes, Authentication authentication, HttpSession session) {
+
+		model.addAttribute("location", pet.getType()+"s");
+
+		List<Pet> filteredPets = petServiceImpl.getFilterPetList(pet.getColor().getId(), pet.getSex(), pet.getSize(), pet.getType());
+
+		User user = new User();
+		if (authentication != null) {
+
+			String username = authentication.getName();
+			model.addAttribute("usernameFromModel", username);
+			user = userServiceImpl.findByUsername(username);
+			session.setAttribute("user", user);
+
+			for (Pet petVar : filteredPets) {
+				for (Request request : petVar.getRequests()) {
+					if (request.getUser().getUsername().equals(username)) {
+						petVar.setStatus("requestedByYou");
+					}
+				}
+			}
+
+			for (Pet thisPet : filteredPets) {
+				int hearts = 0;
+				thisPet.setType("nada");
+				for (FavoriteOne favoriteOne : thisPet.getFavoriteOnes()) {
+					hearts++;
+					if (thisPet.getStatus().equals("requestedByYou")
+							&& favoriteOne.getUser().getUsername().equals(username)) {
+						thisPet.setStatus("lovedIt");
+					} else if (favoriteOne.getUser().getUsername().equals(username)) {
+						thisPet.setStatus("heart");
+					}
+				}
+				thisPet.setType(hearts + "");
+			}
+		} else {
+			for (Pet thisPet : filteredPets) {
+				thisPet.setType(thisPet.getFavoriteOnes().size() + "");
+			}
+		}
+
+		pet.setUser(user);
+		model.addAttribute("user", user);
+		model.addAttribute("colorsList", colorServiceImpl.listAll());
+		model.addAttribute("personalityList", personalityServiceImpl.listAll());
+		model.addAttribute("listPets", filteredPets);
+		model.addAttribute("type", pet.getType());
 		return "petsList";
 	}
     

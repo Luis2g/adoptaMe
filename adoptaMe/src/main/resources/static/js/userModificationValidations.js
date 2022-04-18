@@ -23,9 +23,11 @@ $(document).ready(function() {
 const nameValidation = () => {	
 	user.person.name = document.getElementById("name").value;	
 	if(user.person.name.length < 2 || !regexNames.test(user.person.name) ){
+		!regexNames.test(user.person.name);
 		permitRegister[0] = false;
-		spans.person.name.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
+		spans.person.name.innerHTML = "Debe tener al menos dos letras, debe empezar con mayúscula y no puede contener números";
 	}else{
+		!regexNames.test(user.person.name);
 		permitRegister[0] = true;
 		spans.person.name.innerHTML = "";
 	}
@@ -34,9 +36,11 @@ const nameValidation = () => {
 const surnameValidation = () => {
 	user.person.surname = document.getElementById("surname").value;
 	if(user.person.surname.length < 2 || !regexNames.test(user.person.surname) ){
+		!regexNames.test(user.person.surname);
 		permitRegister[1] = false;
-		spans.person.surname.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
+		spans.person.surname.innerHTML = "Debe tener al menos dos letras, debe empezar con mayúscula y no puede contener números";
 	}else{
+		!regexNames.test(user.person.surname);
 		permitRegister[1] = true;
 		spans.person.surname.innerHTML = "";
 	}
@@ -44,9 +48,11 @@ const surnameValidation = () => {
 const secondSurnameValidation = () => {
 	user.person.secondSurname = document.getElementById("secondSurname").value;
 	if(user.person.secondSurname.length < 2 || !regexNames.test(user.person.secondSurname) ){
+		!regexNames.test(user.person.secondSurname);
 		permitRegister[2] = false;
-		spans.person.secondSurname.innerHTML = "Debe tener al menos dos letras y no puede contener numeros";
+		spans.person.secondSurname.innerHTML = "Debe tener al menos dos letras, debe empezar con mayúscula y no puede contener números";
 	}else{
+		!regexNames.test(user.person.secondSurname);
 		permitRegister[2] = true;
 		spans.person.secondSurname.innerHTML = "";
 	}

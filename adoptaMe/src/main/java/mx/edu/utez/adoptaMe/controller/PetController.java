@@ -538,13 +538,15 @@ public class PetController {
     		@RequestParam(name = "location", required = true) String location,
     		Authentication authentication, RedirectAttributes redirectAttributes) {
     	
-    	
-    	System.err.println("This is the id for removal " + petId);
-    	
+        	
     	
     	requestServiceImpl.removeRequest(petId, authentication.getName());
     	redirectAttributes.addFlashAttribute("msg_success", "Se ha removido la solicitud con exito");
     	
+    	if(location.equals("landingPage")) {
+    		redirectAttributes.addFlashAttribute("msg_success", "Solicitud removida con éxito");    		
+    		return "redirect:/inicio";
+    	}
     	if(location.equals("")){
             return "redirect:/misSolicitudes";
         } else {
@@ -564,6 +566,11 @@ public class PetController {
     	
     	Request request = new Request(user, pet);
     	Request response = requestServiceImpl.saveRequest(request,authentication.getName());
+    	
+    	if(location.equals("landingPage")) {
+    		redirectAttributes.addFlashAttribute("msg_success", "Solicitud realizada con éxito");    		
+    		return "redirect:/inicio";
+    	}
     	
     	if(response.getId() > 0) {
     		redirectAttributes.addFlashAttribute("msg_success", "Solicitud realizada con éxito");    		

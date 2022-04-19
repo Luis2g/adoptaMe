@@ -65,11 +65,11 @@ public class RecoverPasswordController {
 				return "redirect:/login";
 			} else {
 				redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
-				return "redirect:/reset/password";
+				return "redirect:/restablecerContrasena";
 			}
 		}else{
 			redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
-				return "redirect:/reset/password";
+				return "redirect:/restablecerContrasena";
 		}
 		
 		}

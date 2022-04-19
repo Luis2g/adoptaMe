@@ -1,5 +1,3 @@
-console.log('imported correctly');
-
 //person data
 let user = { person : {gender: {}}}
 let spans = { person: {} };
@@ -148,7 +146,7 @@ const validations = {
 	
 	email : () => {
 		user.email = document.getElementById("email").value;
-		if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)){
+		if(!/[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?/.test(user.email)){
 			permitRegister[8] = false;
 			spans.email.innerHTML = "No cumple con el formato solicitado";
 		}else{

@@ -48,7 +48,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 		}
 
-		if (Session.getUrl() == "") {
+//		if (Session.getUrl() == "") {
 			if (hasAdministradorRole) {
 				accessServiceImpl.registerAccess(authentication.getName(), authoritiesForSending);
 				redirectStrategy.sendRedirect(request, response, "/solicitudesParaPublicar");
@@ -59,10 +59,10 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 				accessServiceImpl.registerAccess(authentication.getName(), authoritiesForSending);
 				redirectStrategy.sendRedirect(request, response, "/inicio");
 			}
-		}else{
-			accessServiceImpl.registerAccess(authentication.getName(), authoritiesForSending);
-			redirectStrategy.sendRedirect(request, response, Session.getUrl());
-		}
+//		}else{
+//			accessServiceImpl.registerAccess(authentication.getName(), authoritiesForSending);
+//			redirectStrategy.sendRedirect(request, response, Session.getUrl());
+//		}
 
 	}
 

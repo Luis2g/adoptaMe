@@ -46,34 +46,31 @@ public class RecoverPasswordController {
 	}
 
 	@PostMapping("/reset/password/email")
-	public String enviarContrasenaEmail(@RequestParam("email") String email,
-			RedirectAttributes redirectAttributes) {
-        System.out.println("Entro a email");
-		// Remove white spaces
+	public String enviarContrasenaEmail(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+
 		email = email.replaceAll("[\\s]", "");
-		// Create new password with 12 characters
-		String nuevaContrasena = generarContrasena(12);
-		// Encoder password
-		String contrasenaEncriptada = passwordEncoder.encode(nuevaContrasena);
-		// Search user_name
 		User user = userServiceImpl.findByEmail(email);
-		// Update password
-		boolean respuestaCambio = userServiceImpl.changePassword(contrasenaEncriptada, user.getEmail());
-		// Get full user_name
-		String nombreUsuario = user.getPerson().getName().concat(" ").concat(user.getPerson().getSurname());
-		// Create email content
-		String htmlContent = plantillaRecuperacionContrasena(nombreUsuario, user.getEmail(), nuevaContrasena);
-		// Send message
-		
-		boolean respuestaEmail = emailServiceImpl.sendEmail(user.getEmail(), "Cambio de contraseña", htmlContent);
-		if (respuestaCambio && respuestaEmail) {
-			redirectAttributes.addFlashAttribute("msg_success",
-					"Correo de recuperación de contraseña enviado, por favor revisa tu bandeja de correo.");
-			return "redirect:/login";
-		} else {
+		if (user.getUsername()!=null){
+			String nuevaContrasena = generarContrasena(12);
+			String contrasenaEncriptada = passwordEncoder.encode(nuevaContrasena);
+			boolean respuestaCambio = userServiceImpl.changePassword(contrasenaEncriptada, user.getEmail());
+			String nombreUsuario = user.getPerson().getName().concat(" ").concat(user.getPerson().getSurname());
+			String htmlContent = plantillaRecuperacionContrasena(nombreUsuario, user.getEmail(), nuevaContrasena);
+			
+			boolean respuestaEmail = emailServiceImpl.sendEmail(user.getEmail(), "Cambio de contraseña", htmlContent);
+			if (respuestaCambio && respuestaEmail) {
+				redirectAttributes.addFlashAttribute("msg_success",
+						"Correo de recuperación de contraseña enviado, por favor revisa tu bandeja de correo.");
+				return "redirect:/login";
+			} else {
+				redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
+				return "redirect:/reset/password";
+			}
+		}else{
 			redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
-			return "redirect:/reset/password";
+				return "redirect:/reset/password";
 		}
+		
 	}
 
 	public String plantillaRecuperacionContrasena(String nombreUsuario, String email, String contrasena) {

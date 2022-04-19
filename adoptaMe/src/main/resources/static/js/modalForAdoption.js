@@ -37,7 +37,7 @@ $(document).ready(() => {
 			let p1 = document.createElement("p");
 			p1.innerHTML = json.users[i].person.name + ' ' + json.users[i].person.surname + ' ' + json.users[i].person.secondSurname;
 			let divCol1 = document.createElement("div");
-			divCol1.setAttribute("class", "col-3");
+			divCol1.setAttribute("class", "col-md-3 col-sm-6");
 			divCol1.appendChild(h51);
 			divCol1.appendChild(p1);
 			
@@ -48,7 +48,7 @@ $(document).ready(() => {
 			let p2 = document.createElement("p");
 			p2.innerHTML = json.users[i].person.phoneNumber;
 			let divCol2 = document.createElement("div");
-			divCol2.setAttribute("class", "col-3");
+			divCol2.setAttribute("class", "col-md-3 col-sm-6");
 			divCol2.appendChild(h52);
 			divCol2.appendChild(p2);
 
@@ -59,7 +59,7 @@ $(document).ready(() => {
 			let p3 = document.createElement("p");
 			p3.innerHTML = json.users[i].email;
 			let divCol3 = document.createElement("div");
-			divCol3.setAttribute("class", "col-3");
+			divCol3.setAttribute("class", "col-md-3 col-sm-6");
 			divCol3.appendChild(h53);
 			divCol3.appendChild(p3);
 			
@@ -72,7 +72,7 @@ $(document).ready(() => {
 			button.innerHTML = "Confirmar adopción";
 			
 			let divCol4 = document.createElement("div");
-			divCol4.setAttribute("class", "col-3");
+			divCol4.setAttribute("class", "col-md-3 col-sm-6");
 			divCol4.appendChild(button);
 			
 			divRow.appendChild(divCol1);
@@ -128,7 +128,7 @@ const confirmAdoption = (username) => {
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Aceptar!'
+	  confirmButtonText: 'Aceptar'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 		

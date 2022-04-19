@@ -8,54 +8,59 @@
                 </div>
                 <div class="card-head text-center mt-3">
                     <h3>Adoptame</h3>
+                        <hr>
                 </div>
-                <div class="card-body row ml-5 pl-5">
-                    <div class="col-xl-4 col-lg-6 col-12">
+                <div class="card-body row ">
+                    <div class="col-xl-3 col-md-6 col-lg-6 col-12">
                         <h5>Nombre de usuario:</h5>
                         <p class="card-title" th:text="${session.user.getUsername()}"></p>
                     </div>
-                    <div class="col-xl-3 col-lg-6 col-12">
+                    <div class="col-xl-3 col-md-6 col-lg-6 col-12">
+                        <h5>Correo electrónico:</h5>
+                        <p class="card-title" th:text="${session.user.getEmail()}"></p>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-lg-6 col-12">
                         <h5>Número telefónico:</h5>
                         <p class="card-title" th:text="${session.user.getPerson().getPhoneNumber()}"></p>
                     </div>
-                    <div class="col-xl-4 col-lg-12 col-12">
-                        <h5>Correo electrónico:</h5>
-                        <p class="card-title" th:text="${session.user.getEmail()}"></p>
+                    <div class="col-xl-3 col-md-6 col-lg-6 col-12">
+                        <h5>Nombre completo:</h5>
+                        <p class="card-title" th:text="${session.user.getPerson().getName() + ' ' + session.user.getPerson().getSurname() + ' ' + session.user.getPerson().getSecondSurname() }"></p>
                     </div>
 
                 </div>
                 <hr>
-                <div class="card-body row ml-5 pl-5">
+                <div class="card-body row ml-2">
                     <h3 class="col-xl-12 mb-4">Actualizar datos</h3>
                     <form class="container row" id="userDataForm" th:action="@{/usuarios/updateUserData}"
                         th:object="${user}" method="POST">
-                        <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
                             <label for="">Nombre(s)</label>
                             <input id="name" onChange="nameValidation()" type="text" th:field="*{person.name}"
                                 class="form-control" placeholder="Escriba un nombre">
                             <span id="nameSpan" style="color: red"></span>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
                             <label for="">Apellido paterno</label>
                             <input id="surname" onChange="surnameValidation()" type="text" th:field="*{person.surname}"
                                 class="form-control" placeholder="Escriba un apellido">
                             <span id="surnameSpan" style="color: red"></span>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="form-group col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
                             <label for="">Apellido materno</label>
                             <input id="secondSurname" onChange="secondSurnameValidation()" type="text"
                                 th:field="*{person.secondSurname}" class="form-control"
                                 placeholder="Escriba un apellido">
                             <span id="secondSurnameSpan" style="color: red"></span>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <label for="exampleInputEmail1">Número telefónico</label>
                             <input id="phoneNumber" onChange="phoneNumberValidation()" type="text"
-                                th:field="*{person.phoneNumber}" class="form-control form-control-lg phone-mask"
+                                th:field="*{person.phoneNumber}" class="form-control  phone-mask"
                                 maxlength="10" minlength="14" placeholder="( ___ ) - ___ - __ - __" required>
                             <span id="phoneNumberSpan" style="color: red"></span>
                         </div>
-                        <div class="form-group col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <label for="exampleInputEmail1">Correo electrónico</label>
                             <input id="email" onChange="emailValidation()" type="email" th:field="*{email}"
                                 class="form-control" placeholder="Escriba un correo electrónico">
@@ -65,18 +70,16 @@
                         <input name="passwordIn" type="hidden" id="passwordIn">
 
                         <div class="col-12 text-center mt-3">
-                            <button type="button" onClick="formValidation()" class="btn btn-primary col-4">Actualizar
+                            <button type="button" onClick="formValidation()" class="btn btn-primary">Actualizar
                                 datos</button>
                         </div>
                     </form>
 
-                    <hr style="background-color: #000;  width: 100%" />
+                    <hr style="background-color: rgb(192, 192, 192);  width: 90%" />
 
-
-                    <form class="row" id="changePassword" th:action="@{/usuarios/changePassword}" method="POST">
-
-
-                        <div class="form-group col-12 col-md-6 col-lg-4">
+					<h3 class="col-xl-12 mb-4">Actualizar contraseña</h3>
+                    <form class="container row" id="changePassword" th:action="@{/usuarios/changePassword}" method="POST">
+						<div class="form-group col-12 col-md-6 col-lg-4">
                             <label for="exampleInputEmail1">Contraseña anterior</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -110,11 +113,13 @@
                         </div>
 
                         <div class="col-12 text-center mt-3">
-                            <button type="button" onClick="comparePasswords()" class="btn btn-primary col-4">Cambiar
-                                contrase�a</button>
+                            <button type="button" onClick="comparePasswords()" class="btn btn-primary">Cambiar
+                                contraseña</button>
                         </div>
 
-                    </form>
+                        
+
+                    </form >
 
                 </div>
 

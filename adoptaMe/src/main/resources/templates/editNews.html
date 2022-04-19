@@ -31,12 +31,12 @@
                 <div class="form-group">
                     <input type="hidden" id="idEdit" th:field="*{id}">
                     <div class="form-row">
-                        <div class="col-12 col-sm-6 col-md-6">
+                        <div class="col-12 col-sm-6 col-md-4 col-12 mb-4">
                             <label for="title" style="color: #687281;"><b>Título </b><span
                                     style="color: red;">*</span></label>
                             <input required type="text" class="form-control" id="titleEdit" th:field="*{title}"
                                 placeholder="Ingresa un título corto">
-                            <div id="titleValid" hidden="true" class="alert alert-danger mb-3 mt-3">
+                            <div id="titleValid" hidden="true" class="alert alert-danger">
                                 <span>Por favor, verifique que el título sea válido
                                     (El título puede tener palabras no válidas en el sistema)
                                 </span>
@@ -46,13 +46,19 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-4 col-md-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-12 mb-5">
                             <div class="form-check">
                                 <label class="form-check-label" for="isPrincipalEdit" style="color: #687281;"><b>¿Es
                                         principal? </b></label>
                                 <input type="checkbox" class="form-check-input" id="isPrincipal" th:field="*{isMain}"
-                                    style="display: block; margin-left: 0%;">
+                                    style="display: block; margin-left: 0%; ">
                             </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-12 mb-3">
+                            <label for="image" style="color: #687281;"><b>Imagen </b><span
+                                    style="color: red;">*</span></label>
+                            <input class="form-control" type="file" name="imagenPost" id="imagenPostEdit"
+                                accept=".jpg, .jpeg, .png">
                         </div>
                         <div class="col-12 mt-3">
                             <label for="contenido" style="color: #687281;"><b>Contenido </b><span
@@ -69,12 +75,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-6 mt-3">
-                            <label for="image" style="color: #687281;"><b>Imagen </b><span
-                                    style="color: red;">*</span></label>
-                            <input class="form-control" type="file" name="imagenPost" id="imagenPostEdit"
-                                accept=".jpg, .jpeg, .png">
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">

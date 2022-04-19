@@ -386,8 +386,6 @@ $(document).ready(() => {
 		
 		let probando = document.getElementById("innerLayoutForLanding");
 		
-		console.log("This is the innerLayout ", probando);
-		
 		document.getElementById("footerForAdoption").removeChild(probando);
 		
 		
@@ -421,15 +419,21 @@ $(document).ready(() => {
 			locationInput.setAttribute("value", "landingPage");
 			locationInput.setAttribute("name", "location");
 
-			let buttonFLP = document.createElement("button");
-			buttonFLP.setAttribute("class", "btn btn-success");
-			buttonFLP.setAttribute("type", "button");
-			buttonFLP.setAttribute("onClick", 'confirmBeforeRequesting(' + $(this).data('petid') +", \'" + $(this).data('name') + "\'"+ ')');
-			buttonFLP.innerHTML = "Solicitar adopción";
-			
+			console.log($(this).data("session"));
+
+			if($(this).data("session") === 'ROLE_ADOPTER' ){
+				let buttonFLP = document.createElement("button");
+				buttonFLP.setAttribute("class", "btn btn-success");
+				buttonFLP.setAttribute("type", "button");
+				buttonFLP.setAttribute("onClick", 'confirmBeforeRequesting(' + $(this).data('petid') +", \'" + $(this).data('name') + "\'"+ ')');
+				buttonFLP.innerHTML = "Solicitar adopción";
+				formFLP.appendChild(buttonFLP);
+
+			}
+
+
 			formFLP.appendChild(petIdInput);
 			formFLP.appendChild(locationInput);
-			formFLP.appendChild(buttonFLP);
 			
 			
 //			footer.appendChild(formFLP);

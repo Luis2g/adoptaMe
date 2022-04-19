@@ -1,5 +1,6 @@
 package mx.edu.utez.adoptaMe.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -22,8 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
     
+    private static final long serialVersionUID = 1L;  
 
     @Id
     @Column(name = "username", nullable = false, length = 45, unique = true)

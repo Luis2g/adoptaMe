@@ -93,9 +93,10 @@ public class UserController {
 	public String profile(@PathVariable(required = false) String option, Model model, Authentication authentication,
 			HttpSession session) {
 
+				User user = null;
 		if (authentication != null) {
 			String username = authentication.getName();
-			User user = userServiceImpl.findByUsername(username);
+			user = userServiceImpl.findByUsername(username);
 			session.setAttribute("user", user);
 		}
 
@@ -105,7 +106,7 @@ public class UserController {
 			highlighted = option;
 			model.addAttribute("highlighted", highlighted);
 			if (highlighted.equals("miCuenta")) {
-				User user = userServiceImpl.findByUsername(authentication.getName());
+				
 				user.setPassword(null);
 				model.addAttribute("user", user);
 			}

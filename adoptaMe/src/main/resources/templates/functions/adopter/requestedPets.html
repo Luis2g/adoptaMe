@@ -16,7 +16,12 @@
 
 			<div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="tmpPet: ${adopterRequestedPets}">
                 <div class="card mb-2">
-                    <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" alt="Card image cap">
+                    <img 
+                    	class="card-img-top" 
+                    	th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}" 
+                    	alt="Card image cap"
+                   		style="width:100%; height: 170px; object-fit: cover;"
+                   	>
                     <div class="card-body">
                     	<div th:switch="${tmpPet.status}">
 						    <div th:case="'adoptedForYou'">

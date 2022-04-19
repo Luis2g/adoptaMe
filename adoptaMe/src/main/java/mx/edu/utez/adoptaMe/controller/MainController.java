@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import mx.edu.utez.adoptaMe.entity.FavoriteOne;
 import mx.edu.utez.adoptaMe.entity.Pet;
 import mx.edu.utez.adoptaMe.entity.Request;
 import mx.edu.utez.adoptaMe.entity.RequestedPet;
@@ -174,14 +175,18 @@ public class MainController {
 
     @GetMapping("/inicio")
     public String index(Authentication authentication, HttpSession session, Model model) {
-        if (authentication != null) {
-            String username = authentication.getName();
-            User user = userServiceImpl.findByUsername(username);
-            session.setAttribute("user", user);
-        }
+    	
         List<Pet> sortedPets = petServiceImpl.listSortedPets();
         List<Pet> petList = new ArrayList<>();
         List<Pet> secondPetList = new ArrayList<>();
+    	
+    	User user = new User();
+       
+    	
+    	
+    	
+    	
+
 
         for(int i=0; i<sortedPets.size(); i++){
             System.out.print(sortedPets.get(i).getName());
@@ -211,6 +216,44 @@ public class MainController {
                 }
             }
         }
+        
+        
+        
+        if(authentication != null) {
+    		String username = authentication.getName();
+    		model.addAttribute("usernameFromModel", username);
+    		user = userServiceImpl.findByUsername(username);
+    		session.setAttribute("user", user);
+    		
+    		for(Pet petVar: sortedPets) {
+        		for(Request request: petVar.getRequests()) {
+        			if(request.getUser().getUsername().equals(username)) {
+        				petVar.setStatus("requestedByYou");        				
+        			}
+        		}
+        	}
+    		
+	     	for(Pet thisPet: sortedPets ) {
+	     		int hearts = 0;
+	     		thisPet.setType("nada");
+	        	for(FavoriteOne favoriteOne: thisPet.getFavoriteOnes()) {
+	        		hearts++;
+	        		if(thisPet.getStatus().equals("requestedByYou") && favoriteOne.getUser().getUsername().equals(username)) {
+	        			thisPet.setStatus("lovedIt");
+	        		}else if (favoriteOne.getUser().getUsername().equals(username)){
+	        			thisPet.setStatus("heart");
+	        		}
+	        	}  		        	
+	        	thisPet.setType(hearts+"");
+	     	}
+    	}else {
+    		for(Pet thisPet: sortedPets ) {
+    			thisPet.setType(thisPet.getFavoriteOnes().size() + "");
+	     	}
+    	}
+        
+        
+        
 
         model.addAttribute("postList", postServiceImpl.findByIsMain());
         model.addAttribute("secondPetList", secondPetList);

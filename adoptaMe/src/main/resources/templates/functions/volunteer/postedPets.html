@@ -25,7 +25,7 @@
 			</form>
 		</div>
 
-		<div class="animate__animated animate__fadeInLeft"
+		<div class="animate__animated animate__fadeInLeft mt-5"
 			th:if="${requestedPets.size() == 0 && pendingPets.size() == 0 && acceptedPets.size() == 0 && rejectedPets.size() == 0 && adoptedPets.size() == 0}">
 			<h3 style="color: #727b88">No hay solicitudes de publicaciones</h3>
 		</div>
@@ -36,8 +36,12 @@
 
 				<div class="col-12 col-sm-6 col-md-6 col-lg-6  mb-2 " th:each="requestedPet: ${requestedPets}">
 					<div class="card h-100">
-						<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${requestedPet.pet.image})}"
-							alt="Card image cap">
+						<img 
+							class="card-img-top" 
+							th:src="@{/imagenesPet/{i} (i = ${requestedPet.pet.image})}"
+							alt="Card image cap"
+							style="width:100%; height: 170px; object-fit: cover;"
+						>
 						<div class="card-body">
 							<span class="badge badge-primary shadow">Solicitada</span>
 							<h4 class="card-title mt-2" th:text="${requestedPet.pet.name}"></h4>
@@ -79,8 +83,12 @@
 				<div class="row mt-3">
 					<div class="col-4 mb-2" th:each="pendingPet: ${pendingPets}">
 						<div class="card h-100">
-							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}"
-								alt="Card image cap">
+							<img 
+								class="card-img-top" 
+								th:src="@{/imagenesPet/{i} (i = ${pendingPet.image})}"
+								alt="Card image cap"
+								style="width:100%; height: 170px; object-fit: cover;"
+							>
 							<div class="card-body">
 								<span class="badge badge-warning shadow" style="color: #fff">En espera</span>
 								<h4 class="card-title mt-3" th:text="${pendingPet.name}"></h4>
@@ -109,8 +117,12 @@
 					</div>
 					<div class="col-4  mb-2" th:each="acceptedPet: ${acceptedPets}">
 						<div class="card h-100">
-							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}"
-								alt="Card image cap">
+							<img 
+								class="card-img-top" 
+								th:src="@{/imagenesPet/{i} (i = ${acceptedPet.image})}"
+								alt="Card image cap"
+								style="width:100%; height: 170px; object-fit: cover;"
+							>
 							<div class="card-body">
 								<span class="badge badge-info shadow">Aceptada</span>
 								<h4 class="card-title" th:text="${acceptedPet.name}"></h4>
@@ -139,8 +151,12 @@
 					</div>
 					<div class="col-4  mb-2" th:each="rejectedPet: ${rejectedPets}">
 						<div class="card h-100">
-							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}"
-								alt="Card image cap">
+							<img 
+								class="card-img-top" 
+								th:src="@{/imagenesPet/{i} (i = ${rejectedPet.image})}"
+								alt="Card image cap"
+								style="width:100%; height: 170px; object-fit: cover;"
+							>
 							<div class="card-body">
 								<span class="badge badge-danger shadow">Rechazada</span>
 								<h4 class="card-title" th:text="${rejectedPet.name}"></h4>
@@ -170,8 +186,12 @@
 
 					<div class="col-4 mb-2" th:each="adoptedPet: ${adoptedPets}">
 						<div class="card h-100">
-							<img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${adoptedPet.pet.image})}"
-								alt="Card image cap">
+							<img 
+								class="card-img-top" 
+								th:src="@{/imagenesPet/{i} (i = ${adoptedPet.pet.image})}"
+								alt="Card image cap"
+								style="width:100%; height: 170px; object-fit: cover;"
+							>
 							<div class="card-body">
 								<span style="font-size: 10px" class="badge badge-pill badge-light shadow"> Adoptado
 								</span>

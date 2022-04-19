@@ -89,8 +89,12 @@
                 <div class="carousel-item active">
                     <div class="col-md-3 mb-2" th:each="tmpPet : ${petList}" style="float:left">
                         <div class="card h-100">
-                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}"
-                                alt="Card image cap">
+                            <img 
+                            	class="card-img-top" 
+                            	th:src="@{/imagenesPet/{i} (i = ${tmpPet.image})}"
+                                alt="Card image cap"
+                            	style="width:100%; height: 170px; object-fit: cover;"    
+                            >
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${tmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${tmpPet.description}"></p>
@@ -129,6 +133,41 @@
                                     </div>
                                 </div>
                             </div> -->
+                            <div class="card-footer" >
+                            	
+                            	<div th:if="!(${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')})">
+                                    <form th:action="@{/mascotas/heartOne}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons">
+                                                favorite_border
+                                            </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${tmpPet.status.equals('lovedIt') || tmpPet.status.equals('heart')}">
+                                    <form th:action="@{/mascotas/removeHeart}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${tmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons" style="color: red;">
+                                                favorite
+                                            </span>
+                                            <span class="align-top">
+                                                [[${tmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            	
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -138,8 +177,12 @@
                 <div class="carousel-item">
                     <div class="col-md-3  mb-2" th:each="secondTmpPet : ${secondPetList}" style="float:left">
                         <div class="card h-100">
-                            <img class="card-img-top" th:src="@{/imagenesPet/{i} (i = ${secondTmpPet.image})}"
-                                alt="Card image cap">
+                            <img 
+                            	class="card-img-top" 
+                            	th:src="@{/imagenesPet/{i} (i = ${secondTmpPet.image})}"
+                                alt="Card image cap"
+                            	style="width:100%; height: 170px; object-fit: cover;"
+                            >
                             <div class="card-body">
                                 <h4 class="card-title" th:text="${secondTmpPet.name}"></h4>
                                 <p class="card-text" th:utext="${secondTmpPet.description}"></p>
@@ -148,6 +191,46 @@
                                     Detalles
                                 </button>
                             </div>
+                            
+                            <div class="card-footer" >
+                            
+                            	<div class="card-footer" >
+                            	
+                            	<div th:if="!(${secondTmpPet.status.equals('lovedIt') || secondTmpPet.status.equals('heart')})">
+                                    <form th:action="@{/mascotas/heartOne}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${secondTmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons">
+                                                favorite_border
+                                            </span>
+                                            <span class="align-top">
+                                                [[${secondTmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${secondTmpPet.status.equals('lovedIt') || secondTmpPet.status.equals('heart')}">
+                                    <form th:action="@{/mascotas/removeHeart}" method="POST">
+                                        <input type="hidden" name="petId" th:value="${secondTmpPet.id}">
+                                        <input type="hidden" name="location" th:value="${location}">
+                                        <button class="btn btn-outline-gray"
+                                            style="border : none; right: 0px !important; padding-right: 0px;">
+                                            <span class="material-icons" style="color: red;">
+                                                favorite
+                                            </span>
+                                            <span class="align-top">
+                                                [[${secondTmpPet.type}]]
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            	
+                            </div>
+                            
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

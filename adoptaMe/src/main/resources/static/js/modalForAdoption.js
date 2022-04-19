@@ -1,7 +1,5 @@
 $(document).ready(() => {
 	
-	console.log("se cargo el documento");
-
 
 	$(".btn-information").on("click", function () {
 		let json = $(this).data("info");

@@ -383,6 +383,18 @@ $(document).ready(() => {
 	
 //This functions shows information about a pet in landing page
 	$(".btn-justInformationEveryone").on("click", function () {
+		
+		let probando = document.getElementById("innerLayoutForLanding");
+		
+		console.log("This is the innerLayout ", probando);
+		
+		document.getElementById("footerForAdoption").removeChild(probando);
+		
+		
+		let layout = document.createElement("div");
+		layout.setAttribute("id", "innerLayoutForLanding");
+		document.getElementById("footerForAdoption").appendChild(layout);
+		
 		document.getElementById("petImageJustInfo").setAttribute("src","/imagenesPet/"+$(this).data("image"));
 		document.getElementById("petNameJustInfo").innerHTML = $(this).data("name");
 		document.getElementById("petGenderJustInfo").innerHTML = $(this).data("gender") === 'M' ? 'Macho' : 'Hembra';
@@ -392,7 +404,40 @@ $(document).ready(() => {
 		document.getElementById("petPersonalityJustInfo").innerHTML = $(this).data("personality");
 		document.getElementById("petAgeJustInfo").innerHTML = $(this).data("age")+" "+$(this).data("unit-age");
 		
+		if($(this).data("status") !== 'nada' && $(this).data("status") !== 'requestedByYou' && $(this).data("status") !== 'lovedIt' ){
+			
+		
+			//formFLP = formForLandingPage
+			let formFLP = document.createElement("form");
+			formFLP.setAttribute("action", "/mascotas/requestAdoption");
+			formFLP.setAttribute("method", "POST");	
+			formFLP.setAttribute("id", "requestAPetForm" + $(this).data('petid'));
+			let petIdInput = document.createElement("input");
+			petIdInput.setAttribute("name", "petId");
+			petIdInput.setAttribute("type", "hidden");
+			petIdInput.setAttribute("value", $(this).data("petid"));
+			let locationInput = document.createElement("input");
+			locationInput.setAttribute("type", "hidden");
+			locationInput.setAttribute("value", "landingPage");
+			locationInput.setAttribute("name", "location");
+
+			let buttonFLP = document.createElement("button");
+			buttonFLP.setAttribute("class", "btn btn-success");
+			buttonFLP.setAttribute("type", "button");
+			buttonFLP.setAttribute("onClick", 'confirmBeforeRequesting(' + $(this).data('petid') +", \'" + $(this).data('name') + "\'"+ ')');
+			buttonFLP.innerHTML = "Solicitar adopción";
+			
+			formFLP.appendChild(petIdInput);
+			formFLP.appendChild(locationInput);
+			formFLP.appendChild(buttonFLP);
+			
+			
+//			footer.appendChild(formFLP);
+			document.getElementById("innerLayoutForLanding").appendChild(formFLP);
+		}
+
 		$('#modalForJustForInformation').modal('show');
+		
 	
 	});
 	

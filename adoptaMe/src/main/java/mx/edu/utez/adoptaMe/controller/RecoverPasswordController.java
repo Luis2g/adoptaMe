@@ -50,7 +50,8 @@ public class RecoverPasswordController {
 
 		email = email.replaceAll("[\\s]", "");
 		User user = userServiceImpl.findByEmail(email);
-		if (user.getUsername()!=null){
+		
+		if (user!=null){
 			String nuevaContrasena = generarContrasena(12);
 			String contrasenaEncriptada = passwordEncoder.encode(nuevaContrasena);
 			boolean respuestaCambio = userServiceImpl.changePassword(contrasenaEncriptada, user.getEmail());
@@ -71,7 +72,7 @@ public class RecoverPasswordController {
 				return "redirect:/reset/password";
 		}
 		
-	}
+		}
 
 	public String plantillaRecuperacionContrasena(String nombreUsuario, String email, String contrasena) {
 		StringBuilder contenidoCorreo = new StringBuilder();

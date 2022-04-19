@@ -49,21 +49,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    // @Transactional
-    // @Override
-    // public void changePassword(String password, String username) {
-    // userRepository.changePassword(password, username);
-    // }
-
     @Transactional
     @Override
     public User login(String username, String password) {
         Optional<User> found = null;
         try {
             found = userRepository.login(username, password);
-            // if the next code line is left right below will override the value in the
-            // database
-            // found.setPassword("password");
         } catch (SQLGrammarException ex) {
             return null;
         }

@@ -23,11 +23,9 @@ import mx.edu.utez.adoptaMe.entity.Pet;
 import mx.edu.utez.adoptaMe.entity.Request;
 import mx.edu.utez.adoptaMe.entity.RequestedPet;
 import mx.edu.utez.adoptaMe.entity.User;
-import mx.edu.utez.adoptaMe.service.ColorServiceImpl;
 import mx.edu.utez.adoptaMe.service.PetServiceImpl;
 import mx.edu.utez.adoptaMe.service.PostServiceImpl;
-import mx.edu.utez.adoptaMe.service.RequestServiceImpl;
-import mx.edu.utez.adoptaMe.service.UserServiceImpl;
+	import mx.edu.utez.adoptaMe.service.UserServiceImpl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -178,7 +176,6 @@ public class MainController {
     	for(Pet petVar: list) {
     		for(Request request: petVar.getRequests()) {
     			if(request.getUser().getUsername().equals(username)) {
-    				System.err.println("Entra al if de requestedByYou");
     				petVar.setStatus("requestedByYou");        				
     			}
     		}

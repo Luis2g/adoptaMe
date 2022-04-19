@@ -50,7 +50,8 @@ public class RecoverPasswordController {
 
 		email = email.replaceAll("[\\s]", "");
 		User user = userServiceImpl.findByEmail(email);
-		if (user.getUsername()!=null){
+		
+		if (user!=null){
 			String nuevaContrasena = generarContrasena(12);
 			String contrasenaEncriptada = passwordEncoder.encode(nuevaContrasena);
 			boolean respuestaCambio = userServiceImpl.changePassword(contrasenaEncriptada, user.getEmail());
@@ -64,14 +65,14 @@ public class RecoverPasswordController {
 				return "redirect:/login";
 			} else {
 				redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
-				return "redirect:/reset/password";
+				return "redirect:/restablecerContrasena";
 			}
 		}else{
 			redirectAttributes.addFlashAttribute("msg_error", "Ocurrió un error, por favor intenta de nuevo.");
-				return "redirect:/reset/password";
+				return "redirect:/restablecerContrasena";
 		}
 		
-	}
+		}
 
 	public String plantillaRecuperacionContrasena(String nombreUsuario, String email, String contrasena) {
 		StringBuilder contenidoCorreo = new StringBuilder();

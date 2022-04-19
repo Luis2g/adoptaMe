@@ -1,6 +1,6 @@
 <!-- Inicio Navbar -->
 
-<div th:fragment="navbar">
+<div th:fragment="navbar(activeTab)">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" style="background-color: #F3F3F3;" >
         <a class="navbar-brand" th:href="@{/}">AdoptaMe</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -10,25 +10,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li th:class="${activeTab == 'perros'} ? 'active' : null">
                     <a class="nav-link" th:href="@{/mascotas/perros}">Perros</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${activeTab == 'gatos'} ? 'active' : null">
                     <a class="nav-link" th:href="@{/mascotas/gatos}">Gatos</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${activeTab == 'noticias'} ? 'active' : null ">
                     <a class="nav-link" th:href="@{/noticias}">Noticias</a>
                 </li>
-                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item active">
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" th:class="${activeTab == 'solicitudes'} ? 'active' : null ">
                     <a class="nav-link" th:href="@{/solicitudesParaPublicar}">Solicitudes de publicaciones</a>
                 </li>
-                <li sec:authorize="hasAuthority('ROLE_VOLUNTEER')" class="nav-item active">
+                <li sec:authorize="hasAuthority('ROLE_VOLUNTEER')" th:class="${activeTab == 'publicaciones'} ? 'active' : null ">
                     <a class="nav-link" th:href="@{/misPublicaciones}">Mis publicaciones</a>
                 </li>
-                <li sec:authorize="hasAuthority('ROLE_ADOPTER')" class="nav-item active">
+                <li sec:authorize="hasAuthority('ROLE_ADOPTER')" th:class="${activeTab == 'misSolicitudes'} ? 'active' : null ">
                     <a class="nav-link" th:href="@{/misSolicitudes}" >Mi solicitudes</a>
                 </li>
-                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item active">
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" th:class="${activeTab == 'monitoreo'} ? 'active' : null ">
                     <a class="nav-link " th:href="@{/usuarios/accesos}" >Monitoreo</a>
                 </li>
             </ul>

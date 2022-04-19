@@ -36,9 +36,7 @@
       <label style="color:rgb(88, 87, 87); font-size:20px; font-weight:bold; width:100%; bottom:45%; display:block;">
         No cuentas con acceso a la aplicación</label>
     </div>
-    <form th:action="@{/usuario/acceso}">
-      <button class="btn mt-3" style="text-align-last: center;"> <i data-feather="arrow-left"></i> Regresar</button> 
-    </form>
+    <a th:href="@{/inicio}" class="btn mt-3" style="text-align-last: center;"> <i data-feather="arrow-left"></i> Regresar</a>
   </div>
   <div th:replace="fragments/footer :: footer"></div>
 </body>

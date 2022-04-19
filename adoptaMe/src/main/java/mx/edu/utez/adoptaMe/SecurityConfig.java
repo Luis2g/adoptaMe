@@ -62,18 +62,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-       /*@Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-
-        UserDetails userAdmin = User.withDefaultPasswordEncoder()
-                .username("admin@localhost.com")
-                .password("Uno23456")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(userAdmin);
-    }*/
-
-
-
 }

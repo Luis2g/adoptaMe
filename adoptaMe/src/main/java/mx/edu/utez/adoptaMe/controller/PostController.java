@@ -90,7 +90,7 @@ public class PostController {
 
         if (post.getId() == null) {
             for (int i = 0; i < blacklist.length; i++) {
-                if (post.getTitle().toLowerCase().contains(blacklist[i].toLowerCase())) {
+                if (post.getTitle().toLowerCase().contains(blacklist[i].toLowerCase()) || post.getTitle().length() > 50) {
                     redirectAttributes.addFlashAttribute("msg_error", "¡Ha ocurrido un error en el registro!");
                     return "redirect:/noticias";
                 }

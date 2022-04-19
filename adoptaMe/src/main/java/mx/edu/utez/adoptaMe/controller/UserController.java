@@ -51,6 +51,32 @@ public class UserController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	
+	String[] blacklist = { ",", ";", "/", "/", "@@",
+            "SELECT", "select", "script", "<script", "UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker" };
+
+    String[] blacklist2 = { "@@", "SELECT", "select", "script", "<script", "UPDATE",
+            "update", "DELETE", "delete", "input", "button",
+            "div", "html", "char", "varchar", "nvarchar", "hooks.js",
+            "int", "integer", "String", "sys", "sysobjects",
+            "sysobject", "puto", "puta", "pendejo", "idiota", "estupido",
+            "estúpido", "estupideces", "idioteces", "pendejadas",
+            "encabronarse", "cabron", "cabrón", "chingada", "verga",
+            "pito", "joder", "jodido", "jodete", "imbécil", "imbecil",
+            "culero", "panocha", "fuck", "dick", "asshole", "ass",
+            "bitch", "son of a bitch", "pussy", "nigga", "nigger",
+            "deep throat", "bbc", "cock", "motherfucker", "fucker" };
 
 	@GetMapping("/registro")
 	public String register(User user, Model model) {
@@ -87,14 +113,39 @@ public class UserController {
 
 		return "accountOptions";
 	}
+	
+	
+	
 
 	@PostMapping("/guardar")
 	public String save(@Valid @ModelAttribute("user") User user, BindingResult result,
 			Model model, RedirectAttributes redirectAttributes,
 			@RequestParam(name = "confirmation", required = true) String confirmation) {
 
-
-		System.out.println("This is the confirmation: " + confirmation);
+		String validation = user.toString();
+		
+		validation = validation.toLowerCase();
+		
+		System.out.println(validation);
+		
+		for(int i = 0; blacklist.length > i; i++) {
+			if(validation.contains(blacklist[i])) {
+				
+				redirectAttributes.addFlashAttribute("msg_error", "se ha detectado una palabra maliciosa entre los datos");
+				return "redirect:/usuarios/registro";
+			}
+			
+		}
+		for(int i = 0; blacklist2.length > i; i++) {
+			if(validation.contains(blacklist2[i])) {
+				
+				redirectAttributes.addFlashAttribute("msg_error", "se ha detectado una palabra maliciosa entre los datos");
+				return "redirect:/usuarios/registro";
+			}
+			
+		}
+		
+		
 		if (!user.getPassword().equals(confirmation)) {
 			redirectAttributes.addFlashAttribute("msg_error", "¡Las contraseñas no coinciden, por favor verifique!");
 			model.addAttribute("rolesList", roleServiceImpl.listAll());

@@ -139,9 +139,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [donations=" + donations + ", email=" + email + ", password=" + password
-                + ", person=" + person + ", pets=" + pets + ", username=" + username
-                + "]";
+        return person.getName() + " " + person.getSurname() + " " + person.getSecondSurname() + " " +
+                username + " " + email + " " + person.getPhoneNumber();
     }
 
 }

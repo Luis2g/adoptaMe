@@ -153,24 +153,29 @@
         const validarDatos = () => {
             var title = document.getElementById("title").value.toLowerCase();
             var image = document.getElementById("image").value;
-            var content = tinymce.get('content').getContent({format : 'raw'}).toLowerCase();
-            console.log(content)
+            var content = tinymce.get('content').getContent({format : 'raw'}).toLowerCase();            
             var flag = false;
             var flag2 = false;
             var flag3 = false;
 
             for (var i = 0; i < blacklist.length; i++) {
-                if (title.includes(blacklist[i].toLowerCase)) {                    
+                if (title.includes(blacklist[i].toLowerCase())) {   
                     document.getElementById("titleValid").removeAttribute("hidden");
                     flag = true;
                 }
             }
 
             for (var i = 0; i < blacklist2.length; i++) {
-                if (content.includes(blacklist2[i])) {
+                if (content.includes(blacklist2[i].toLowerCase())) {
+                    console.log("Aqui" + blacklist2[i].toLowerCase())
                     document.getElementById("contentValid").removeAttribute("hidden");
                     flag2 = true;
                 }
+            }
+
+            if(title.length > 50){
+                document.getElementById("titleMax").removeAttribute("hidden")
+                flag = true;
             }
 
             if(title == ""){

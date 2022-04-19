@@ -21,8 +21,8 @@ public class Post {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 150)
-    @Size(min = 2, max = 150)
+    @Column(name = "title", nullable = false, length = 50)
+    @Size(min = 2, max = 50)
     @NotEmpty(message = "Este campo es requerido")
     private String title;
 
